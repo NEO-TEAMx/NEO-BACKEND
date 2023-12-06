@@ -18,9 +18,9 @@ const tokenSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    user: {
+    admin: {
         type: mongoose.Types.ObjectId,
-        ref: 'User',
+        ref: 'Admin',
         required: true
     }
 }, {timestamps: true});

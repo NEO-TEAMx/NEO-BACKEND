@@ -5,7 +5,7 @@ const ErrorMainHandler = (err,req,res,next) =>{
         statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
         msg: err.message || "Internal server ERR"
     }
-
+    console.log(err)
     if(err.name === 'validationError'){
         customError.msg = Object.values(err.errors)
         .map((item) => item.message)

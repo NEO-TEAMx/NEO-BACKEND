@@ -8,7 +8,7 @@ const authMiddleware = async(req,res,next) =>{
 
     const {access_token, refresh_token} = req.signedCookies;
 
-
+    console.log(access_token)
     try {
         if(access_token){
             const payload = verifyToken(access_token)

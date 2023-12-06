@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator =  require("validator");
+const bcrypt = require("bcrypt");
 
 const adminSchema = new mongoose.Schema({
     username: {
@@ -22,7 +23,6 @@ const adminSchema = new mongoose.Schema({
     adminId: {
         type: String,
         required: true,
-        unique: true
     },
     role:{
         type:   String,
@@ -41,5 +41,15 @@ const adminSchema = new mongoose.Schema({
     }
 });
 
+adminSchema.pre("save", async function(){
+    if(!this.isModified("password")) return;
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+});
+
+adminSchema.methods.comparePassword = async function(cp){
+    return isMatch = await bcrypt.compare(cp, this.password);
+    // return isMatch;
+}
 
 module.exports = mongoose.model("AdminModel", adminSchema);

@@ -19,7 +19,7 @@ const app = express();
 // APP CONFIG
 app.use(express.json());
 app.use(cors());
-app.use(cookieParser(process.env.SECRET));
+app.use(cookieParser('secret'));
 app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
@@ -30,7 +30,7 @@ app.use('/api/v1/admin', adminRouter);
 
 app.get("/health-check", (req,res) =>{
     console.log(req.signedCookies)
-    console.log(req.headers)
+    // console.log(req.headers)
     res.status(200).json({
         success:true, 
         msg: 'Health check successful!!'

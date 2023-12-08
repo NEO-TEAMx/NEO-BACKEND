@@ -1,4 +1,5 @@
 const { UNAUTHORIZEDApiError } = require("../Errors");
+const Admin = require("../models/admin.model");
 
 function authorizePermissions(...roles){
     return (req,res,next) =>{
@@ -16,5 +17,10 @@ function checkAdmin(req,res,next){
     next();
 }
 
+async function CheckAdminType(req,res,next){
+    if(req.user.adminType === "main-admin"){
+        console.log("main admin")
+    }
+}
 
-module.exports = {authorizePermissions, checkAdmin};
+module.exports = {authorizePermissions, checkAdmin, CheckAdminType};

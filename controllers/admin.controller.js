@@ -1,6 +1,6 @@
 const {StatusCodes} = require("http-status-codes");
 const Admin = require("../models/admin.model");
-const Token = require("../models/token");
+const Token = require("../models/token.model/token");
 const {attachCookieToRes} =  require("../utils/jwt");
 const {BadRequestApiError, NotFoundApiError} = require("../Errors/index");
 const crypto = require("crypto");
@@ -37,7 +37,7 @@ const adminSignup = async(req,res) =>{
         const adminType = 'main-admin';
         const adminId = 'adm39t3v2';
         const admin = await Admin.create({username,email,password,adminType,adminId});
-        const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType };
+        const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType,role:admin.role };
 
         const userAgent = req.headers['user-agent']
         const ip = req.ip
@@ -55,13 +55,13 @@ const adminSignup = async(req,res) =>{
         const adminType = 'deposit-admin';
         const adminId = 'adm6ck9s2';
         const admin = await Admin.create({username,email,password,adminType,adminId});
-        const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType };
+        const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType,role:admin.role };
 
         const userAgent = req.headers['user-agent']
         const ip = req.ip
         let refresh_token = crypto.randomBytes(40).toString('hex');
         
-        const userToken = {refreshToken,userAgent,ip,admin:admin._id}
+        const userToken = {refresh_token,userAgent,ip,admin:admin._id}
         
 
         await Token.create(userToken)
@@ -72,13 +72,13 @@ const adminSignup = async(req,res) =>{
         const adminType = 'withdrawal-admin';
         const adminId = 'adm72n9e1';
         const admin = await Admin.create({username,email,password,adminType,adminId});
-        const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType };
+        const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType,role:admin.role };
 
         const userAgent = req.headers['user-agent']
         const ip = req.ip
         let refresh_token = crypto.randomBytes(40).toString('hex');
         
-        const userToken = {refreshToken,userAgent,ip,admin:admin._id}
+        const userToken = {refresh_token,userAgent,ip,admin:admin._id}
         
 
         await Token.create(userToken)
@@ -95,13 +95,13 @@ const adminSignup = async(req,res) =>{
         }
         
         const admin = await Admin.create({username,email,password,adminType,adminId});
-        const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType };
+        const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType,role:admin.role };
 
         const userAgent = req.headers['user-agent']
         const ip = req.ip
         let refresh_token = crypto.randomBytes(40).toString('hex');
         
-        const userToken = {refreshToken,userAgent,ip,admin:admin._id}
+        const userToken = {refresh_token,userAgent,ip,admin:admin._id}
         
 
         await Token.create(userToken)
@@ -135,7 +135,7 @@ const adminLogin = async(req,res) =>{
         throw new BadRequestApiError("Invalid Credential(s)")
     }
 
-    const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType };
+    const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType,role:admin.role};
 
     const existingToken = await Token.findOne({admin: admin._id});
     if(existingToken){
@@ -144,9 +144,9 @@ const adminLogin = async(req,res) =>{
             throw new CustomError.UnauthenticatedError('Temporarily prohibited from the site');
         }
         refresh_token = existingToken.refresh_token;
-        attachCookieToRes({res, admin:tokenUser, refreshToken:refresh_token});
+        attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});
     
-        res.status(200).json({admin: tokenUser});
+        res.status(200).json({success:true, admin: tokenUser});
         return;
     }
     refresh_token = crypto.randomBytes(40).toString("hex")
@@ -156,7 +156,9 @@ const adminLogin = async(req,res) =>{
     const userToken = {refresh_token,userAgent,ip,admin:admin._id};
     
     await Token.create(userToken);
-    attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})   
+    // attachCookiesToResponse({res, user:tokenUser})
+    attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});  
+    
 
     return res.status(200).json({success:true, admin: tokenUser})
 }
@@ -201,12 +203,22 @@ const deleteAdmin = async(req,res) =>{
     return res.status(200).json({success:true, msg:"Admin deleted suucessfully!!!"})
 }
 
+const showCurrentUser = async (req, res) => {
+    // console.log(req.signedCookies)
+    // console.log(req)
+   return res.status(StatusCodes.OK).json({ admin: req.user });
+};
 
-
+const t = async(req,res)=>{
+    // const y = await Token.findOne({ admin: req.userId,})
+    console.log("firing from t")
+}
 module.exports = {
     adminLogin,
     adminSignup,
     adminUpdatePassword,
     getAllAdmin,
-    deleteAdmin
+    deleteAdmin,
+    showCurrentUser,
+    t
 }

@@ -1,45 +1,19 @@
 const jwt = require("jsonwebtoken");
 
+const createJWT = ({ payload }) => {
+  const token = jwt.sign(payload, 'secret')
+  return token;
+};
 
-const createJwt = ({payload}) =>{
-    const token = jwt.sign(payload, process.env.SECRET,)
-    return token;
-}
-
-const verifyToken = (token) => {
-  const verifyT =  jwt.verify(token, process.env.SECRET,(err,decoded)=>{
-    if(err){
-        err = {
-            name: 'JsonWebTokenError',
-            message: 'Invalid Token'
-        },
-        err = {
-            name: 'TokenExpiredError',
-            message: 'Token is expired'
-        }
-    }
-  })
-    return verifyT;
-}
-
-const jwtToken = ({payload}) =>{
-    return jwt.sign(payload, process.env.SECRET, {expiresIn:'200days'}, (err,token)=>{
-        if(err){
-            console.log(err)
-        }
-        
-        return token;
-    });
-}
+const isTokenValid = ( token ) => jwt.verify(token, 'secret');
 
 const attachCookieToRes = ({res,user,refreshToken}) =>{
     const accessTokenDuration = 1000 * 60 * 60 * 24 * 70;
-    const reefreahTokenDuration = 1000 * 60 * 60 * 24 * 120;
+    const refreshTokenDuration = 1000 * 60 * 60 * 24 * 120;
 
-    const accessTokenVal = jwtToken({payload: {user}});
-    const refreshTokenVal = jwtToken({payload: {user, refreshToken}});
-
-    console.log(accessTokenVal)
+   
+    const accessTokenVal = createJWT({payload: {user}});
+    const refreshTokenVal = createJWT({payload: {user, refreshToken}})
 
     res.cookie('access_token', accessTokenVal,{
         expires: new Date(Date.now() + accessTokenDuration),
@@ -49,11 +23,12 @@ const attachCookieToRes = ({res,user,refreshToken}) =>{
     });
 
     res.cookie('refresh_token', refreshTokenVal, {
-        expires: new Date(Date.now() + reefreahTokenDuration),
+        expires: new Date(Date.now() + refreshTokenDuration),
         signed: true,
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
     });
 }
 
-module.exports = {createJwt, verifyToken, jwtToken, attachCookieToRes}
+
+module.exports = {attachCookieToRes,isTokenValid}

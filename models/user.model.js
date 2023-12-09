@@ -49,6 +49,12 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    passwordToken: {
+        type: String
+    },
+    passwordTokenExpirationDate: {
+        type: Date,
+    },
     referral_link:{
         type: String,
         required: true,

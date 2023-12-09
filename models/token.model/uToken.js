@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const tokenSchema = new mongoose.Schema({
+const uTokenSchema = new mongoose.Schema({
     refresh_token :{
         type: String,
         require: true
@@ -26,4 +26,4 @@ const tokenSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 
-module.exports = mongoose.model('Token', tokenSchema);
+module.exports = mongoose.model('Utoken', uTokenSchema);

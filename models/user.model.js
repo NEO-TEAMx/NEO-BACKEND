@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator =  require("validator");
 const bcrypt = require("bcrypt");
+const shortid = require("shortid");
 
 const userSchema = new mongoose.Schema({
 
@@ -54,6 +55,15 @@ const userSchema = new mongoose.Schema({
     },
     passwordTokenExpirationDate: {
         type: Date,
+    },
+    referralCode: {
+        type:String,
+        unique: true,
+        // default: shortid.generate
+    },
+    referredBy: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     referral_link:{
         type: String,

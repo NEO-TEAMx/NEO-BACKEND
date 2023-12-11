@@ -14,10 +14,6 @@ const uTokenSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    isValid: {
-        type: Boolean,
-        default: true
-    },
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'User',

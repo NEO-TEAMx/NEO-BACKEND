@@ -3,7 +3,7 @@ const Admin = require("../models/admin.model");
 
 function authorizePermissions(...roles){
     return (req,res,next) =>{
-        if(!roles.include(req.user.role)){
+        if(!roles.includes(req.user.role)){
             throw new UNAUTHORIZEDApiError('Route is Forbidden!!!')
         }
         next();
@@ -17,10 +17,14 @@ function checkAdmin(req,res,next){
     next();
 }
 
-async function CheckAdminType(req,res,next){
-    if(req.user.adminType === "main-admin"){
-        console.log("main admin")
+function CheckAdminType(...types){
+    return (req,res,next) =>{
+        if(!types.includes(req.user.adminType)){
+            throw new UNAUTHORIZEDApiError("Forbidden Route")
+        }
+        next()
     }
+
 }
 
 module.exports = {authorizePermissions, checkAdmin, CheckAdminType};

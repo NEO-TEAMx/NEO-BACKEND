@@ -6,6 +6,7 @@ const { attachCookieToRes } = require("../utils/jwt");
 const shortid = require("shortid");
 const {StatusCodes} = require("http-status-codes");
 const {emailLogin,usernameLogin} = require("../__helpers__/loginHelpers");
+const {isPasswordStrong} = require("../__helpers__/isPasswordStrong");
 
 const register = async(req,res) =>{
     const {username,email,password,confirmPassword} =  req.body;
@@ -13,7 +14,7 @@ const register = async(req,res) =>{
     const isEmailTaken = await User.findOne({email});
     const isUsernameTaken = await User.findOne({username});
     const genRefCode = shortid.generate();
-
+    const isStrongpassword = isPasswordStrong(password);
     const referringUser = referralCode ? await User.findOne({referralCode}) : null;
     const referral_link = `https://localhost:4040/api/v1/register?referralCode=${genRefCode}`
 
@@ -28,7 +29,11 @@ const register = async(req,res) =>{
     if(isUsernameTaken){
         throw new BadRequestApiError("Username already taken. Pick another username")
     }
-
+    if(!isStrongpassword){
+        throw new BadRequestApiError(
+            "Password must contain an uppercase and smallcase letters, a number and a special character"
+        )
+    }
     if(password !== confirmPassword){
         throw new BadRequestApiError("Password and confirm password does not match!")
     }
@@ -47,6 +52,7 @@ const register = async(req,res) =>{
     });
 
     const tokenUser = {
+        userId: user._id,
         username: user.username,
         email: user.email,
         role: user.role,
@@ -110,7 +116,8 @@ const logout = async(req,res) =>{
 
 const forgetPassword = async(req,res) =>{
     const {email} = req.body;
-  
+    
+
     if(!email){
       throw new BadRequestApiError('Please provide valid email')
     }
@@ -147,11 +154,17 @@ const forgetPassword = async(req,res) =>{
 const resetPassword = async(req,res) =>{
   
     const {token,email,password,confirmPassword} = req.body;
-  
+    const isStrongPassword = isPasswordStrong(password);
+    const isStrongConfirmPassword = isPasswordStrong(confirmPassword)
+
     if(!token || !email || !password || confirmPassword){
       throw new BadRequestApiError('Please provide needed value(s)')
     }
-  
+    
+    if(!isStrongConfirmPassword || isStrongPassword){
+        throw new BadRequestApiError("Password must contain an uppercase and smallcase letters, a number and a special character")
+    }
+
     if(password !== confirmPassword){
         throw new BadRequestApiError("Password and confrim password are not the same")
     }
@@ -177,17 +190,25 @@ const resetPassword = async(req,res) =>{
 }
 
 const updatePassword = async(req,res) =>{
-
-    const {oldPassword, newPassword, confirmPassword} = req.body
+    const {oldPassword, newPassword, confirmPassword} = req.body;
+    const isStrongPassword = isPasswordStrong(password);
+    const isStrongConfirmPassword = isPasswordStrong(confirmPassword)
+    
     // console.log(req.user.userId)
     if(!oldPassword || !newPassword || !confirmPassword){
         throw new BadRequestApiError("Please provide the needed value(s")
+    }
+    if(!isStrongPassword||isStrongConfirmPassword){
+        throw new BadRequestApiError(
+            "Password must contain an uppercase and smallcase letters, a number and a special character"
+        )
     }
     const user = await User.findOne({_id:req.user.userId})
     const isPasswordCorrect = await user.comparePassword(oldPassword);
     if (!isPasswordCorrect) {
         throw new BadRequestApiError('Invalid Credentials');
     }
+
     user.password = newPassword;
 
     await user.save();
@@ -196,11 +217,17 @@ const updatePassword = async(req,res) =>{
 
 }
 
+const showMe = async(req,res) =>{
+   return res.status(StatusCodes.OK).json({ user: req.user });
+}
+
+
 module.exports = {
     register,
     login,
     logout,
     resetPassword,
     forgetPassword,
-    updatePassword
+    updatePassword,
+    showMe
 }

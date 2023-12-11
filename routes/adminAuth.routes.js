@@ -7,19 +7,15 @@ const {
     deleteAdmin,
     adminUpdatePassword,
     showCurrentUser,
-    t
-} = require("../controllers/admin.controller");
+} = require("../controllers/adminAuth.controller");
 const {authorizePermissions,checkAdmin,CheckAdminType} = require("../middlewares/authorizationmiddleware");
 const adminAuth = require("../middlewares/auth/adminAuth");
-const { check } = require("express-validator");
-
 
 router.post('/register', adminSignup);
 router.post('/login', adminLogin);
-router.get('/get-all-admin', getAllAdmin);
+router.get('/get-all-admin',adminAuth,CheckAdminType("main-admin"), getAllAdmin);
 router.get("/show-me", adminAuth, showCurrentUser);
 router.patch('/update-password', adminAuth,adminUpdatePassword);
-router.delete('/delete-admin/:id', deleteAdmin);
-router.get('/t',adminAuth,CheckAdminType,t)
+router.delete('/delete-admin/:id', CheckAdminType("main-admin"),adminAuth,deleteAdmin);
 
 module.exports = router;

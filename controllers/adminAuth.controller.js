@@ -209,10 +209,6 @@ const showCurrentUser = async (req, res) => {
    return res.status(StatusCodes.OK).json({ admin: req.user });
 };
 
-const t = async(req,res)=>{
-    // const y = await Token.findOne({ admin: req.userId,})
-    console.log("firing from t")
-}
 module.exports = {
     adminLogin,
     adminSignup,
@@ -220,5 +216,4 @@ module.exports = {
     getAllAdmin,
     deleteAdmin,
     showCurrentUser,
-    t
 }

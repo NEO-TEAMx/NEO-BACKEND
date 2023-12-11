@@ -19,15 +19,18 @@ const userAuthMiddleware = async(req,res,next) =>{
         }
 
         const payload = isTokenValid(refresh_token);
+    //    console.log(payload)
+
         const existingToken = await Utoken.findOne({
             user: payload.user.userId,
-            // refresh_token: payload.refresh_token
+            refresh_token: payload.refreshToken
         });
         // console.log(existingToken)
 
 
-        if(!existingToken || !existingToken?.isValid){
-            throw new UnauthenticatedApiError("Authentication failed. Please login again!")
+        if(!existingToken){
+            return res.status(401).json({msg:"Authentication failed. Please login again!"})
+            // throw new UnauthenticatedApiError("Authentication failed. Please login again!")
         }
         attachCookieToRes({
             res, 
@@ -39,8 +42,8 @@ const userAuthMiddleware = async(req,res,next) =>{
         next();
 
     } catch (error) {
-        console.log(error)
-        // throw new UnauthenticatedApiError("Authentication Failed. Please login again!")
+        // console.log(error)
+        throw new UnauthenticatedApiError("Authentication Failed. Please login again!")
     }
 }
 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const withdrawalSchema = new mongoose.Schema({
-    user: {
+    
         user: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
@@ -13,26 +13,27 @@ const withdrawalSchema = new mongoose.Schema({
         },
         date: {
             type: Date,
-            required: true,
             default: Date.now(),
         },
         approved: {
             type: Boolean,
-            required: true,
             default: false,
+            required: true
         },
         charge: {
             type: Number,
-            default: 5,
-            required: true
         },
         payable_amount: {
             type: Number
         },
         walletAddress: {
             type: String,
+            required: true
+        },
+        transaction_id:{
+            type:String,
+            required:true,
         }
-    }
 
 },{timestamps:true});
 

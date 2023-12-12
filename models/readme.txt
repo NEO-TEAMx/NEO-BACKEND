@@ -35,3 +35,18 @@ user
 neoAmount
 usdT amount
 data
+
+
+withdrawal routes
+request for withdrawal
+confirm withdrawal request
+get users withdrawal history
+update withdrawal to approved(admin)
+get all withdrawals (admin)
+
+deposit routes
+create deposit request
+confrim deposit request
+get users deposit history
+update deposit to approved and increase the users totalAmount(admin)
+get all deposits (admin)

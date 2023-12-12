@@ -11,6 +11,8 @@ const  ErrorMainHandler = require("./middlewares/ErrorHandler");
 const userRouter = require("./routes/userAuth.route");
 const adminRouter = require("./routes/adminAuth.routes");
 const adminMRouter = require("./routes/adminMain.route");
+const withdrawalRouter = require("./routes/withdrawal.route");
+const depositRouter = require("./routes/deposit.route");
 const helmet = require("helmet");
 const xssClean = require("xss-clean")
 const run = require("./seedDB");
@@ -29,6 +31,8 @@ app.use(helmet());
 app.use('/api/v1',userRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/admin', adminMRouter);
+app.use('/api/v1/user', withdrawalRouter);
+app.use('/api/v1/user', depositRouter);
 
 app.get("/health-check", (req,res) =>{
     console.log(req.signedCookies)

@@ -1,15 +1,8 @@
 const mongoose = require("mongoose");
-const validator =  require("validator");
-const bcrypt = require("bcrypt");
-
+const { generateUniquieId } = require("../__helpers__/generateId");
 
 const depositSchema = new mongoose.Schema({
-    user: {
-        user: {
-            type: mongoose.Types.ObjectId,
-            ref: 'User',
-            required: true
-        },
+    
         amount: {
             type: Number,
             required: true,
@@ -23,8 +16,17 @@ const depositSchema = new mongoose.Schema({
             type: Boolean,
             required: true,
             default: false,
+        },
+        transaction_id: {
+            type: String,
+            require: true,
+        },
+        user: {
+            type: mongoose.Types.ObjectId,
+            ref: 'User',
+            required: true
         }
-    }
+    
 
 },{timestamps:true});
 

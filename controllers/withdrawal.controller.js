@@ -6,36 +6,31 @@ const { generateUniquieId } = require("../__helpers__/generateId");
 
 const requestWithdrawl = async(req,res) =>{
     const {total_amount,walletAddress} = req.body;
+    const charge = 5;
+    const user = await User.findOne({_id:req.user.userId});
+    // const {total_balance} = user;
+    const transaction_id = generateUniquieId();
 
     if(!total_amount || !walletAddress){
         throw new BadRequestApiError("provide the needed value(s)")
     }
 
-    req.body.user = req.user.userId;
-
-    
-    const user = await User.findOne({_id:req.user.userId})
-
-    let {total_balance} = user;
-    console.log(user.total_balance)
     if(!user){
         throw new BadRequestApiError("Please login again!")
     }
 
-    if(total_balance < total_amount){
+    if(user.total_balance < total_amount){
         throw new BadRequestApiError("Insufficient wallet balance.") 
     }
 
-    const charge = 5;
+    req.body.user = req.user.userId;
+    req.body.email = req.user.email;
 
     const payable_amount = (total_amount * charge)/100;
 
-    total_balance = total_balance - total_amount;
-    
+    user.total_balance -= total_amount;
     await user.save();
-
-    const transaction_id = generateUniquieId();
-
+    console.log(user.total_balance)
     const withdrawal = await Withdrawal.create({
         total_amount,
         charge,
@@ -43,9 +38,9 @@ const requestWithdrawl = async(req,res) =>{
         walletAddress,
         transaction_id,
         user: req.user.userId,
+        email: req.user.email,
     });
 
-    
     return res.status(StatusCodes.OK).json({success:true, msg: "Your withdrawal is being processed.", withdrawal})
 }
 

@@ -13,6 +13,7 @@ const requestDeposit = async(req,res) =>{
     if(amount<1){
         throw new BadRequestApiError("Amount should not be less than 1 usdt")
     }
+    req.body.email = req.user.email;
     req.body.transaction_id = generateUniquieId();
     req.body.user = req.user.userId;
     

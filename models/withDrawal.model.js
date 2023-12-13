@@ -7,6 +7,11 @@ const withdrawalSchema = new mongoose.Schema({
             ref: 'User',
             required: true
         },
+        email:{
+            type: String,
+            required: true,
+            trim: true
+        },
         total_amount: {
             type: Number,
             required: true,

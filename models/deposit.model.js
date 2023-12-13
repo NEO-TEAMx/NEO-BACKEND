@@ -21,6 +21,11 @@ const depositSchema = new mongoose.Schema({
             type: String,
             require: true,
         },
+        email:{
+            type: String,
+            required: true,
+            trim: true
+        },
         user: {
             type: mongoose.Types.ObjectId,
             ref: 'User',

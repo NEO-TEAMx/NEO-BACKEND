@@ -16,6 +16,11 @@ const swapSchema = new mongoose.Schema({
             required: true,
             default: Date.now(),
         },
+        email:{
+            type: String,
+            required: true,
+            trim: true
+        },
         usdt_equ:{
             type:Number
         }

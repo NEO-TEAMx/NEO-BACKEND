@@ -13,6 +13,7 @@ const adminRouter = require("./routes/adminAuth.routes");
 const adminMRouter = require("./routes/adminMain.route");
 const withdrawalRouter = require("./routes/withdrawal.route");
 const depositRouter = require("./routes/deposit.route");
+const dashboardRouter = require("./routes/dashboard.route");
 const helmet = require("helmet");
 const xssClean = require("xss-clean")
 const run = require("./seedDB");
@@ -33,6 +34,7 @@ app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/admin', adminMRouter);
 app.use('/api/v1/user', withdrawalRouter);
 app.use('/api/v1/user', depositRouter);
+app.use('/api/v1/user', dashboardRouter);
 
 app.get("/health-check", (req,res) =>{
     console.log(req.signedCookies)

@@ -11,7 +11,7 @@ const getAllUsers = async(req,res) =>{
         queryObject.email = {$regex: email, $options:'i'}
     }
 
-    let result = await User.find(queryObject);
+    let result = await User.find(queryObject).select('-password');;
     const users = result;
     return res.status(StatusCodes.OK).json({success:true, count: users.length, users})
 }

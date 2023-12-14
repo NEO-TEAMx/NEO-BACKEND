@@ -44,7 +44,8 @@ const userSchema = new mongoose.Schema({
         default: 0
     },
     yield_time: {
-        type: Date
+        type: Date,
+        default:null
     },
     yield_percentage: {
         type: Number,

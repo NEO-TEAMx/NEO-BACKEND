@@ -4,6 +4,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require('cors');
 const morgan = require("morgan");
+const http = require("http");
+const WebSocket = require("ws");
 const cookieParser = require("cookie-parser");
 const notFoundRoute = require('./middlewares/notFound');
 const connectDB = require("./config/dbConfig");
@@ -18,6 +20,9 @@ const helmet = require("helmet");
 const xssClean = require("xss-clean")
 const run = require("./seedDB");
 const app = express();
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({server})
 
 // run();
 // APP CONFIG
@@ -62,3 +67,4 @@ async function startServer(){
 }
 
 startServer();
+module.exports = {wss}

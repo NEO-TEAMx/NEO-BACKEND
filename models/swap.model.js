@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const swapSchema = new mongoose.Schema({
-    user: {
+    
         user: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
@@ -24,7 +24,7 @@ const swapSchema = new mongoose.Schema({
         usdt_equ:{
             type:Number
         }
-    }
+    
 
 },{timestamps:true});
 

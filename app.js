@@ -16,13 +16,37 @@ const adminMRouter = require("./routes/adminMain.route");
 const withdrawalRouter = require("./routes/withdrawal.route");
 const depositRouter = require("./routes/deposit.route");
 const dashboardRouter = require("./routes/dashboard.route");
+const stimulateMining = require("./controllers/dashboard.controller");
+const User = require("./models/user.model");
 const helmet = require("helmet");
 const xssClean = require("xss-clean")
 const run = require("./seedDB");
 const app = express();
 
+
 const server = http.createServer(app);
-const wss = new WebSocket.Server({server})
+const wss = new WebSocket.Server({server});
+
+wss.on('connection', (ws) => {
+    console.log("websocket connection established")
+    ws.on('message', async(data) =>{
+        const message = JSON.parse(data);
+        // if(message.type === 'connectUser'){
+        //     const userId = message.userId;
+        //     let user = await User.findById(req.user.userId)
+        //     if(!user){
+        //         ws.send(JSON.stringify({type:'error', messgae: 'User not found'}));
+        //         return;
+        //     }
+        //     stimulateMining(ws,user) 
+        // }
+        stimulateMining(ws);
+    });
+    ws.on('close', () =>{
+        console.log('websocket connection closed')
+    })
+});
+
 
 // run();
 // APP CONFIG
@@ -53,6 +77,11 @@ app.get("/health-check", (req,res) =>{
 app.use(notFoundRoute);
 app.use(ErrorMainHandler);
 
+wss.on('connection', (ws) =>{
+    stimulateMining(ws);
+});
+
+
 const port = 4040 || process.env.PORT
 
 async function startServer(){
@@ -67,4 +96,4 @@ async function startServer(){
 }
 
 startServer();
-module.exports = {wss}
+module.exports = wss;

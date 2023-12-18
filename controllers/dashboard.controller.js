@@ -4,7 +4,7 @@ const User = require("../models/user.model");
 const Swap = require("../models/swap.model");
 const {getNeoToUsdtRate} = require("../__helpers__/generateNeoEqu");
 const moment = require("moment");
-const {wss} = require("../app");
+const wss = require("../app");
 
 const userDashboard = async(req,res) =>{
     
@@ -119,32 +119,34 @@ const startMining = async(req,res) =>{
     res.status(200).json({msg: "Mining started successfully!!", user})
 }
 
-wss.on('connection', (ws) => {
-    console.log("websocket connection established")
-    ws.on('message', async(data) =>{
-        const message = JSON.parse(data);
-        if(message.type === 'connectUser'){
-            const userId = message.userId;
-            let user = await User.findById(req.user.userId)
-            if(!user){
-                ws.send(JSON.stringify({type:'error', messgae: 'User not found'}));
-                return;
-            }
-            stimulateMining(ws,user) 
-        }
-    });
-    ws.on('close', () =>{
-        console.log('websocket connection closed')
-    })
-});
+// wss.on('connection', (ws) => {
+//     console.log("websocket connection established")
+//     ws.on('message', async(data) =>{
+//         const message = JSON.parse(data);
+//         if(message.type === 'connectUser'){
+//             const userId = message.userId;
+//             let user = await User.findById(req.user.userId)
+//             if(!user){
+//                 ws.send(JSON.stringify({type:'error', messgae: 'User not found'}));
+//                 return;
+//             }
+//             stimulateMining(ws,user) 
+//         }
+//     });
+//     ws.on('close', () =>{
+//         console.log('websocket connection closed')
+//     })
+// });
 
-async function stimulateMining(ws,user){
+async function stimulateMining(ws){
+    console.log('websocket connection initiated!!')
+
     const yield_time = moment();
     const miningDuration = moment.duration(24, 'hours');
 
 
     const intervalId = setInterval(async () =>{
-        user = await User.findById(req.user.userId)
+       const user = await User.findById(req.user.userId)
         if(!user){
             clearInterval(intervalId);
             ws.send(JSON.stringify({type: 'error', message: 'User not found'}))
@@ -156,12 +158,20 @@ async function stimulateMining(ws,user){
             clearInterval(intervalId);
             const finalYieldPercentage = 100;
             const totalYieldBalance = user.hash_rate * 24 *60;
-            const x = await User.findByIdAndUpdate(req.user.userId, {
-                yield_balance: user.yield_balance +=  totalYieldBalance,
-                yield_percentage: finalYieldPercentage,
-                yield_time: null,
-            });
-            ws.send(JSON.stringify({type:'update', message: 'Mining completed', x}))
+            // const x = await User.findByIdAndUpdate(req.user.userId, {
+                user.yield_balance +=  totalYieldBalance,
+                user.yield_percentage = finalYieldPercentage,
+                user.yield_time = null,
+            // });
+            ws.send(JSON.stringify({type:'update', message: 'Mining completed', 
+            user: {
+                ...user.toObject(),
+                currentYeildBalance,
+                yield_percentage,
+                yield_time,
+                yield_balance
+            } 
+            }))
         }else{
             const progress = 100 - (remainingTime / miningDuration) * 100;
             const yield_percentage = progress > 100 ? 100 : progress;
@@ -188,8 +198,6 @@ async function stimulateMining(ws,user){
 }
 
 
-
-
 async function statMining(){
     const user = await User.findById(req.user.userId);
     if(!user){
@@ -203,5 +211,5 @@ module.exports = {
     buyHash,
     neoToUsdt,
     startMining,
-    cancelMining,
+    stimulateMining
 }

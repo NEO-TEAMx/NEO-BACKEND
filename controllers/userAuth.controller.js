@@ -7,6 +7,8 @@ const shortid = require("shortid");
 const {StatusCodes} = require("http-status-codes");
 const {emailLogin,usernameLogin} = require("../__helpers__/loginHelpers");
 const {isPasswordStrong} = require("../__helpers__/isPasswordStrong");
+const sendCeoMail = require("../EmailFormats/welcomeEmail");
+const sendResetPaasswordEmail = require("../EmailFormats/resetPasswordMail");
 
 const register = async(req,res) =>{
     const {username,email,password,confirmPassword} =  req.body;
@@ -42,6 +44,7 @@ const register = async(req,res) =>{
         throw new BadRequestApiError("Password should be at least 8 characters")
     }
     
+
     const user = await User.create({
         email,
         username,
@@ -76,6 +79,7 @@ const register = async(req,res) =>{
     }
 
     // send email from ceo
+    await sendCeoMail({username: username, email:email})
 
     return res.status(200).json({success:true, msg: "User have successfully registered", user:tokenUser })
 }
@@ -129,14 +133,15 @@ const forgetPassword = async(req,res) =>{
   
       // send forgot password link email
 
-      // const origin = 'http://localhost:3000'
-      // await sendResetPaassword({
-      //   name: user.name,
-      //   email: user.email,
-      //   token: passwordToken,
-      //   origin,
-      // });
-  
+      const origin = 'http://localhost:3000'
+     
+      await sendResetPaasswordEmail({
+        username: user.username,
+        email: user.email,
+        token: passwordToken,
+        origin,
+      })
+
       const tenMins = 1000 * 60 * 10;
       const passwordTokenExpirationDate = new Date(Date.now() + tenMins);
       
@@ -144,11 +149,11 @@ const forgetPassword = async(req,res) =>{
       user.passwordTokenExpirationDate = passwordTokenExpirationDate
   
       await user.save();
-      res.status(201).json({user:user, passwordToken})
-    //   console.log(user)
+        //   res.status(201).json({user:user, passwordToken})
+        //   console.log(user)
     }
     // console.log(user)
-    // res.status(200).json({msg: `Please check your email for rest password link`});
+    res.status(200).json({msg: `Please check your email for rest password link`});
 }
 
 const resetPassword = async(req,res) =>{

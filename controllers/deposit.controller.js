@@ -2,6 +2,7 @@ const Deposit = require("../models/deposit.model");
 const {BadRequestApiError} = require("../Errors");
 const { StatusCodes } = require("http-status-codes");
 const { generateUniquieId } = require("../__helpers__/generateId");
+const sendDepositEmail = require("../EmailFormats/depositMail");
 
 const requestDeposit = async(req,res) =>{
     
@@ -18,6 +19,13 @@ const requestDeposit = async(req,res) =>{
     req.body.user = req.user.userId;
     
     const deposit = await Deposit.create(req.body);
+
+    await sendDepositEmail({
+        email: req.body.email,
+        transactionId: req.body.transaction_id,
+        amount: amount 
+    })
+
     return res.status(StatusCodes.OK).json({success:true, deposit})
 
 }

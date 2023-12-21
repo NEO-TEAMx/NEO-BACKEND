@@ -3,6 +3,7 @@ const Withdrawal = require("../models/withDrawal.model");
 const {BadRequestApiError} = require("../Errors");
 const { StatusCodes } = require("http-status-codes");
 const { generateUniquieId } = require("../__helpers__/generateId");
+const sendWithdrawalEmail = require("../EmailFormats/transactionMail");
 
 const requestWithdrawl = async(req,res) =>{
     const {total_amount,walletAddress} = req.body;
@@ -30,7 +31,8 @@ const requestWithdrawl = async(req,res) =>{
 
     user.total_balance -= total_amount;
     await user.save();
-    console.log(user.total_balance)
+
+    // console.log(user.total_balance)
     const withdrawal = await Withdrawal.create({
         total_amount,
         charge,
@@ -39,6 +41,12 @@ const requestWithdrawl = async(req,res) =>{
         transaction_id,
         user: req.user.userId,
         email: req.user.email,
+    });
+
+    await sendWithdrawalEmail({
+        email: user.email,
+        transactionId: transaction_id,
+        amount: total_amount
     });
 
     return res.status(StatusCodes.OK).json({success:true, msg: "Your withdrawal is being processed.", withdrawal})

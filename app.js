@@ -51,8 +51,8 @@ wss.on('connection', (ws) => {
 // APP CONFIG
 app.use(express.json());
 app.use(cors());
-app.use(cookieParser('secret'));
-app.use(morgan("dev"));
+app.use(cookieParser(process.env.SECRET));
+// app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
 
@@ -65,8 +65,7 @@ app.use('/api/v1/user', depositRouter);
 app.use('/api/v1/user', dashboardRouter);
 
 app.get("/health-check", (req,res) =>{
-    console.log(req.signedCookies)
-    // console.log(req.headers)
+    
     res.status(200).json({
         success:true, 
         msg: 'Health check successful!!'

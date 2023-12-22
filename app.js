@@ -47,7 +47,6 @@ wss.on('connection', (ws) => {
     })
 });
 
-
 // run();
 // APP CONFIG
 app.use(express.json());

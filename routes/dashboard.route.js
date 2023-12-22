@@ -7,7 +7,7 @@ const {
 
 } = require("../controllers/dashboard.controller");
 const userAuth = require("../middlewares/auth/userAuth");
-const {authorizePermissions} = require("../middlewares/authorizationmiddleware");
+const {authorizePermissions} = require("../middlewares/authorizationMiddleware");
 const router = express.Router();
 
 

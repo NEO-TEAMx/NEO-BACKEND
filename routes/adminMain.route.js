@@ -7,7 +7,7 @@ const {
     approveWithdrawal,
     addDeposit,
 } = require("../controllers/adminMain.controller");
-const {CheckAdminType,authorizePermissions} = require("../middlewares/authorizationmiddleware");
+const {CheckAdminType,authorizePermissions} = require("../middlewares/authorizationMiddleware");
 const adminAuth = require("../middlewares/auth/adminAuth");
 const router = express.Router();
 

@@ -8,7 +8,7 @@ const {
     adminUpdatePassword,
     showCurrentUser,
 } = require("../controllers/adminAuth.controller");
-const {authorizePermissions,checkAdmin,CheckAdminType} = require("../middlewares/authorizationmiddleware");
+const {authorizePermissions,checkAdmin,CheckAdminType} = require("../middlewares/authorizationMiddleware");
 const adminAuth = require("../middlewares/auth/adminAuth");
 
 router.post('/register', adminSignup);

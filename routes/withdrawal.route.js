@@ -1,6 +1,6 @@
 const express = require("express");
 const {requestWithdrawl,withdrawalHistory} = require("../controllers/withdrawal.controller");
-const {authorizePermissions} = require("../middlewares/authorizationmiddleware");
+const {authorizePermissions} = require("../middlewares/authorizationMiddleware");
 const userAuth = require("../middlewares/auth/userAuth"); 
 const router = express.Router();
 

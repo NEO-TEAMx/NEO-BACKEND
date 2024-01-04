@@ -52,7 +52,7 @@ wss.on('connection', (ws) => {
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser(process.env.SECRET));
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
 

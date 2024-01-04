@@ -79,7 +79,7 @@ const register = async(req,res) =>{
     }
 
     // send email from ceo
-    await sendCeoMail({username: username, email:email})
+    // await sendCeoMail({username: username, email:email})
 
     return res.status(200).json({success:true, msg: "User have successfully registered", user:tokenUser })
 }
@@ -135,20 +135,25 @@ const forgetPassword = async(req,res) =>{
 
       const origin = 'http://localhost:3000'
      
-      await sendResetPaasswordEmail({
-        username: user.username,
-        email: user.email,
-        token: passwordToken,
-        origin,
-      })
+        await sendResetPaasswordEmail({
+            username: user.username,
+            email: user.email,
+            token: passwordToken,
+            origin,
+        })
 
-      const tenMins = 1000 * 60 * 10;
-      const passwordTokenExpirationDate = new Date(Date.now() + tenMins);
+        const tenMins = 1000 * 60 * 10;
+        const passwordTokenExpirationDate = new Date(Date.now() + tenMins);
+
+        const hashString = (string) =>{
+            crypto.createHash('md5').update(string).digest('hex');
+        }
+        
       
-      user.passwordToken = createHash(passwordToken)
-      user.passwordTokenExpirationDate = passwordTokenExpirationDate
+        user.passwordToken = hashString(passwordToken);
+        user.passwordTokenExpirationDate = passwordTokenExpirationDate
   
-      await user.save();
+        await user.save();
         //   res.status(201).json({user:user, passwordToken})
         //   console.log(user)
     }

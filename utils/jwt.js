@@ -18,15 +18,18 @@ const attachCookieToRes = ({res,user,refreshToken}) =>{
     res.cookie('access_token', accessTokenVal,{
         expires: new Date(Date.now() + accessTokenDuration),
         signed: true,
+        // secure: false,
         secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,
+        // httpOnly: true,
     });
 
     res.cookie('refresh_token', refreshTokenVal, {
         expires: new Date(Date.now() + refreshTokenDuration),
         signed: true,
+        // secure: false,
+        // httpOnly: false
         secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,
+        // httpOnly: true,
     });
 }
 

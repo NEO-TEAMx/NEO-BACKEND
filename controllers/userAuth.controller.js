@@ -98,7 +98,7 @@ const register = async(req,res) =>{
 const login = async(req,res) =>{
     const {username, email, password} = req.body;
     if((!username || !password) && (!email || !password)){
-        throw new Error('Error occurred at login')
+        throw new BadRequestApiError("Please provide the needed value(s)")
     }
 
     const isUsernameExist = await User.findOne({username});
@@ -106,7 +106,7 @@ const login = async(req,res) =>{
     let refresh_token = '';
 
     if((!isUsernameExist) && (!isEmailExist)){
-        throw new Error("Error occurred at login 2")
+         throw new BadRequestApiError("Invalid credential(s)")
     }
 
     if(isEmailExist){

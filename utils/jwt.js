@@ -18,19 +18,26 @@ const attachCookieToRes = ({res,user,refreshToken}) =>{
     res.cookie('access_token', accessTokenVal,{
         expires: new Date(Date.now() + accessTokenDuration),
         signed: true,
-        // secure: false,
-        secure: process.env.NODE_ENV === 'production',
-        // httpOnly: true,
+        secure: false,
+        // secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
     });
-
+    // signed:true,httpOnly:true,secure:false,
     res.cookie('refresh_token', refreshTokenVal, {
         expires: new Date(Date.now() + refreshTokenDuration),
         signed: true,
+        sameSite:false,
         // secure: false,
         // httpOnly: false
-        secure: process.env.NODE_ENV === 'production',
-        // httpOnly: true,
+        // secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        secure: false
     });
+
+    // res.cookie('user', 'username', {
+    //     httpOnly: true,
+    //     secure: false
+    // })
 }
 
 

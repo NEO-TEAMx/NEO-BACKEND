@@ -1,7 +1,7 @@
 const {sendEmail, sendMail} = require('../utils/sendEmailConfig');
 
 
-const sendWithdrawalEmail = async({email,transactionId,amount}) =>{
+const sendWithdrawalEmail = async({email,transactionId,amount,payableAmount}) =>{
 
     
     const message = `
@@ -11,6 +11,8 @@ const sendWithdrawalEmail = async({email,transactionId,amount}) =>{
             <ul>
                 <li>Transaction ID: ${transactionId}</li>
                 <li>Amount: ${amount}</li>
+                <li>Tax: 5%</li>
+                <li>Payable amount: ${payableAmount}</li>
             </ul>
             <p>
                 If you have any concerns or further inquiries, feel free to reach out to our support team.

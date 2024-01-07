@@ -1,49 +1,53 @@
 const {attachCookieToRes,isTokenValid } = require("../../utils/jwt");
-const {UnauthenticatedApiError} = require("../../Errors/index");
+const {UnauthenticatedApiError, UNAUTHORIZEDApiError} = require("../../Errors/index");
 const Utoken = require("../../models/token.model/uToken");
-
+const jwt = require("jsonwebtoken");
 
 const userAuthMiddleware = async(req,res,next) =>{
+    const accessToken = req.headers['authorization'];
+    const refresh_token = req.cookies['refresh_token'];
 
-    const {access_token,refresh_token} = req.signedCookies;
-
-    // console.log(access_token)
+    if(!accessToken && !refresh_token){
+        return res.status(401)
+            .json({msg:"Authentication failed. Please login"})
+    }
+    // const {access_token,refresh_token} = req.signedCookies;
+    
     try {
         
-        
-
-        if(access_token){
-            const payload = isTokenValid(access_token)
-            req.user = payload.user;
-            return next()
+        if(accessToken){      
+            if(!refresh_token){
+                return res.status(401)
+                        .json({msg:"Please login again!!"})
+            }  
+            const payload = jwt.verify(accessToken,process.env.SECRET)
+            // console.log(payload)
+            req.user = payload;
+           return  next()
         }
-
-        const payload = isTokenValid(refresh_token);
-    //    console.log(payload)
-
+        
+        if(!accessToken){
+        const payload = jwt.verify(refresh_token, process.env.SECRET);
+        console.log(payload)
         const existingToken = await Utoken.findOne({
-            user: payload.user.userId,
-            refresh_token: payload.refreshToken
+            user:payload.tokenUser.userId,
+            refresh_token: payload.refresh_token
         });
         // console.log(existingToken)
-
-
         if(!existingToken){
-            return res.status(401).json({msg:"Authentication failed. Please login again!"})
-            // throw new UnauthenticatedApiError("Authentication failed. Please login again!")
+            return res.status(401)
+                .json({msg:"Authentication failed. Please login again!"})
         }
-        attachCookieToRes({
-            res, 
-            user:payload.user,
-            refreshToken:existingToken.refresh_token
-        })
-        
-        req.user = payload.user;
-        next();
-
-    } catch (error) {
-        // console.log(error)
-        throw new UnauthenticatedApiError("Authentication Failed. Please login again!")
+        const accessToken = jwt.sign(payload, process.env.SECRET);
+        console.log(accessToken)
+        // console.log(res.header[Authorization])
+        res.header('Authorization', accessToken);
+        req.user = payload.tokenUser;
+        return next();
+        }
+    } catch (error) {    
+        console.log(error)
+        throw new UnauthenticatedApiError('Authentication failed!!')
     }
 }
 

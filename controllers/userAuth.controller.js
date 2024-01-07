@@ -9,6 +9,7 @@ const {emailLogin,usernameLogin} = require("../__helpers__/loginHelpers");
 const {isPasswordStrong} = require("../__helpers__/isPasswordStrong");
 const sendCeoMail = require("../EmailFormats/welcomeEmail");
 const sendResetPaasswordEmail = require("../EmailFormats/resetPasswordMail");
+const jwt =  require("jsonwebtoken");
 
 const register = async(req,res) =>{
     const {username,email,password,confirmPassword} =  req.body;
@@ -71,26 +72,42 @@ const register = async(req,res) =>{
 
     await Utoken.create(userToken)
     
-    attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
-    
+    // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+
+    const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
+    const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+                
+    const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+
     if(referringUser){
         referringUser.hash_rate += 1
         await referringUser.save();
     }
 
     // send email from ceo
-    // await sendCeoMail({username: username, email:email})
+    await sendCeoMail({username: username, email:email})
 
-    return res.status(200).json({success:true, msg: "User have successfully registered", user:tokenUser })
+    return res
+        .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+        .header('Authorization', accessToken).send(tokenUser)
+        
+    
+    // return res.status(200).json({success:true, msg: "User have successfully registered", user:tokenUser, accessToken, refreshToken })
 }
 
 const login = async(req,res) =>{
     const {username, email, password} = req.body;
+    if((!username || !password) && (!email || !password)){
+        throw new Error('Error occurred at login')
+    }
 
     const isUsernameExist = await User.findOne({username});
     const isEmailExist = await User.findOne({email});
     let refresh_token = '';
 
+    if((!isUsernameExist) && (!isEmailExist)){
+        throw new Error("Error occurred at login 2")
+    }
 
     if(isEmailExist){
         return emailLogin(isEmailExist,refresh_token,password,Utoken,res,req);

@@ -47,8 +47,10 @@ wss.on('connection', (ws) => {
     })
 });
 
+
 // run();
 // APP CONFIG
+app.set('trust proxy', 1)
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser(process.env.SECRET));

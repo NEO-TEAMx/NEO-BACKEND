@@ -46,7 +46,8 @@ const requestWithdrawl = async(req,res) =>{
     await sendWithdrawalEmail({
         email: user.email,
         transactionId: transaction_id,
-        amount: total_amount
+        amount: total_amount,
+        payableAmount: payable_amount
     });
 
     return res.status(StatusCodes.OK).json({success:true, msg: "Your withdrawal is being processed.", withdrawal})

@@ -4,14 +4,22 @@ const sgMail = require("@sendgrid/mail");
 
 const sendEmail = ({to,subject,html}) =>{
 
-    const transportter = nodemailer.createTransport(nodemailerConfig)
+    const transporter = nodemailer.createTransport(nodemailerConfig)
 
+    // transporter.sendMail
     
-    return transportter.sendMail({
-        from: 'Neo coin',
+    return transporter.sendMail({
+        from: 'Neo cloud',
         to,
         subject,
         html,
+    } , (error, info) =>{
+        if(error){
+            console.log(error)
+        }else{
+            console.log("email sent")
+            console.log(info.response)
+        }
     });
 };
 
@@ -19,7 +27,7 @@ const sendMail = ({to,subject,html}) =>{
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
     const msg = {
-        from: 'Neo coin',
+        from: 'Neo cloud',
         to,
         subject,
         html,

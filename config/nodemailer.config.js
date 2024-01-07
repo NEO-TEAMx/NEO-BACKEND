@@ -1,8 +1,9 @@
 module.exports = {
-    host: 'smtp.ethereal.email',
-    port: 587,
+    host: 'smtp.gmail.com',
+    port: 465,
+    service: 'gmail',
     auth: {
-        user: 'ericka57@ethereal.email',
-        pass: 'HDUzHENHWjpk26eh4t'
+        user: 'Neo.cloud.mining@gmail.com',
+        pass: 'lixf lgng dqrt nuad'
     }
 };

@@ -46,17 +46,29 @@ wss.on('connection', (ws) => {
         console.log('websocket connection closed')
     })
 });
-
+const corsOpt = {
+    origin: 'http://localhost:8080',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true
+}
 
 // run();
 // APP CONFIG
 app.set('trust proxy', 1)
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOpt));
 app.use(cookieParser(process.env.SECRET));
 app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
+app.use((req,res,next) =>{
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type', 'Authorization', 'Origin', 'Accept')
+    res.setHeader('Access-Control-Expose-Headers', 'Authorization')
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
+    next()
+});
 
 //Router
 app.use('/api/v1',userRouter);

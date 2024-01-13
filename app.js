@@ -46,9 +46,14 @@ wss.on('connection', (ws) => {
         console.log('websocket connection closed')
     })
 });
+const allowedOrigins = [
+    'http://localhost:8080',
+    'https://neoprotocol.netlify.app',
+    'https://neoadmindashboard.netlify.app'
+];
+
 const corsOpt = {
-    // origin: 'http://localhost:8080',
-    origin: 'https://neoprotocol.netlify.app',
+    origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true
 }
@@ -63,7 +68,7 @@ app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
 app.use((req,res,next) =>{
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigins)
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type', 'Authorization', 'Origin', 'Accept')
     res.setHeader('Access-Control-Expose-Headers', 'Authorization')

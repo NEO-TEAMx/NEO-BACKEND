@@ -19,7 +19,7 @@ const register = async(req,res) =>{
     const genRefCode = shortid.generate();
     const isStrongpassword = isPasswordStrong(password);
     const referringUser = referralCode ? await User.findOne({referralCode}) : null;
-    const referral_link = `https://localhost:neoprotocol.netlify.app/html/signin.html?referralCode=${genRefCode}`
+    const referral_link = `https://neoprotocol.netlify.app/html/signin.html?referralCode=${genRefCode}`
 
     if(!username||!email||!password||!confirmPassword){
         throw new BadRequestApiError("Please provide the needed value(s)")

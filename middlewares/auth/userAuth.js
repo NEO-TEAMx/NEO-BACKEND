@@ -11,8 +11,7 @@ const userAuthMiddleware = async(req,res,next) =>{
         return res.status(401)
             .json({msg:"Authentication failed. Please login"})
     }
-    // const {access_token,refresh_token} = req.signedCookies;
-    
+        
     try {
         
         if(accessToken){      
@@ -21,26 +20,25 @@ const userAuthMiddleware = async(req,res,next) =>{
                         .json({msg:"Please login again!!"})
             }  
             const payload = jwt.verify(accessToken,process.env.SECRET)
-            // console.log(payload)
+            
             req.user = payload;
            return  next()
         }
         
         if(!accessToken){
         const payload = jwt.verify(refresh_token, process.env.SECRET);
-        console.log(payload)
+        
         const existingToken = await Utoken.findOne({
             user:payload.tokenUser.userId,
             refresh_token: payload.refresh_token
         });
-        // console.log(existingToken)
+        
         if(!existingToken){
             return res.status(401)
                 .json({msg:"Authentication failed. Please login again!"})
         }
         const accessToken = jwt.sign(payload, process.env.SECRET);
-        console.log(accessToken)
-        // console.log(res.header[Authorization])
+        
         res.header('Authorization', accessToken);
         req.user = payload.tokenUser;
         return next();

@@ -47,7 +47,8 @@ wss.on('connection', (ws) => {
     })
 });
 const corsOpt = {
-    origin: 'http://localhost:8080',
+    // origin: 'http://localhost:8080',
+    origin: 'https://neoprotocol.netlify.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true
 }

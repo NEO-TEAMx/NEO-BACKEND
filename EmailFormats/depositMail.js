@@ -1,7 +1,7 @@
 const {sendEmail, sendMail} = require('../utils/sendEmailConfig');
 
 
-const sendDepositEmail = async({email,transactionId,amount}) =>{
+const sendDepositEmail = async({email,transactionId,amount,username}) =>{
 
     
     const message = `

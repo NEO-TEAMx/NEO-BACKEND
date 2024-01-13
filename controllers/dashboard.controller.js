@@ -42,6 +42,24 @@ const buyHash = async(req,res) =>{
     return res.status(StatusCodes.OK).json({success:true, msg: "Successfully purchased hash!", hash})
 }
 
+//hash equivalent
+const hashEquivalent = async(req,res) =>{
+    const {hash_amount} = req.body;
+
+    const equivalentVal = hash_amount * 0.00015;
+    return res.json({equivalentVal: equivalentVal.toFixed(3)})
+};
+
+//neo equivalent
+const neoEquivalent = async(req,res) =>{
+    const {neo_amount} = req.body;
+    const neoUsdtRate = await getNeoToUsdtRate();
+
+    const usdt_equ = neo_amount * neoUsdtRate;
+
+    return res.json({usdEqu: usdt_equ})
+}
+
 const neoToUsdt = async(req,res) =>{
     const {neo_amount} = req.body;
     const neoUsdtRate = await getNeoToUsdtRate();
@@ -52,7 +70,7 @@ const neoToUsdt = async(req,res) =>{
     const user = await User.findById(req.user.userId);
     
     if(neo_amount > user.yield_balance){
-        throw new BadRequestApiError("NOt enough neo")
+        throw new BadRequestApiError("You are low on neo. Please mine more neo!")
     }
     req.body.user = req.user.userId
     const usdt_equ = neo_amount * neoUsdtRate;
@@ -210,6 +228,8 @@ module.exports = {
     userDashboard,
     buyHash,
     neoToUsdt,
+    neoEquivalent,
+    hashEquivalent,
     startMining,
     stimulateMining
 }

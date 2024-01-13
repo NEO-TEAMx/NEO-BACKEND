@@ -22,6 +22,7 @@ const requestDeposit = async(req,res) =>{
 
     await sendDepositEmail({
         email: req.body.email,
+        username: req.user.username,
         transactionId: req.body.transaction_id,
         amount: amount 
     })

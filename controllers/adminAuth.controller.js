@@ -47,9 +47,18 @@ const adminSignup = async(req,res) =>{
         
 
         await Token.create(userToken)
-        attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+        const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
+        const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+                
+        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+
+        return res
+            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header('Authorization', accessToken).send(tokenUser)
         
-      return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
+
+    //   return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
         
     }else if(isDepositAdmin){
         const adminType = 'deposit-admin';
@@ -65,9 +74,20 @@ const adminSignup = async(req,res) =>{
         
 
         await Token.create(userToken)
-        attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
         
-      return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
+        const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
+        const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+                
+        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+
+        return res
+            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header('Authorization', accessToken).send(tokenUser)
+        
+
+
+    //   return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
     }else if(isWithdrawalAdmin){
         const adminType = 'withdrawal-admin';
         const adminId = 'adm72n9e1';
@@ -82,9 +102,21 @@ const adminSignup = async(req,res) =>{
         
 
         await Token.create(userToken)
-        attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+ 
+        const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
+        const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+                
+        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+
+        return res
+            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header('Authorization', accessToken).send(tokenUser)
         
-      return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
+
+
+
+//       return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
     }else{
         const adminType = 'moderators';
         
@@ -105,9 +137,20 @@ const adminSignup = async(req,res) =>{
         
 
         await Token.create(userToken)
-        attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+   
+        const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
+        const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+                
+        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+
+        return res
+            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header('Authorization', accessToken).send(tokenUser)
         
-      return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
+
+
+    //   return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
     }
 
    
@@ -144,10 +187,21 @@ const adminLogin = async(req,res) =>{
             throw new CustomError.UnauthenticatedError('Temporarily prohibited from the site');
         }
         refresh_token = existingToken.refresh_token;
-        attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});
+        const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
+        const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+                
+        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+
+        return res
+            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header('Authorization', accessToken).send(tokenUser)
+        
+
+        // refresh_token = existingToken.refresh_token;
+        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});
     
-        res.status(200).json({success:true, admin: tokenUser});
-        return;
+        // res.status(200).json({success:true, admin: tokenUser});
+        // return;
     }
     refresh_token = crypto.randomBytes(40).toString("hex")
 
@@ -157,10 +211,21 @@ const adminLogin = async(req,res) =>{
     
     await Token.create(userToken);
     // attachCookiesToResponse({res, user:tokenUser})
-    attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});  
+    // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});  
+    
+    const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
+    const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+                
+    const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+
+    return res
+            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header('Authorization', accessToken).send(tokenUser)
+        
     
 
-    return res.status(200).json({success:true, admin: tokenUser})
+
+    // return res.status(200).json({success:true, admin: tokenUser})
 }
 
 

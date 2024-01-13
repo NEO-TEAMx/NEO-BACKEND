@@ -19,7 +19,7 @@ const register = async(req,res) =>{
     const genRefCode = shortid.generate();
     const isStrongpassword = isPasswordStrong(password);
     const referringUser = referralCode ? await User.findOne({referralCode}) : null;
-    const referral_link = `https://localhost:4040/api/v1/register?referralCode=${genRefCode}`
+    const referral_link = `https://localhost:neoprotocol.netlify.app/html/signin.html?referralCode=${genRefCode}`
 
     if(!username||!email||!password||!confirmPassword){
         throw new BadRequestApiError("Please provide the needed value(s)")
@@ -122,11 +122,7 @@ const logout = async(req,res) =>{
 
     await Utoken.findOneAndDelete({user: req.user.userId})
 
-    res.cookie('access_token', 'logout', {
-        httpOnly: true,
-        expires: new Date(Date.now()),
-    });
-
+    
     res.cookie('refresh_token', 'logout', {
         httpOnly: true,
         expires: new Date(Date.now()),
@@ -150,7 +146,7 @@ const forgetPassword = async(req,res) =>{
   
       // send forgot password link email
 
-      const origin = 'http://localhost:3000'
+      const origin = 'https://neoprotocol.netkify.app/'
      
         await sendResetPaasswordEmail({
             username: user.username,

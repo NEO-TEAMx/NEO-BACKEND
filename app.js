@@ -99,8 +99,8 @@ wss.on('connection', (ws) =>{
     stimulateMining(ws);
 });
 
-
 const port = 4040 || process.env.PORT
+
 
 async function startServer(){
     try {

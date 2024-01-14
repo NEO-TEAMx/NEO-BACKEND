@@ -10,7 +10,7 @@ const sendResetPaasswordEmail = async({username,email,token,origin}) =>{
         <a href='${resetURl}'>Reset Password</a></p>
     `;
 
-    return sendMail({
+    return sendEmail({
         to: email,
         subject: 'Reset Password',
         html: `<div>

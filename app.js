@@ -68,7 +68,7 @@ app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
 app.use((req,res,next) =>{
-    res.setHeader('Access-Control-Allow-Origin', allowedOrigins)
+    // res.setHeader('Access-Control-Allow-Origin', allowedOrigins)
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type', 'Authorization', 'Origin', 'Accept')
     res.setHeader('Access-Control-Expose-Headers', 'Authorization')

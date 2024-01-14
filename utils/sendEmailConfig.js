@@ -16,6 +16,9 @@ const sendEmail = ({to,subject,html}) =>{
     } , (error, info) =>{
         if(error){
             console.log(error)
+            return null;
+
+            // console.log(error)
         }else{
             console.log("email sent")
             console.log(info.response)

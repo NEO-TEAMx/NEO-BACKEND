@@ -30,7 +30,7 @@ const wss = new WebSocket.Server({server});
 wss.on('connection', (ws) => {
     console.log("websocket connection established")
     ws.on('message', async(data) =>{
-        const message = JSON.parse(data);
+        // const message = JSON.parse(data);
         // if(message.type === 'connectUser'){
         //     const userId = message.userId;
         //     let user = await User.findById(req.user.userId)

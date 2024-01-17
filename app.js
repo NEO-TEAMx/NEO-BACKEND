@@ -5,7 +5,6 @@ const express = require("express");
 const cors = require('cors');
 const morgan = require("morgan");
 const http = require("http");
-const WebSocket = require("ws");
 const cookieParser = require("cookie-parser");
 const notFoundRoute = require('./middlewares/notFound');
 const connectDB = require("./config/dbConfig");
@@ -16,41 +15,30 @@ const adminMRouter = require("./routes/adminMain.route");
 const withdrawalRouter = require("./routes/withdrawal.route");
 const depositRouter = require("./routes/deposit.route");
 const dashboardRouter = require("./routes/dashboard.route");
-const stimulateMining = require("./controllers/dashboard.controller");
+const {stimulateMining,startMining} = require("./controllers/dashboard.controller");
+const miningDashboard = require("./routes/mining");
 const User = require("./models/user.model");
 const helmet = require("helmet");
-const xssClean = require("xss-clean")
+const xssClean = require("xss-clean");
+const socketio = require("socket.io");
 const run = require("./seedDB");
 const app = express();
-
-
-const server = http.createServer(app);
-const wss = new WebSocket.Server({server});
-
-wss.on('connection', (ws) => {
-    console.log("websocket connection established")
-    ws.on('message', async(data) =>{
-        // const message = JSON.parse(data);
-        // if(message.type === 'connectUser'){
-        //     const userId = message.userId;
-        //     let user = await User.findById(req.user.userId)
-        //     if(!user){
-        //         ws.send(JSON.stringify({type:'error', messgae: 'User not found'}));
-        //         return;
-        //     }
-        //     stimulateMining(ws,user) 
-        // }
-        stimulateMining(ws);
-    });
-    ws.on('close', () =>{
-        console.log('websocket connection closed')
-    })
-});
 const allowedOrigins = [
-    'http://localhost:8080',
+    'http://localhost:8081',
+    'http://localhost:4040',
     'https://neoprotocol.netlify.app',
     'https://neoadmindashboard.netlify.app'
 ];
+
+
+const server = http.createServer(app);
+const io = socketio(server,{
+    cors:{
+        origin: allowedOrigins,
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true
+    }
+});
 
 const corsOpt = {
     origin: allowedOrigins,
@@ -61,6 +49,7 @@ const corsOpt = {
 // run();
 // APP CONFIG
 app.set('trust proxy', 1)
+app.set('io',io);
 app.use(express.json());
 app.use(cors(corsOpt));
 app.use(cookieParser(process.env.SECRET));
@@ -76,6 +65,15 @@ app.use((req,res,next) =>{
     next()
 });
 
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
+
+io.on('connection', (socket)=>{
+    console.log("New websocket connencted!")
+})
+
+
 //Router
 app.use('/api/v1',userRouter);
 app.use('/api/v1/admin', adminRouter);
@@ -83,6 +81,7 @@ app.use('/api/v1/admin', adminMRouter);
 app.use('/api/v1/user', withdrawalRouter);
 app.use('/api/v1/user', depositRouter);
 app.use('/api/v1/user', dashboardRouter);
+startMining(io)
 
 app.get("/health-check", (req,res) =>{
     
@@ -95,17 +94,12 @@ app.get("/health-check", (req,res) =>{
 app.use(notFoundRoute);
 app.use(ErrorMainHandler);
 
-wss.on('connection', (ws) =>{
-    stimulateMining(ws);
-});
-
 const port = 4040 || process.env.PORT
-
 
 async function startServer(){
     try {
         await connectDB(process.env.MONGOURI)
-        app.listen(port,()=>{
+        server.listen(port,()=>{
             console.log(`server started on port ${port}`)
         });
     } catch (error) {
@@ -114,4 +108,3 @@ async function startServer(){
 }
 
 startServer();
-module.exports = wss;

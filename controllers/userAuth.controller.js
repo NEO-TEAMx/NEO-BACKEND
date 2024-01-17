@@ -146,7 +146,7 @@ const forgetPassword = async(req,res) =>{
   
       // send forgot password link email
 
-      const origin = 'https://neoprotocol.netkify.app/'
+      const origin = 'https://neoprotocol.netlify.app'
      
         await sendResetPaasswordEmail({
             username: user.username,

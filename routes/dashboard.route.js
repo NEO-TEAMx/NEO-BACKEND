@@ -19,7 +19,12 @@ router.patch("/buy-hash",userAuth, authorizePermissions("user"), buyHash);
 router.post("/swap", userAuth, authorizePermissions("user"),neoToUsdt);
 router.post("/neo-equivalent", userAuth, authorizePermissions("user"),neoEquivalent);
 router.post("hash_equivalent", userAuth, authorizePermissions("user"), hashEquivalent);
-router.post("/start-mining", userAuth, authorizePermissions("user"),startMining);
+// router.get("/start-mining", userAuth, authorizePermissions("user"),startMining());
 // router.patch("/cancel-mining", userAuth, authorizePermissions("user"), cancelMining);
+
+// router.get('/start', (req,res) =>{
+//     startMining(req.app.get('io'))
+//     res.status(200).send("mining started!!")
+// });
 
 module.exports = router;

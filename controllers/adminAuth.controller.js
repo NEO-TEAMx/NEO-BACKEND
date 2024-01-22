@@ -4,6 +4,7 @@ const Token = require("../models/token.model/token");
 const {attachCookieToRes} =  require("../utils/jwt");
 const {BadRequestApiError, NotFoundApiError} = require("../Errors/index");
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 
 const adminSignup = async(req,res) =>{
     const {username,email,password} = req.body;

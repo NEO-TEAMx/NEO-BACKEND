@@ -91,12 +91,90 @@ const neoToUsdt = async(req,res) =>{
 const startMining = (io) =>{
     io.on('connection', (socket) =>{
         console.log('user connected')
-        // io.emit('updateMiningData')
         socket.on('startMining', async() =>{
-            const user = await User.findById(socket.request.user.userId)
+            const user = await User.findById(socket.userId)
             console.log(user)
-        })
-    })
+            
+            let {
+                yield_time,
+                yield_balance,
+                yield_percentage,
+                hash_rate
+            } = user;
+
+            yield_time = moment();
+            await User.findByIdAndUpdate(socket.userId,{yield_time});
+            const minningDuration = moment.duration(24, 'hours');
+            
+            const intervalId = setInterval(async() => {
+                if(!user){
+                    clearInterval(intervalId);
+                    io.send(JSON.stringify({type: 'error', message: 'User not found'}))
+                    return;
+                }
+                let elapsedTime = moment().diff(yield_time);
+                const remainingTime = minningDuration - elapsedTime;
+                if(remainingTime <= 0){
+                    // if user doesnt have hash_rate
+                    if(hash_rate <= 0){
+                        clearInterval(intervalId);
+                        const finalYieldPercentage = 100;
+                        const totalYieldBalance = 0.0000000023 * 24 * 60;
+                        await User.findByIdAndUpdate(socket.user.Id,{
+                            yield_balance: yield_balance += totalYieldBalance,
+                            yield_percentage: finalYieldPercentage,
+                            yield_time,
+                        });
+                        // console.log(user)
+                        io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
+                        return;
+                    };
+                    // if user have hash_rate
+                    clearInterval(intervalId);
+                    const finalYieldPercentage =100;
+                    const  totalYieldBalance = hash_rate * 24 * 60;
+                    await User.findByIdAndUpdate(socket.userId,{
+                        yield_balance: yield_balance+=totalYieldBalance,
+                        yield_percentage: finalYieldPercentage,
+                        yield_time,
+                    });
+                    // console.log(user)
+                    io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
+                    return;
+                }else{
+                    // if there is no hashrate
+                    if(hash_rate <= 0){
+                        let progress = 100 - (remainingTime / minningDuration) * 100;
+                        yield_percentage = progress > 100 ? 100 : progress;
+                        let remainingMinutes = remainingTime / (60 * 1000);
+                        let currentYeildBalance = 0.0000000023  * (24 * 60 - remainingMinutes)
+                        await User.findByIdAndUpdate(socket.userId,{
+                            yield_balance: yield_balance+=currentYeildBalance,
+                            yield_percentage,
+                            yield_time: remainingMinutes,
+                        });
+                        console.log(user)
+                        io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
+                        return;
+                    };
+                    // if  hash_rate
+                    
+                    
+                    yield_percentage = progress > 100 ? 100 : progress;
+                    let remainingMinutes = remainingTime / (60 * 1000);
+                    let currentYeildBalance = hash_rate * (24 * 60 - remainingMinutes)
+                    await User.findByIdAndUpdate(socket.userId,{
+                        yield_balance: yield_balance+=currentYeildBalance,
+                        yield_percentage,
+                        yield_time: remainingMinutes,
+                    });
+                    // console.log(user)
+                    io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
+                    return;   
+                }
+            }, 5000);
+        });
+    });
 
     // const user = await User.findById(req.user.userId)
     // console.log(user)    

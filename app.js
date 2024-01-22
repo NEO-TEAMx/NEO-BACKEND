@@ -22,6 +22,7 @@ const helmet = require("helmet");
 const xssClean = require("xss-clean");
 const socketio = require("socket.io");
 const run = require("./seedDB");
+const jwt = require("jsonwebtoken");
 const app = express();
 const allowedOrigins = [
     'http://localhost:8081',
@@ -64,14 +65,44 @@ app.use((req,res,next) =>{
     res.setHeader('Access-Control-Allow-Credentials', 'true')
     next()
 });
+io.use((socket,next) =>{
+    const accessToken = socket.handshake.query.accessToken;
+
+    if(!accessToken){
+        return next(new Error("Authentication failed. Please login!"))
+    }
+
+    try {
+            if(accessToken){
+                 
+                const payload = jwt.verify(accessToken, process.env.SECRET)
+                
+                socket.userId = payload.userId
+                console.log(payload.userId)
+                console.log(socket.userId)
+                // req.user = payload;
+    
+                return next()
+            }
+    } catch (error) {
+            console.log(error)    
+            next(error)
+    }
+    
+});
+
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+
+    if(socket.userId){
+        console.log("userId: " + socket.userId)
+    }else{
+        console.log("error occurred!")
+    }
 });
 
-io.on('connection', (socket)=>{
-    console.log("New websocket connencted!")
-})
+
 
 
 //Router

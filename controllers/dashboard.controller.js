@@ -93,7 +93,7 @@ const startMining = (io) =>{
         console.log('user connected')
         socket.on('startMining', async() =>{
             const user = await User.findById(socket.userId)
-            console.log(user)
+            // console.log(user)
             
             let {
                 yield_time,
@@ -153,7 +153,7 @@ const startMining = (io) =>{
                             yield_percentage,
                             yield_time: remainingMinutes,
                         });
-                        console.log(user)
+                        // console.log(user)
                         io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
                         return;
                     };

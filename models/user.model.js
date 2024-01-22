@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator =  require("validator");
 const bcrypt = require("bcrypt");
 const shortid = require("shortid");
+const moment = require("moment");
 
 const userSchema = new mongoose.Schema({
 
@@ -45,6 +46,7 @@ const userSchema = new mongoose.Schema({
     },
     yield_time: {
         type: Date,
+        // default: () => moment().add(24, 'hours').toDate()
         default:null
     },
     yield_percentage: {

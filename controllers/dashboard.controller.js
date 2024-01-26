@@ -111,18 +111,18 @@ const startMining = (io) =>{
 
         socket.on('startMining', async() =>{
             const user = await User.findById(socket.userId)
-            let = {
-                yield_time,
-                yield_balance,
-                yield_percentage,
-                hash_rate,
-                mining_status
-            } = user;
+            // let = {
+            //     yield_time,
+            //     yield_balance,
+            //     yield_percentage,
+            //     hash_rate,
+            //     mining_status
+            // } = user;
             
-            yield_time = moment();
+            user.yield_time = moment();
             // console.log(formatTime(yield_time))
 
-            await user.save(formatTime(yield_time)) 
+            await user.save() 
             console.log(user)
             const minningDuration = moment.duration(24, 'hours');
             
@@ -191,7 +191,9 @@ const startMining = (io) =>{
                 startCronJob(socket, user)
             }
             
-            
+            if(user.yield_percentage === 100){
+                stopCronJob()
+            }
         });
 
         // const cronJ = cron.schedule("* * * * * *", () =>{
@@ -233,7 +235,7 @@ const startMining = (io) =>{
 
 function startCronJob(socket, val){
     if(!cronJob){
-        cronJob = cron.schedule("* * * * * *", () =>{
+        cronJob = cron.schedule(" * * * * *", () =>{
             socket.emit("miningData", val)
         });
     }

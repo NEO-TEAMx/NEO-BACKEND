@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
         type:Number,
         default: 0
     },
+    mining_status: {
+        type: Boolean,
+        default: false
+    },
     yield_balance: {
         type:  Number,
         default:0

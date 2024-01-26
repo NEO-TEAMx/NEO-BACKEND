@@ -54,7 +54,7 @@ app.set('io',io);
 app.use(express.json());
 app.use(cors(corsOpt));
 app.use(cookieParser(process.env.SECRET));
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
 app.use((req,res,next) =>{
@@ -92,15 +92,16 @@ io.use((socket,next) =>{
 });
 
 
-io.on('connection', (socket) => {
-    console.log('a user connected');
+// io.on('connection', (socket) => {
+//     console.log('a user connected');
+//     startMining(io)
 
-    if(socket.userId){
-        console.log("userId: " + socket.userId)
-    }else{
-        console.log("error occurred!")
-    }
-});
+//     if(socket.userId){
+//         console.log("userId: " + socket.userId)
+//     }else{
+//         console.log("error occurred!")
+//     }
+// });
 
 
 

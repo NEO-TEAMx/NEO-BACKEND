@@ -98,6 +98,75 @@ function formatTime(val){
 let cronJob;
 
 const startMining = (io) =>{
+    io.on('connection', (socket) =>{
+        console.log('user connected!!')
+        socket.on("startMining", async() =>{
+            const user = await User.findById(socket.userId);
+            
+            user.mining_duration = 24 * 60 *60;
+        
+            await user.save();
+            const startTime = Date.now();
+            const endTime = startTime + user.mining_duration * 1000;
+
+            console.log(user)
+
+            if(user.mining_status){
+                return;
+            }
+
+            const intervalId = setInterval(async() =>{
+
+                    const currentTime = Date.now();
+                    const elapsedTime = currentTime - startTime     
+                    const remainingTime = Math.max(0, endTime - currentTime)
+                    if(currentTime>=endTime){
+                        clearInterval(intervalId);
+
+                        // set  progress and others to full
+                        const finalYieldPercentage = 100;
+                        const totalYieldBalance = 0.000000023 * 24 * 60;
+                        user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
+                        user.yield_percentage = finalYieldPercentage;
+                        user.yield_time = null;
+                        user.mining_status = false
+                        await user.save();
+                        return;
+ 
+                    }
+                    // let progress = (elapsedTime / (user.mining_duration * 1000)) * 100;
+                    let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
+                    let remainingMinutes = remainingTime / (60 * 1000);
+                    let currentYeildBalance = 0.000000023 * (24 * 60 - remainingMinutes);
+                    user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
+                    user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
+                    user.yield_time = remainingTime;
+                    user.mining_status = true;
+
+                console.log(`Remaining time: ${formatTime(remainingTime)}`)
+                console.log(`yield time: ${formatTime(user.yield_time)}`)
+                console.log(`percentage: ${user.yield_percentage}`)
+                console.log(`balance ${user.yield_balance}`)
+                console.log(remainingTime)                   
+                console.log(elapsedTime)
+                console.log(user.mining_status)
+                await user.save();
+                return;
+            },2000)
+            if(!user.mining_status || user.yield_percentage === 0){
+                // cronJ.start();
+                startCronJob(socket, user)
+            }
+            
+            if(user.yield_percentage === 100){
+                stopCronJob()
+            }
+
+        })
+    })
+}
+
+const startMiningt = (io) =>{
     io.on('connection', async(socket) =>{
         console.log("A user connected!")
         // const user = await User.findById(socket.userId)
@@ -111,13 +180,6 @@ const startMining = (io) =>{
 
         socket.on('startMining', async() =>{
             const user = await User.findById(socket.userId)
-            // let = {
-            //     yield_time,
-            //     yield_balance,
-            //     yield_percentage,
-            //     hash_rate,
-            //     mining_status
-            // } = user;
             
             user.yield_time = moment();
             // console.log(formatTime(yield_time))
@@ -125,36 +187,40 @@ const startMining = (io) =>{
             await user.save() 
             console.log(user)
             const minningDuration = moment.duration(24, 'hours');
-            
+           
             const intervalId = setInterval(async() =>{
                 console.log("start")
                 let elapsedTime = moment().diff(user.yield_time);
                 let remainingTime = minningDuration - elapsedTime;
+                console.log(remainingTime)
+                console.log(elapsedTime)
+                console.log(formatTime(minningDuration))
                 console.log(formatTime(elapsedTime))
                 console.log(formatTime(remainingTime))
                 // user.yield_time = remainingTime
 
-                if(remainingTime == "00:00:00"){
+                if(remainingTime <= 0){
                     if(user.hash_rate <= 0){
                         clearInterval(intervalId);
                         console.log("start1")
                         const finalYieldPercentage = 100;
-                        const totalYieldBalance = 0.00000023 * 24 * 60;
+                        const totalYieldBalance = 0.000000023 * 24 * 60;
+                        user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
+                        user.yield_percentage = 0;
+                        user.yield_time = null;
+                        await user.save();
+                        return;
+                    }else{
+                        clearInterval(intervalId);
+                        console.log("start2")
+                        const finalYieldPercentage = 100;
+                        const  totalYieldBalance = user.hash_rate * 24 * 60;
                         user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
                         user.yield_percentage = 0;
                         user.yield_time = null;
                         await user.save();
                         return;
                     }
-                    clearInterval(intervalId);
-                    console.log("start2")
-                    const finalYieldPercentage = 100;
-                    const  totalYieldBalance = user.hash_rate * 24 * 60;
-                    user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
-                    user.yield_percentage = 0;
-                    user.yield_time = null;
-                    await user.save();
-                    return;
                 }else{
                     if(user.hash_rate <= 0){
                         console.log("Start3")
@@ -196,46 +262,13 @@ const startMining = (io) =>{
             }
         });
 
-        // const cronJ = cron.schedule("* * * * * *", () =>{
-            
-        //     // console.log(user)
-        //     socket.on("startMining", user)
-        //     socket.emit("miningData", user)
-        // });
+    });        
+}        
 
-        // if(!user.mining_status || user.yield_percentage === 0){
-        //     // cronJ.start();
-        //     startCronJob(socket, user)
-        // }
-        // if(user.mining_status){
-            // cronJ.stop();
-        // }
-    });
-}
-
-// let cronJob;
-
-// const startMiningv = (io) =>{
-//     io.on('connection', async(socket) =>{
-//         console.log("A user connected!")
-//         const user = await User.findById(socket.userId)
-        
-//         socket.on('startMining', async(val) =>{
-//             console.log(user)
-//             if(val === "startMining"){
-//                 startCronJob(socket, user)
-//             }else{
-//                 stopCronJob()
-//             }
-//         });
-
-        
-//     });
-// }
 
 function startCronJob(socket, val){
     if(!cronJob){
-        cronJob = cron.schedule(" * * * * *", () =>{
+        cronJob = cron.schedule(" * * * * * *", () =>{
             socket.emit("miningData", val)
         });
     }
@@ -249,223 +282,9 @@ function stopCronJob(){
 }
 
 
-// const startMining = (io) =>{
-//     io.on('connection', (socket) =>{
-//         emitMiningData(socket)
-//         socket.on('disconnect', () =>{
-//             console.log("disconnected")
-//         });
-//     });
-//     const emitMiningData = async(socket, id) =>{
-//         try {
-//             const user = await User.findById(socket.userId)
-//             if(user){
-//                 socket.emit("miningData", user)
-//                 console.log(user)
-//                 io.to(socket.userId)
-//             }
-//         } catch (error) {
-//             console.error("Error occurred: ", error)
-//         }
-//     }
-// }
-
-
-const startMinings = (io) =>{
-    io.on('connection', (socket) =>{
-        console.log('user connected')
-        socket.on('startMining', async() =>{
-            const user = await User.findById(socket.userId)
-            // console.log(user)
-            
-            let {
-                yield_time,
-                yield_balance,
-                yield_percentage,
-                hash_rate
-            } = user;
-
-            yield_time = moment();
-            await User.findByIdAndUpdate(socket.userId,{yield_time});
-            const minningDuration = moment.duration(24, 'hours');
-            
-            const intervalId = setInterval(async() => {
-                if(!user){
-                    clearInterval(intervalId);
-                    io.send(JSON.stringify({type: 'error', message: 'User not found'}))
-                    return;
-                }
-                let elapsedTime = moment().diff(yield_time);
-                const remainingTime = minningDuration - elapsedTime;
-                if(remainingTime <= 0){
-                    // if user doesnt have hash_rate
-                    if(hash_rate <= 0){
-                        clearInterval(intervalId);
-                        const finalYieldPercentage = 100;
-                        const totalYieldBalance = 0.0000000023 * 24 * 60;
-                        await User.findByIdAndUpdate(socket.user.Id,{
-                            yield_balance: yield_balance += totalYieldBalance,
-                            yield_percentage: finalYieldPercentage,
-                            yield_time,
-                        });
-                        // console.log(user)
-                        io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
-                        return;
-                    };
-                    // if user have hash_rate
-                    clearInterval(intervalId);
-                    const finalYieldPercentage =100;
-                    const  totalYieldBalance = hash_rate * 24 * 60;
-                    await User.findByIdAndUpdate(socket.userId,{
-                        yield_balance: yield_balance+=totalYieldBalance,
-                        yield_percentage: finalYieldPercentage,
-                        yield_time,
-                    });
-                    // console.log(user)
-                    io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
-                    return;
-                }else{
-                    // if there is no hashrate
-                    if(hash_rate <= 0){
-                        let progress = 100 - (remainingTime / minningDuration) * 100;
-                        yield_percentage = progress > 100 ? 100 : progress;
-                        let remainingMinutes = remainingTime / (60 * 1000);
-                        let currentYeildBalance = 0.0000000023  * (24 * 60 - remainingMinutes)
-                        await User.findByIdAndUpdate(socket.userId,{
-                            yield_balance: yield_balance+=currentYeildBalance,
-                            yield_percentage,
-                            yield_time: remainingMinutes,
-                        });
-                        // console.log(user)
-                        io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
-                        return;
-                    };
-                    // if  hash_rate
-                    
-                    
-                    yield_percentage = progress > 100 ? 100 : progress;
-                    let remainingMinutes = remainingTime / (60 * 1000);
-                    let currentYeildBalance = hash_rate * (24 * 60 - remainingMinutes)
-                    await User.findByIdAndUpdate(socket.userId,{
-                        yield_balance: yield_balance+=currentYeildBalance,
-                        yield_percentage,
-                        yield_time: remainingMinutes,
-                    });
-                    // console.log(user)
-                    io.send(JSON.stringify({type: 'success', message: 'Mining completed!!'}))
-                    return;   
-                }
-            }, 5000);
-        });
-    });
-
-    // const user = await User.findById(req.user.userId)
-    // console.log(user)    
-    // if(!user){
-    //     throw new BadRequestApiError("User not found")
-    // }
-    // if(user.yield_time){
-    //     throw new BadRequestApiError("User is already mining!")
-    // }
-    // const yield_time = moment();
-    
-    // await User.findByIdAndUpdate(req.user.userId,{yield_time});
-
-    
-    // const intervalId = setInterval(async() =>{
-    //     const elapsedTime = moment().diff(yield_time);
-    //     const remainingTime = miningDuration - elapsedTime;
-    //     if(remainingTime <= 0){
-    //         clearInterval(intervalId);
-    //         const finalYieldPercentage = 100;
-    //         // const totalYieldBalance = user.hash_rate * 24; // for hours
-    //         const totalYieldBalance = user.hash_rate * 24 * 60; // for minutes
-    //         const x = await User.findByIdAndUpdate(req.user.userId, {
-    //             yield_balance: user.yield_balance +=  totalYieldBalance,
-    //             yield_percentage: finalYieldPercentage,
-    //             yield_time: null,
-    //         });
-    //        return res.status(200).json({msg:"Mining completed successfully", x})
-    //     }else{
-        //     const progress = 100 - (remainingTime / miningDuration) * 100;
-        //     const yield_percentage = progress > 100 ? 100 : progress;
-        //     const remainingHours = remainingTime / (60 * 60 * 1000); // for hours
-        //     const remainingMinutes = remainingTime / (60 * 1000); // for minutes
-        //     // const currentYeildBalance = user.hash_rate * (24 - remainingHours) // for hours
-        //     // const currentYeildBalance = user.hash_rate * (24 * 60 - remainingMinutes) // for minutes
-        //     const currentYeildBalance = user.hash_rate * remainingMinutes;
-        //     const x = await User.findByIdAndUpdate(req.user.userId, {
-        //         yield_balance: user.yield_balance += currentYeildBalance,
-        //         yield_percentage,
-        //     });
-        // //    return res.status(200).json({msg: "Miining started successfully!!", x})
-        // }
-        // io.emit('updateMiningData', miningData)
-    // }, 1000)
-
-    // res.status(200).json({msg: "Mining started successfully!!", user})
-}
 
 
 
-async function stimulateMining(ws){
-    console.log('websocket connection initiated!!')
-
-    const yield_time = moment();
-    const miningDuration = moment.duration(24, 'hours');
-
-
-    const intervalId = setInterval(async () =>{
-       const user = await User.findById(req.user.userId)
-        if(!user){
-            clearInterval(intervalId);
-            ws.send(JSON.stringify({type: 'error', message: 'User not found'}))
-            return;
-        }
-        const elapsedTime = moment().diff(yield_time);
-        const remainingTime = miningDuration - elapsedTime;
-        if(remainingTime <= 0){
-            clearInterval(intervalId);
-            const finalYieldPercentage = 100;
-            const totalYieldBalance = user.hash_rate * 24 *60;
-            // const x = await User.findByIdAndUpdate(req.user.userId, {
-                user.yield_balance +=  totalYieldBalance,
-                user.yield_percentage = finalYieldPercentage,
-                user.yield_time = null,
-            // });
-            ws.send(JSON.stringify({type:'update', message: 'Mining completed', 
-            user: {
-                ...user.toObject(),
-                currentYeildBalance,
-                yield_percentage,
-                yield_time,
-                yield_balance
-            } 
-            }))
-        }else{
-            const progress = 100 - (remainingTime / miningDuration) * 100;
-            const yield_percentage = progress > 100 ? 100 : progress;
-            const remainingHours = remainingTime / (60 * 60 * 1000); // for hours
-            const remainingMinutes = remainingTime / (60 * 1000); // for minutes
-            const currentYeildBalance = user.hash_rate * remainingMinutes;
-            user.yield_balance += currentYeildBalance,
-            yield_percentage,
-            ws.send(JSON.stringify({
-                type:'update', 
-                message: 'Mining in progress',
-                user: {
-                    ...user.toObject(),
-                    currentYeildBalance,
-                    yield_percentage,
-                    yield_time,
-                    yield_balance
-                } 
-            }))
-        }
-    },1000)
-
-
-}
 
 
 module.exports = {

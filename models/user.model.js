@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    mining_duration :{
+        type: Date,
+        // default: () => moment.duration(24, 'hours')
+        default:null
+    },
     yield_balance: {
         type:  Number,
         default:0

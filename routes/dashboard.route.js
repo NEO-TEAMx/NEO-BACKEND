@@ -3,7 +3,7 @@ const {
     userDashboard,
     buyHash,
     neoToUsdt,
-    startMining,
+    getReferredUsers,
     neoEquivalent,
     hashEquivalent,
 } = require("../controllers/dashboard.controller");
@@ -19,12 +19,6 @@ router.patch("/buy-hash",userAuth, authorizePermissions("user"), buyHash);
 router.post("/swap", userAuth, authorizePermissions("user"),neoToUsdt);
 router.post("/neo-equivalent", userAuth, authorizePermissions("user"),neoEquivalent);
 router.post("hash_equivalent", userAuth, authorizePermissions("user"), hashEquivalent);
-// router.get("/start-mining", userAuth, authorizePermissions("user"),startMining());
-// router.patch("/cancel-mining", userAuth, authorizePermissions("user"), cancelMining);
-
-// router.get('/start', (req,res) =>{
-//     startMining(req.app.get('io'))
-//     res.status(200).send("mining started!!")
-// });
+router.get("/referral", userAuth, authorizePermissions("user"),getReferredUsers);
 
 module.exports = router;

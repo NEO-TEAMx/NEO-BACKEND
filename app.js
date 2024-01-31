@@ -91,21 +91,6 @@ io.use((socket,next) =>{
     
 });
 
-
-// io.on('connection', (socket) => {
-//     console.log('a user connected');
-//     startMining(io)
-
-//     if(socket.userId){
-//         console.log("userId: " + socket.userId)
-//     }else{
-//         console.log("error occurred!")
-//     }
-// });
-
-
-
-
 //Router
 app.use('/api/v1',userRouter);
 app.use('/api/v1/admin', adminRouter);

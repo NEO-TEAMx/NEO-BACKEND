@@ -74,8 +74,8 @@ const userSchema = new mongoose.Schema({
         // default: shortid.generate
     },
     referredBy: {
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type:mongoose.Types.ObjectId,
+        ref: "User"
     },
     referral_link:{
         type: String,

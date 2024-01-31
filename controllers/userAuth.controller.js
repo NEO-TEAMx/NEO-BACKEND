@@ -12,14 +12,22 @@ const sendResetPaasswordEmail = require("../EmailFormats/resetPasswordMail");
 const jwt =  require("jsonwebtoken");
 
 const register = async(req,res) =>{
-    const {username,email,password,confirmPassword} =  req.body;
-    const {referralCode} = req.query;
+    const {username,email,password,confirmPassword,referralCode} =  req.body;
+    // const {referralCode} = req.query;
     const isEmailTaken = await User.findOne({email});
     const isUsernameTaken = await User.findOne({username});
     const genRefCode = shortid.generate();
     const isStrongpassword = isPasswordStrong(password);
-    const referringUser = referralCode ? await User.findOne({referralCode}) : null;
-    const referral_link = `https://neoprotocol.netlify.app/html/signin.html?referralCode=${genRefCode}`
+
+    
+    // if(referralCode){
+    //     const x = await User.findOne({referralCode})
+    //     return referringUser = x.username
+    // }
+    const referringUser = referralCode  ? (await User.findOne({referralCode})) : null;
+    const referral_link = `http://localhost:8081/html/signup.html?referralCode=${genRefCode}`
+
+    // const referral_link = `https://neoprotocol.netlify.app/html/signin.html?referralCode=${genRefCode}`
 
     if(!username||!email||!password||!confirmPassword){
         throw new BadRequestApiError("Please provide the needed value(s)")
@@ -45,6 +53,10 @@ const register = async(req,res) =>{
         throw new BadRequestApiError("Password should be at least 8 characters")
     }
     
+    // console.log(referringUser)
+    if(!referringUser){
+        throw new NotFoundApiError("Referral code does not exist")
+    }
 
     const user = await User.create({
         email,
@@ -79,10 +91,11 @@ const register = async(req,res) =>{
                 
     const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
-    if(referringUser){
-        referringUser.hash_rate += 1
-        await referringUser.save();
-    }
+    // if(referringUser){
+    //     // referringUser.hash_rate += 1
+    //     referringUser.hash_rate += 2
+    //     await referringUser.save();
+    // }
 
     // send email from ceo
     await sendCeoMail({username: username, email:email})

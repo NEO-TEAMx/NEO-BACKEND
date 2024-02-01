@@ -9,12 +9,12 @@ const Token = require("./models/token.model/token");
 const run = async() =>{
     try {
         await connectDB(process.env.MONGOURI)
-        // await Admin.deleteMany();   
+        await Admin.deleteMany();   
         await User.deleteMany();
-        // await Withdrawal.deleteMany();
-        // await Deposit.deleteMany();
+        await Withdrawal.deleteMany();
+        await Deposit.deleteMany();
         await Utoken.deleteMany();
-        // await Token.deleteMany();
+        await Token.deleteMany();
         console.log("success!!") 
         process.exit(0)
         

@@ -25,9 +25,9 @@ const register = async(req,res) =>{
     //     return referringUser = x.username
     // }
     const referringUser = referralCode  ? (await User.findOne({referralCode})) : null;
-    const referral_link = `http://localhost:8081/html/signup.html?referralCode=${genRefCode}`
+    // const referral_link = `http://localhost:8081/html/signup.html?referralCode=${genRefCode}`
 
-    // const referral_link = `https://neoprotocol.netlify.app/html/signin.html?referralCode=${genRefCode}`
+    const referral_link = `https://neoprotocol.netlify.app/html/signin.html?referralCode=${genRefCode}`
 
     if(!username||!email||!password||!confirmPassword){
         throw new BadRequestApiError("Please provide the needed value(s)")
@@ -91,12 +91,7 @@ const register = async(req,res) =>{
                 
     const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
-    // if(referringUser){
-    //     // referringUser.hash_rate += 1
-    //     referringUser.hash_rate += 2
-    //     await referringUser.save();
-    // }
-
+    
     // send email from ceo
     await sendCeoMail({username: username, email:email})
 

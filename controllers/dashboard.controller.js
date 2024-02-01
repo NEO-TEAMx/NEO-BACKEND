@@ -81,7 +81,7 @@ const hashEquivalent = async(req,res) =>{
     const {hash_amount} = req.body;
 
     const equivalentVal = hash_amount * 0.00015;
-    return res.json({equivalentVal: equivalentVal.toFixed(3)})
+    return res.json({equivalentVal: equivalentVal.toFixed(4)})
 };
 
 //neo equivalent
@@ -91,7 +91,7 @@ const neoEquivalent = async(req,res) =>{
 
     const usdt_equ = neo_amount * neoUsdtRate;
 
-    return res.json({usdEqu: usdt_equ})
+    return res.json({usdEqu: usdt_equ.toFixed(4)})
 }
 
 const neoToUsdt = async(req,res) =>{
@@ -106,9 +106,11 @@ const neoToUsdt = async(req,res) =>{
     if(neo_amount > user.yield_balance){
         throw new BadRequestApiError("You are low on neo. Please mine more neo!")
     }
+
     req.body.user = req.user.userId
     const usdt_equ = neo_amount * neoUsdtRate;
 
+    user.yield_balance -= neo_amount
     user.total_balance += usdt_equ;
     await user.save();
 

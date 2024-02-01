@@ -55,12 +55,15 @@ const requestWithdrawl = async(req,res) =>{
 
 
 const withdrawalHistory = async(req,res) =>{
-  const withdrawal = await Withdrawal.find({id:req.user._id});
+    const userId = req.user.userId;
+    
+    const withdrawal = await Withdrawal.find({user:userId})
+ 
     if(withdrawal.length < 1){
         return res.status(StatusCodes.OK).json({success:true, msg: "Withdrawal history is empty"})
     }
 
-    return res.status(StatusCodes.OK).json({success:true, withdrawal})
+    return res.status(StatusCodes.OK).json({success:true, count:withdrawal.length, withdrawal})
 }
 
 

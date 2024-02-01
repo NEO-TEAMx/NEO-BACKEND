@@ -33,12 +33,15 @@ const requestDeposit = async(req,res) =>{
 
 
 const DepositlHistory = async(req,res) =>{
-  const deposit = await Deposit.find({id:req.user._id});
+   const userId = req.user.userId;
+    
+    const deposit = await Deposit.find({user:userId})
+    
     if(deposit.length < 1){
         return res.status(StatusCodes.OK).json({success:true, msg: "Deposit history is empty"})
     }
 
-    return res.status(StatusCodes.OK).json({success:true, deposit})
+    return res.status(StatusCodes.OK).json({success:true, count: deposit.length, deposit})
 }
 
 

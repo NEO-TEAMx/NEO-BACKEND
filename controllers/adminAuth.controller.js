@@ -233,14 +233,14 @@ const adminLogin = async(req,res) =>{
 const adminUpdatePassword = async(req,res) =>{
 
     const {oldPassword, newPassword, confirmPassword} = req.body
-    console.log(req.user.userId)
+    // console.log(req.user.userId)
     if(!oldPassword || !newPassword || !confirmPassword){
-        throw new BadRequestApiError("Please provide the needed value(s")
+        throw new BadRequestApiError("Please provide the needed value(s)")
     }
     const admin = await Admin.findOne({_id:req.user.userId})
     const isPasswordCorrect = await admin.comparePassword(oldPassword);
     if (!isPasswordCorrect) {
-        throw new CustomError.UnauthenticatedError('Invalid Credentials');
+        throw new BadRequestApiError("Please provide the needed value(s)")
     }
     admin.password = newPassword;
 

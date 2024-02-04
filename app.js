@@ -26,6 +26,7 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const allowedOrigins = [
     'http://localhost:8081',
+    'http://localhost:7070',
     'http://localhost:4040',
     'https://neoprotocol.netlify.app',
     'https://neoadmindashboard.netlify.app'

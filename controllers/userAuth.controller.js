@@ -54,9 +54,9 @@ const register = async(req,res) =>{
     }
     
     // console.log(referringUser)
-    if(!referringUser){
-        throw new NotFoundApiError("Referral code does not exist")
-    }
+    // if(!referringUser){
+    //     throw new NotFoundApiError("Referral code does not exist")
+    // }
 
     const user = await User.create({
         email,

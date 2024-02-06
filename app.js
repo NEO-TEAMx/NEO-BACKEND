@@ -48,6 +48,7 @@ const corsOpt = {
     credentials: true
 }
 
+
 // run();
 // APP CONFIG
 app.set('trust proxy', 1)

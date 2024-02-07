@@ -27,7 +27,8 @@ const requestWithdrawl = async(req,res) =>{
     req.body.user = req.user.userId;
     req.body.email = req.user.email;
 
-    const payable_amount = (total_amount * charge)/100;
+    const charged_amount = (total_amount * charge)/100;
+    const payable_amount = total_amount - charged_amount;
 
     user.total_balance -= total_amount;
     await user.save();

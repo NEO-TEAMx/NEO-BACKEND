@@ -42,6 +42,7 @@ const buyHash = async(req,res) =>{
     // referral logic
     if(user.referredBy){
         const referringUser = await User.findById(user.referredBy)
+        console.log(ref)
         if(referringUser){
             referringUser.hash_rate += 0.0000075
             await referringUser.save();
@@ -50,7 +51,7 @@ const buyHash = async(req,res) =>{
 
     await user.save();
 
-    return res.status(StatusCodes.OK).json({success:true, msg: "Successfully purchased hash!", hash})
+    return res.status(StatusCodes.OK).json({success:true, msg: "Successfully purchased hash"})
 }
 
 // get all referred users 
@@ -58,7 +59,7 @@ const getReferredUsers = async(req,res)=>{
     const userId = req.user.userId;
     // const user = await User.findById(req.user.userId)
     const user =  await User.findById(req.user.userId);
-    console.log(user)
+    // console.log(user)
     if(!user){
         return res.status(404).json({msg:"User not found"})
     }
@@ -110,7 +111,8 @@ const neoToUsdt = async(req,res) =>{
     req.body.user = req.user.userId
     const usdt_equ = neo_amount * neoUsdtRate;
 
-    user.yield_balance -= neo_amount
+    user.yield_balance -= neo_amount;
+
     user.total_balance += usdt_equ;
     await user.save();
 
@@ -133,7 +135,7 @@ let cronJob;
 
 const startMining = (io) =>{
     io.on('connection', (socket) =>{
-        console.log('user connected!!')
+        // console.log('user connected!!')
         socket.on("startMining", async() =>{
             const user = await User.findById(socket.userId);
             
@@ -143,7 +145,7 @@ const startMining = (io) =>{
             const startTime = Date.now();
             const endTime = startTime + user.mining_duration * 1000;
 
-            console.log(user)
+            // console.log(user)
 
             if(user.mining_status){
                 return;
@@ -201,13 +203,13 @@ const startMining = (io) =>{
                             user.yield_time = remainingTime;
                             user.mining_status = true;
 
-                            console.log(`Remaining time: ${formatTime(remainingTime)}`)
-                            console.log(`yield time: ${formatTime(user.yield_time)}`)
-                            console.log(`percentage: ${user.yield_percentage}`)
-                            console.log(`balance ${user.yield_balance}`)
-                            console.log(remainingTime)                   
-                            console.log(elapsedTime)
-                            console.log(user.mining_status)
+                            // console.log(`Remaining time: ${formatTime(remainingTime)}`)
+                            // console.log(`yield time: ${formatTime(user.yield_time)}`)
+                            // console.log(`percentage: ${user.yield_percentage}`)
+                            // console.log(`balance ${user.yield_balance}`)
+                            // console.log(remainingTime)                   
+                            // console.log(elapsedTime)
+                            // console.log(user.mining_status)
                             await user.save();
                             return;
                         }else{

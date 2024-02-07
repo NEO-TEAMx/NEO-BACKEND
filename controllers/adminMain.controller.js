@@ -58,6 +58,9 @@ const approveWithdrawal = async(req,res)=>{
         throw new NotFoundApiError("No withdrawal found")
     }
     withdrawalApprove.approved = true;
+
+    await withdrawalApprove.save();
+
     return res.status(StatusCodes.OK).json({success:true, withdrawalApprove});
 }
 

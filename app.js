@@ -56,7 +56,7 @@ app.set('io',io);
 app.use(express.json());
 app.use(cors(corsOpt));
 app.use(cookieParser(process.env.SECRET));
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
 app.use((req,res,next) =>{
@@ -80,8 +80,8 @@ io.use((socket,next) =>{
                 const payload = jwt.verify(accessToken, process.env.SECRET)
                 
                 socket.userId = payload.userId
-                console.log(payload.userId)
-                console.log(socket.userId)
+                // console.log(payload.userId)
+                // console.log(socket.userId)
                 // req.user = payload;
     
                 return next()

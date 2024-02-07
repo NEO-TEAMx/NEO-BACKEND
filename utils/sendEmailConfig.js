@@ -15,13 +15,14 @@ const sendEmail = ({to,subject,html}) =>{
         html,
     } , (error, info) =>{
         if(error){
-            console.log(error)
+            // console.log(error)
             return null;
 
             // console.log(error)
         }else{
-            console.log("email sent")
-            console.log(info.response)
+            // console.log("email sent")
+            // console.log(info.response)
+            return true
         }
     });
 };

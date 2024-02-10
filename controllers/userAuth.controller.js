@@ -97,8 +97,13 @@ const register = async(req,res) =>{
 
     return res
         .cookie('refresh_token', refreshToken,{
-            // httpOnly:true,
-            expires: new Date(Date.now() + refreshTokenDuration)
+            httpOnly:true,
+            expires: new Date(Date.now() + refreshTokenDuration),
+            // secure: process.env.NODE_ENV === 'production',
+            secure: true,
+            SameSite: 'None'
+            // // httpOnly:true,
+            // expires: new Date(Date.now() + refreshTokenDuration)
         })
         .header('Authorization', accessToken).send(tokenUser)
         

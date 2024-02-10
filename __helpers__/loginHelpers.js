@@ -41,7 +41,14 @@ async function usernameLogin (isUsernameExist,refresh_token,password,Utoken,res,
                 const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
                 return res
-                    .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)})
+                    .cookie('refresh_token', refreshToken,{
+                        httpOnly:true,
+                        expires: new Date(Date.now() + refreshTokenDuration),
+                        // secure: process.env.NODE_ENV === 'production',
+                        secure: true,
+                        SameSite: 'None'
+                        // httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)
+                    })
                     .header('Authorization', accessToken).send(tokenUser)             
 
                 // return res.status(200).json({success:true, user: tokenUser,  accessToken, refreshToken});
@@ -66,7 +73,14 @@ async function usernameLogin (isUsernameExist,refresh_token,password,Utoken,res,
             // attachCookieToRes({res,user:tokenUser,refreshToken:refresh_token});
             // return res.status(200).json({success:true, user: tokenUser, accessToken, refreshToken}); 
             return res
-                .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)})
+                .cookie('refresh_token', refreshToken,{
+                    httpOnly:true,
+                    expires: new Date(Date.now() + refreshTokenDuration),
+                    // secure: process.env.NODE_ENV === 'production',
+                    secure: true,
+                    SameSite: 'None'
+                    // httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)
+                })
                 .header('Authorization', accessToken).send(tokenUser)
         
     } catch (error) {
@@ -100,7 +114,14 @@ async function emailLogin(isEmailExist,refresh_token,password,Utoken,res,req){
                 // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token}); 
                 // return res.status(200).json({success:true, user: tokenUser, accessToken, refreshToken});
                 return res
-                    .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)})
+                    .cookie('refresh_token', refreshToken,{
+                        httpOnly:true,
+                        expires: new Date(Date.now() + refreshTokenDuration),
+                        // secure: process.env.NODE_ENV === 'production',
+                        secure: true,
+                        SameSite: 'None'
+                        // httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)
+                    })
                     .header('Authorization', accessToken).send(tokenUser)
 
             }
@@ -121,7 +142,15 @@ async function emailLogin(isEmailExist,refresh_token,password,Utoken,res,req){
             // attachCookieToRes({res,user:tokenUser,refreshToken:refresh_token});
 
             return res
-                .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)})
+                .cookie('refresh_token', refreshToken,{
+                    // httpOnly:true,
+                    httpOnly:true,
+                    expires: new Date(Date.now() + refreshTokenDuration),
+                    // secure: process.env.NODE_ENV === 'production',
+                    secure: true,
+                    SameSite: 'None'
+                    // expires: new Date(Date.now() + refreshTokenDuration)
+                })
                 .header('Authorization', accessToken).send(tokenUser)
             
             // return res.status(200).json({success:true, user: tokenUser, accessToken, refreshToken,}); 

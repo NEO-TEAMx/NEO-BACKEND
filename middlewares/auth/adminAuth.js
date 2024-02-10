@@ -5,9 +5,11 @@ const jwt = require('jsonwebtoken');
 
 const authMiddleware = async(req,res,next) =>{
     const accessToken = req.headers['authorization'];
+    // const refresh_token = req.headers['refresh_token'];
     const refresh_token = req.cookies['refresh_token'];
-
-    
+//    console.log(req.headers)
+    console.log(refresh_token)
+    console.log(accessToken)
     if(!accessToken && !refresh_token){
         return res.status(401)
             .json({msg:"Authentication failed. Please login"})

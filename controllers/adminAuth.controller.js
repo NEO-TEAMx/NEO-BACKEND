@@ -55,7 +55,7 @@ const adminSignup = async(req,res) =>{
         const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
         return res
-            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header("refresh_token", refreshToken)
             .header('Authorization', accessToken).send(tokenUser)
         
 
@@ -83,8 +83,13 @@ const adminSignup = async(req,res) =>{
         const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
         return res
-            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header("refresh_token", refreshToken)
             .header('Authorization', accessToken).send(tokenUser)
+        
+
+        // return res
+        //     .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+        //     .header('Authorization', accessToken).send(tokenUser)
         
 
 
@@ -111,8 +116,13 @@ const adminSignup = async(req,res) =>{
         const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
         return res
-            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header("refresh_token", refreshToken)
             .header('Authorization', accessToken).send(tokenUser)
+        
+
+        // return res
+        //     .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+        //     .header('Authorization', accessToken).send(tokenUser)
         
 
 
@@ -146,8 +156,13 @@ const adminSignup = async(req,res) =>{
         const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
         return res
-            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .header("refresh_token", refreshToken)
             .header('Authorization', accessToken).send(tokenUser)
+        
+
+        // return res
+        //     .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+        //     .header('Authorization', accessToken).send(tokenUser)
         
 
 
@@ -196,19 +211,18 @@ const adminLogin = async(req,res) =>{
         return res
             .cookie('refresh_token', refreshToken,{
                 // secure: process.env.NODE_ENV === 'production',
-                httpOnly: true,
+                httpOnly: false,
                 secure:false,
                 expires: new Date(Date.now() + refreshTokenDuration),
                 SameSite: 'None'
             })
             .header('Authorization', accessToken).send(tokenUser)
+        // return res
+        //     .header("Refresh_token", refreshToken)
+        //     .header('Authorization', accessToken).send(tokenUser)
         
 
-        // refresh_token = existingToken.refresh_token;
-        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});
-    
-        // res.status(200).json({success:true, admin: tokenUser});
-        // return;
+       
     }
     refresh_token = crypto.randomBytes(40).toString("hex")
 
@@ -225,9 +239,14 @@ const adminLogin = async(req,res) =>{
                 
     const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
+    // return res
+    //         .header("Refresh_token", refreshToken)
+    //         .header('Authorization', accessToken).send(tokenUser)
+        
+
     return res
             .cookie('refresh_token', refreshToken,{
-                httpOnly:true,
+                httpOnly:false,
                 expires: new Date(Date.now() + refreshTokenDuration),
                 // secure: process.env.NODE_ENV === 'production',
                 secure: false,
@@ -238,7 +257,6 @@ const adminLogin = async(req,res) =>{
     
 
 
-    // return res.status(200).json({success:true, admin: tokenUser})
 }
 
 

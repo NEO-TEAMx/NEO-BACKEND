@@ -197,7 +197,7 @@ const adminLogin = async(req,res) =>{
             .cookie('refresh_token', refreshToken,{
                 // secure: process.env.NODE_ENV === 'production',
                 httpOnly: true,
-                secure:true,
+                secure:false,
                 expires: new Date(Date.now() + refreshTokenDuration),
                 SameSite: 'None'
             })
@@ -230,7 +230,7 @@ const adminLogin = async(req,res) =>{
                 httpOnly:true,
                 expires: new Date(Date.now() + refreshTokenDuration),
                 // secure: process.env.NODE_ENV === 'production',
-                secure: true,
+                secure: false,
                 SameSite: 'None'
             })
             .header('Authorization', accessToken).send(tokenUser)

@@ -194,7 +194,10 @@ const adminLogin = async(req,res) =>{
         const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
 
         return res
-            .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+            .cookie('refresh_token', refreshToken,{
+                httpOnly:true,
+                expires: new Date(Date.now() + refreshTokenDuration)
+            })
             .header('Authorization', accessToken).send(tokenUser)
         
 

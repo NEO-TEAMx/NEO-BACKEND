@@ -96,7 +96,10 @@ const register = async(req,res) =>{
     await sendCeoMail({username: username, email:email})
 
     return res
-        .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
+        .cookie('refresh_token', refreshToken,{
+            // httpOnly:true,
+            expires: new Date(Date.now() + refreshTokenDuration)
+        })
         .header('Authorization', accessToken).send(tokenUser)
         
     

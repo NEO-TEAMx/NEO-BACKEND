@@ -56,7 +56,7 @@ app.set('io',io);
 app.use(express.json());
 app.use(cors(corsOpt));
 app.use(cookieParser(process.env.SECRET));
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(xssClean());
 app.use(helmet());
 app.use((req,res,next) =>{

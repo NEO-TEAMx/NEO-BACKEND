@@ -13,17 +13,13 @@ const jwt =  require("jsonwebtoken");
 
 const register = async(req,res) =>{
     const {username,email,password,confirmPassword,referralCode} =  req.body;
-    // const {referralCode} = req.query;
     const isEmailTaken = await User.findOne({email});
     const isUsernameTaken = await User.findOne({username});
     const genRefCode = shortid.generate();
     const isStrongpassword = isPasswordStrong(password);
 
     
-    // if(referralCode){
-    //     const x = await User.findOne({referralCode})
-    //     return referringUser = x.username
-    // }
+    
     const referringUser = referralCode  ? (await User.findOne({referralCode})) : null;
     // const referral_link = `http://localhost:8081/html/signup.html?referralCode=${genRefCode}`
 
@@ -53,10 +49,6 @@ const register = async(req,res) =>{
         throw new BadRequestApiError("Password should be at least 8 characters")
     }
     
-    // console.log(referringUser)
-    // if(!referringUser){
-    //     throw new NotFoundApiError("Referral code does not exist")
-    // }
 
     const user = await User.create({
         email,
@@ -84,31 +76,20 @@ const register = async(req,res) =>{
 
     await Utoken.create(userToken)
     
-    // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
-
-    const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
-    const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+    const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'2d'});
+    const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'4d'});
                 
-    const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
-
     
     // send email from ceo
     await sendCeoMail({username: username, email:email})
 
-    return res
-        .cookie('refresh_token', refreshToken,{
-            httpOnly:true,
-            expires: new Date(Date.now() + refreshTokenDuration),
-            // secure: process.env.NODE_ENV === 'production',
-            secure: true,
-            SameSite: 'None'
-            // // httpOnly:true,
-            // expires: new Date(Date.now() + refreshTokenDuration)
-        })
-        .header('Authorization', accessToken).send(tokenUser)
-        
-    
-    // return res.status(200).json({success:true, msg: "User have successfully registered", user:tokenUser, accessToken, refreshToken })
+    return res.status(200).json({
+        username: user.username,
+        email: user.email,
+        userId: user._id,
+        accessToken,
+        refreshToken
+    })
 }
 
 const login = async(req,res) =>{
@@ -144,7 +125,7 @@ const logout = async(req,res) =>{
         expires: new Date(Date.now()),
     });
 
-  res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
+    res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
 }
 
 const forgetPassword = async(req,res) =>{

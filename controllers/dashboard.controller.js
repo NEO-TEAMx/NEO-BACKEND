@@ -42,7 +42,7 @@ const buyHash = async(req,res) =>{
     // referral logic
     if(user.referredBy){
         const referringUser = await User.findById(user.referredBy)
-        console.log(ref)
+        
         if(referringUser){
             referringUser.hash_rate += 0.0000075
             await referringUser.save();

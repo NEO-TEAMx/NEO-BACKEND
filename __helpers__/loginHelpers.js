@@ -32,26 +32,21 @@ async function usernameLogin (isUsernameExist,refresh_token,password,Utoken,res,
                 referral_link: isUsernameExist.referral_link
             }
             const existingToken = await Utoken.findOne({user:isUsernameExist._id});
-            // helperLogin(existingToken,tokenUser,res);
+            
             if(existingToken) {
                 refresh_token = existingToken.refresh_token;
-                // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});
+                
                 const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'2d'});
-                const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
-                const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+                const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'4d'});
+                
 
-                return res
-                    .cookie('refresh_token', refreshToken,{
-                        httpOnly:true,
-                        expires: new Date(Date.now() + refreshTokenDuration),
-                        // secure: process.env.NODE_ENV === 'production',
-                        secure: true,
-                        SameSite: 'None'
-                        // httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)
-                    })
-                    .header('Authorization', accessToken).send(tokenUser)             
-
-                // return res.status(200).json({success:true, user: tokenUser,  accessToken, refreshToken});
+                return res.status(200).json({
+                    username: isUsernameExist.username,
+                    email: isUsernameExist.email,
+                    userId: isUsernameExist._id,
+                    accessToken,
+                    refreshToken
+                })
             }
             refresh_token = crypto.randomBytes(40).toString("hex")
             const userAgent = req.headers["user-agent"]
@@ -65,24 +60,16 @@ async function usernameLogin (isUsernameExist,refresh_token,password,Utoken,res,
             await Utoken.create(userToken);
             
             const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'2d'});
-            const refreshToken = jwt.sign({tokenUser, refresh_token}, process.env.SECRET,{expiresIn:'30d'});
-            const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+            const refreshToken = jwt.sign({tokenUser, refresh_token}, process.env.SECRET,{expiresIn:'4d'});
+            
+            return res.status(200).json({
+                username: isUsernameExist.username,
+                email: isUsernameExist.email,
+                userId: isUsernameExist._id,
+                accessToken,
+                refreshToken
+            })
 
-
-
-            // attachCookieToRes({res,user:tokenUser,refreshToken:refresh_token});
-            // return res.status(200).json({success:true, user: tokenUser, accessToken, refreshToken}); 
-            return res
-                .cookie('refresh_token', refreshToken,{
-                    httpOnly:true,
-                    expires: new Date(Date.now() + refreshTokenDuration),
-                    // secure: process.env.NODE_ENV === 'production',
-                    secure: true,
-                    SameSite: 'None'
-                    // httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)
-                })
-                .header('Authorization', accessToken).send(tokenUser)
-        
     } catch (error) {
         console.log(error)
         res.status(400).json({success:false, msg:"Invalid credential(s)"})
@@ -104,25 +91,20 @@ async function emailLogin(isEmailExist,refresh_token,password,Utoken,res,req){
                 referral_link: isEmailExist.referral_link
             }
             const existingToken = await Utoken.findOne({user:isEmailExist._id});
-            // helperLogin(existingToken,tokenUser,res);
+            
             if(existingToken) {
                 refresh_token = existingToken.refresh_token;
 
                 const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'2d'});
-                const refreshToken = jwt.sign({tokenUser, refresh_token}, process.env.SECRET,{expiresIn:'30d'});
-                const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
-                // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token}); 
-                // return res.status(200).json({success:true, user: tokenUser, accessToken, refreshToken});
-                return res
-                    .cookie('refresh_token', refreshToken,{
-                        httpOnly:true,
-                        expires: new Date(Date.now() + refreshTokenDuration),
-                        // secure: process.env.NODE_ENV === 'production',
-                        secure: true,
-                        SameSite: 'None'
-                        // httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration)
-                    })
-                    .header('Authorization', accessToken).send(tokenUser)
+                const refreshToken = jwt.sign({tokenUser, refresh_token}, process.env.SECRET,{expiresIn:'4d'});
+
+                return res.status(200).json({
+                    username: isEmailExist.username,
+                    email: isEmailExist.email,
+                    userId: isEmailExist._id,
+                    accessToken,
+                    refreshToken
+                })
 
             }
             refresh_token = crypto.randomBytes(40).toString("hex");
@@ -137,24 +119,16 @@ async function emailLogin(isEmailExist,refresh_token,password,Utoken,res,req){
             await Utoken.create(userToken);
 
             const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'2d'});
-            const refreshToken = jwt.sign({tokenUser, refresh_token}, process.env.SECRET,{expiresIn:'30d'});
-            const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
-            // attachCookieToRes({res,user:tokenUser,refreshToken:refresh_token});
-
-            return res
-                .cookie('refresh_token', refreshToken,{
-                    // httpOnly:true,
-                    httpOnly:true,
-                    expires: new Date(Date.now() + refreshTokenDuration),
-                    // secure: process.env.NODE_ENV === 'production',
-                    secure: true,
-                    SameSite: 'None'
-                    // expires: new Date(Date.now() + refreshTokenDuration)
-                })
-                .header('Authorization', accessToken).send(tokenUser)
+            const refreshToken = jwt.sign({tokenUser, refresh_token}, process.env.SECRET,{expiresIn:'4d'});
             
-            // return res.status(200).json({success:true, user: tokenUser, accessToken, refreshToken,}); 
-         
+            return res.status(200).json({
+                username: isEmailExist.username,
+                email: isEmailExist.email,
+                userId: isEmailExist._id,
+                accessToken,
+                refreshToken
+            })
+
     } catch (error) {
         console.log(error)
         res.status(400).json({success:false, msg:"Invalid credential(s)"})

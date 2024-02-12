@@ -4,28 +4,27 @@ const Utoken = require("../../models/token.model/uToken");
 const jwt = require("jsonwebtoken");
 
 const userAuthMiddleware = async(req,res,next) =>{
-    const accessToken = req.headers['authorization'];
-    const refresh_token = req.cookies['refresh_token'];
+    let {accesstoken, refresh_token} = req.headers
 
-    if(!accessToken && !refresh_token){
+    if(!accesstoken && !refresh_token){
         return res.status(401)
             .json({msg:"Authentication failed. Please login"})
     }
         
     try {
         
-        if(accessToken){      
+        if(accesstoken){      
             if(!refresh_token){
                 return res.status(401)
                         .json({msg:"Please login again!!"})
             }  
-            const payload = jwt.verify(accessToken,process.env.SECRET)
+            const payload = jwt.verify(accesstoken,process.env.SECRET)
             
             req.user = payload;
            return  next()
         }
         
-        if(!accessToken){
+        if(!accesstoken){
         const payload = jwt.verify(refresh_token, process.env.SECRET);
         
         const existingToken = await Utoken.findOne({
@@ -39,7 +38,7 @@ const userAuthMiddleware = async(req,res,next) =>{
         }
         const accessToken = jwt.sign(payload, process.env.SECRET);
         
-        res.header('Authorization', accessToken);
+        // res.header('Authorization', accessToken);
         req.user = payload.tokenUser;
         return next();
         }

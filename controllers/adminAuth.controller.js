@@ -48,19 +48,18 @@ const adminSignup = async(req,res) =>{
         
 
         await Token.create(userToken)
-        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
+        
         const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
         const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
                 
-        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+        return res.status(200).json({
+            username: admin.username,
+            email: admin.email,
+            userId: admin._id,
+            accessToken,
+            refreshToken
+        })
 
-        return res
-            .header("refresh_token", refreshToken)
-            .header('Authorization', accessToken).send(tokenUser)
-        
-
-    //   return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
-        
     }else if(isDepositAdmin){
         const adminType = 'deposit-admin';
         const adminId = 'adm6ck9s2';
@@ -75,25 +74,18 @@ const adminSignup = async(req,res) =>{
         
 
         await Token.create(userToken)
-        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
         
         const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
         const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
                 
-        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+        return res.status(200).json({
+            username: admin.username,
+            email: admin.email,
+            userId: admin._id,
+            accessToken,
+            refreshToken
+        })
 
-        return res
-            .header("refresh_token", refreshToken)
-            .header('Authorization', accessToken).send(tokenUser)
-        
-
-        // return res
-        //     .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
-        //     .header('Authorization', accessToken).send(tokenUser)
-        
-
-
-    //   return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
     }else if(isWithdrawalAdmin){
         const adminType = 'withdrawal-admin';
         const adminId = 'adm72n9e1';
@@ -108,26 +100,18 @@ const adminSignup = async(req,res) =>{
         
 
         await Token.create(userToken)
-        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
- 
+        
         const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
         const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
                 
-        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+        return res.status(200).json({
+            username: admin.username,
+            email: admin.email,
+            userId: admin._id,
+            accessToken,
+            refreshToken
+        })
 
-        return res
-            .header("refresh_token", refreshToken)
-            .header('Authorization', accessToken).send(tokenUser)
-        
-
-        // return res
-        //     .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
-        //     .header('Authorization', accessToken).send(tokenUser)
-        
-
-
-
-//       return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
     }else{
         const adminType = 'moderators';
         
@@ -148,25 +132,18 @@ const adminSignup = async(req,res) =>{
         
 
         await Token.create(userToken)
-        // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token})
-   
+        
         const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
         const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
                 
-        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+        return res.status(200).json({
+            username: admin.username,
+            email: admin.email,
+            userId: admin._id,
+            accessToken,
+            refreshToken
+        })
 
-        return res
-            .header("refresh_token", refreshToken)
-            .header('Authorization', accessToken).send(tokenUser)
-        
-
-        // return res
-        //     .cookie('refresh_token', refreshToken,{httpOnly:true,expires: new Date(Date.now() + refreshTokenDuration),})
-        //     .header('Authorization', accessToken).send(tokenUser)
-        
-
-
-    //   return  res.status(StatusCodes.OK).json({ success:true, admin: tokenUser });
     }
 
    
@@ -175,7 +152,7 @@ const adminSignup = async(req,res) =>{
 
 const adminLogin = async(req,res) =>{
 
-    const {username,password,email} = req.body;
+    const {password,email} = req.body;
 
     if( !(email&&password)){
         throw new BadRequestApiError("Please provide the needed value(s)")
@@ -203,23 +180,18 @@ const adminLogin = async(req,res) =>{
             throw new CustomError.UnauthenticatedError('Temporarily prohibited from the site');
         }
         refresh_token = existingToken.refresh_token;
-        const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
-        const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
-                
-        const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
+        const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'1d'});
+        const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'3d'});
+      
+        return res.status(200).json({
+            username: admin.username,
+            email: admin.email,
+            userId: admin._id,
+            accessToken,
+            refreshToken
+        })
 
-        return res
-            .cookie('refresh_token', refreshToken,{
-                // secure: process.env.NODE_ENV === 'production',
-                httpOnly: false,
-                secure:false,
-                expires: new Date(Date.now() + refreshTokenDuration),
-                SameSite: 'None'
-            })
-            .header('Authorization', accessToken).send(tokenUser)
-        // return res
-        //     .header("Refresh_token", refreshToken)
-        //     .header('Authorization', accessToken).send(tokenUser)
+        
         
 
        
@@ -231,32 +203,18 @@ const adminLogin = async(req,res) =>{
     const userToken = {refresh_token,userAgent,ip,admin:admin._id};
     
     await Token.create(userToken);
-    // attachCookiesToResponse({res, user:tokenUser})
-    // attachCookieToRes({res, user:tokenUser, refreshToken:refresh_token});  
     
-    const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'70d'});
-    const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'30d'});
+    const accessToken = jwt.sign(tokenUser, process.env.SECRET,{expiresIn:'1d'});
+    const refreshToken = jwt.sign({tokenUser,refresh_token}, process.env.SECRET,{expiresIn:'3d'});
                 
-    const refreshTokenDuration = 1000 * 60 * 60 * 24 * 30;
-
-    // return res
-    //         .header("Refresh_token", refreshToken)
-    //         .header('Authorization', accessToken).send(tokenUser)
-        
-
-    return res
-            .cookie('refresh_token', refreshToken,{
-                httpOnly:false,
-                expires: new Date(Date.now() + refreshTokenDuration),
-                // secure: process.env.NODE_ENV === 'production',
-                secure: false,
-                SameSite: 'None'
-            })
-            .header('Authorization', accessToken).send(tokenUser)
-        
+    return res.status(200).json({
+        username: admin.username,
+        email: admin.email,
+        userId: admin._id,
+        accessToken,
+        refreshToken
+    })
     
-
-
 }
 
 

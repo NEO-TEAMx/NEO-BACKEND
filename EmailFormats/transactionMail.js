@@ -6,14 +6,29 @@ const sendWithdrawalEmail = async({email,transactionId,amount,payableAmount}) =>
     
     const message = `
         <div>
-            <p>We are pleased to inform you that your withdrawal request has been successfully processed.</p>
+            <p>We are delighted to inform you that your withdrawal request has been successfully processed.</p>
             <h5>Transaction Details:</h5>
-            <ul>
-                <li>Transaction ID: ${transactionId}</li>
-                <li>Amount: ${amount}</li>
-                <li>Tax: 5%</li>
-                <li>Payable amount: ${payableAmount}</li>
-            </ul>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Amount</th>
+                            <th>Tax</th>
+                            <th>Net Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>${transactionId}</tr>
+                        <tr>${amount}</tr>
+                        <tr>5%</tr>
+                        <tr>${payableAmount}</tr>
+                    </tbody>
+                </table>
+            
+            
+            </div>
+          
             <p>
                 If you have any concerns or further inquiries, feel free to reach out to our support team.
             </p>

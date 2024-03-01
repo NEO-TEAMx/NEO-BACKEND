@@ -5,16 +5,22 @@ const Withdrawal = require("./models/withDrawal.model");
 const Deposit = require("./models/deposit.model");
 const Utoken = require("./models/token.model/uToken");
 const Token = require("./models/token.model/token");
+const mongoose = require("mongoose")
 
 const run = async() =>{
     try {
-        await connectDB(process.env.MONGOURI)
-        await Admin.deleteMany();   
+      await connectDB(process.env.MONGOURI)
+
+      // await mongoose.connection.dropDatabase();
+
+        
+        // await connectDB(process.env.MONGOURI)
+        // await Admin.deleteMany();   
         await User.deleteMany();
-        await Withdrawal.deleteMany();
-        await Deposit.deleteMany();
-        await Utoken.deleteMany();
-        await Token.deleteMany();
+        // await Withdrawal.deleteMany();
+        // await Deposit.deleteMany();
+        // await Utoken.deleteMany();
+        // await Token.deleteMany();
         console.log("success!!") 
         process.exit(0)
         

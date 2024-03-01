@@ -32,7 +32,6 @@ const allowedOrigins = [
     'https://neoadmindashboard.netlify.app'
 ];
 
-
 const server = http.createServer(app);
 const io = socketio(server,{
     cors:{

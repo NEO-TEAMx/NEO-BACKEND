@@ -20,9 +20,9 @@ const sendCeoMail = async({username,email}) =>{
             <p>
                 Best regards,
                 </br>
-                Xu chin yu
+                Neo Support Team
                 </br>
-                C.E.O
+            
             </p>
         </div>
     `;

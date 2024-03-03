@@ -177,11 +177,11 @@ const resetPassword = async(req,res) =>{
     const isStrongPassword = isPasswordStrong(password);
     const isStrongConfirmPassword = isPasswordStrong(confirmPassword)
 
-    if(!token || !email || !password || confirmPassword){
+    if(!token || !email || !password || !confirmPassword){
       throw new BadRequestApiError('Please provide needed value(s)')
     }
     
-    if(!isStrongConfirmPassword || isStrongPassword){
+    if(!isStrongConfirmPassword || !isStrongPassword){
         throw new BadRequestApiError("Password must contain an uppercase and smallcase letters, a number and a special character")
     }
 

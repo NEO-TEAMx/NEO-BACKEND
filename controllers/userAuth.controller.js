@@ -7,8 +7,8 @@ const shortid = require("shortid");
 const {StatusCodes} = require("http-status-codes");
 const {emailLogin,usernameLogin} = require("../__helpers__/loginHelpers");
 const {isPasswordStrong} = require("../__helpers__/isPasswordStrong");
-const sendCeoMail = require("../EmailFormats/welcomeEmail");
-const sendResetPaasswordEmail = require("../EmailFormats/resetPasswordMail");
+const sendCeoMail = require("../EmailFormats/welcomeMail");
+const sendResetPaasswordEmail = require("../EmailFormats/resetPasswordEmail");
 const jwt =  require("jsonwebtoken");
 
 const register = async(req,res) =>{
@@ -18,12 +18,10 @@ const register = async(req,res) =>{
     const genRefCode = shortid.generate();
     const isStrongpassword = isPasswordStrong(password);
 
-    
-    
     const referringUser = referralCode  ? (await User.findOne({referralCode})) : null;
     // const referral_link = `http://localhost:8081/html/signup.html?referralCode=${genRefCode}`
 
-    const referral_link = `https://neoprotocol.netlify.app/html/signup.html?referralCode=${genRefCode}`
+    const referral_link = `https://neo-protocol.netlify.app/html/signup.html?referralCode=${genRefCode}`
 
     if(!username||!email||!password||!confirmPassword){
         throw new BadRequestApiError("Please provide the needed value(s)")
@@ -143,7 +141,7 @@ const forgetPassword = async(req,res) =>{
   
       // send forgot password link email
 
-      const origin = 'https://neoprotocol.netlify.app'
+      const origin = 'https://neo-protocol.netlify.app'
      
         await sendResetPaasswordEmail({
             username: user.username,

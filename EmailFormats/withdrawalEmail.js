@@ -1,11 +1,10 @@
 const {sendEmail} = require('../utils/sendEmailConfig');
 
 
-const sendDepositEmail = async({email,transactionId,amount,username}) =>{
+const sendWithdrawalEmail = async({email,transactionId,amount,payableAmount}) =>{
 
     
     const message = `
-        
 
     <!DOCTYPE html>
     <html lang="en">
@@ -165,17 +164,17 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
                     </div>
                 </div>
                 <div class="welcome">
-                    <h2 class="text-success">Deposit</h2>
+                    <h2 class="text-success">Withdrawal</h2>
                 </div>
             </div>
     
     
             <div class="write-up">
                 <h2 style="color:#fff;font-size:20px;line-height:25px;font-weight:700;padding:0;margin-bottom:16px">
-                    Hello ,
+                    Hello ${email},
                 </h2>
                 <p style="font-size: 18px; font-family:DM Sans,'Google Sans',sans-serif; line-height:32px;color:#fff;font-weight:400;margin-top:0px;margin-bottom:32px">
-                    Your deposit request is currently under processing. We appreciate your patience and will notifyyou once it's credited.
+                    We are delighted to inform you that your withdrawal request has been successfully processed.
                 </p>
             </div>
     
@@ -188,12 +187,16 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
                             <tr>
                                 <th scope="col">Transaction ID</th>
                                 <th scope="col">Amount</th>
+                                <th scope="col">Tax</th>
+                                <th scope="col">Net Amount</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td scope="row">${transactionId}</td>
                                 <td>${amount}</td>
+                                <td>5%</td>
+                                <td>${payableAmount}</td>
                             </tr>        
                         </tbody>
                     </table>
@@ -275,15 +278,14 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
     
     </html>
     
-        
     `;
 
     return sendEmail({
         to: email,
-        subject: 'Deposit request',
-        html:message
+        subject: `Withdrawal request processed - Transaction ID: ${transactionId}`,
+        html: message
     });
 }
 
 
-module.exports = sendDepositEmail;
+module.exports = sendWithdrawalEmail;

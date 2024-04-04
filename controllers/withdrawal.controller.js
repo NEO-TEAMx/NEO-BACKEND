@@ -3,7 +3,7 @@ const Withdrawal = require("../models/withDrawal.model");
 const {BadRequestApiError} = require("../Errors");
 const { StatusCodes } = require("http-status-codes");
 const { generateUniquieId } = require("../__helpers__/generateId");
-const sendWithdrawalEmail = require("../EmailFormats/transactionMail");
+const sendWithdrawalEmail = require("../EmailFormats/withdrawalEmail");
 
 const requestWithdrawl = async(req,res) =>{
     const {total_amount,walletAddress} = req.body;
@@ -66,7 +66,6 @@ const withdrawalHistory = async(req,res) =>{
 
     return res.status(StatusCodes.OK).json({success:true, count:withdrawal.length, withdrawal})
 }
-
 
 
 module.exports = {

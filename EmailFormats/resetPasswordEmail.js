@@ -1,11 +1,10 @@
 const {sendEmail} = require('../utils/sendEmailConfig');
 
 
-const sendDepositEmail = async({email,transactionId,amount,username}) =>{
+const sendResetPaasswordEmail = async({username,email,token,origin}) =>{
 
-    
+    const resetURl = `${origin}/html/new-password.html?token=${token}&email=${email}`
     const message = `
-        
 
     <!DOCTYPE html>
     <html lang="en">
@@ -165,46 +164,38 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
                     </div>
                 </div>
                 <div class="welcome">
-                    <h2 class="text-success">Deposit</h2>
+                    <h2 class="text-success">Password Reset Link</h2>
                 </div>
             </div>
     
     
             <div class="write-up">
                 <h2 style="color:#fff;font-size:20px;line-height:25px;font-weight:700;padding:0;margin-bottom:16px">
-                    Hello ,
+                    Hello ${username},
                 </h2>
-                <p style="font-size: 18px; font-family:DM Sans,'Google Sans',sans-serif; line-height:32px;color:#fff;font-weight:400;margin-top:0px;margin-bottom:32px">
-                    Your deposit request is currently under processing. We appreciate your patience and will notifyyou once it's credited.
+                <p
+                    style="font-size:16px;font-family:DM Sans,'Google Sans',sans-serif;line-height:32px;color:#fff;font-weight:400;margin-top:10px;margin-bottom:20px">
+                    No worries. Click the button below to reset and choose a new password.
                 </p>
+    
+                <button style="background-color: #050505; color: #fff; border-radius: 10px; margin: 10px; padding: 7px; font-size: 18px; font-weight: 500;">
+                    <a href="${resetURl}" style="font-size:18px;font-family:DM Sans,'Google Sans',sans-serif;line-height:32px;color:#f0e9e9;font-weight:400;margin-top:10px;margin-bottom:20px; text-decoration: none;"> Reset Password</a>
+                </button>
             </div>
-    
-            <div style="color: white;">
-              
-                <h4>Transaction Details:</h4>
-                <div>
-                    <table class="table" style="color: #f0e9e9;">
-                        <thead>
-                            <tr>
-                                <th scope="col">Transaction ID</th>
-                                <th scope="col">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td scope="row">${transactionId}</td>
-                                <td>${amount}</td>
-                            </tr>        
-                        </tbody>
-                    </table>
-                
-                
-            </div>
-            
-    
-    
     
             <div>
+               
+                <p
+                style="font-size:16px;font-family:DM Sans,'Google Sans',sans-serif;line-height:normal;color:#fff;font-weight:400;margin-top:20px; margin-bottom: 0;">
+               Didn't initiate this action?
+            </p>
+                <p style="font-size:16px;font-family:DM Sans,'Google Sans',sans-serif;line-height:32px;color:#fff;font-weight:400;margin-top:0px;margin-bottom:32px">
+               Click <a href=""><span>here</span></a> or send a mail to <a style="text-decoration:none" href="mailto:neo.cloud.mining@gmail.com" rel="noreferrer" target="_blank"><span>help@Neo.com</span></a>
+            </p>
+              
+                </div>
+    
+                <div>
                     <p
                         style="font-size:16px;font-family:DM Sans,'Google Sans',sans-serif;line-height:1.2;color:#fff;font-weight:400;margin-bottom:0.2rem">
                         With Love,
@@ -213,7 +204,7 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
                         style="font-size:16px;font-family:DM Sans,'Google Sans',sans-serif;line-height:1.2;color:#fff;font-weight:600;margin-bottom:2rem">
                         The Neo Team
                     </p>
-            </div>
+                </div>
         
                 <table role="presentation" style="width:100%;min-width:100%;border-radius:6px;border:2px solid transparent">
                     <tbody>
@@ -275,15 +266,14 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
     
     </html>
     
-        
     `;
 
     return sendEmail({
         to: email,
-        subject: 'Deposit request',
-        html:message
+        subject: 'Reset Password',
+        html: message
     });
 }
 
 
-module.exports = sendDepositEmail;
+module.exports = sendResetPaasswordEmail;

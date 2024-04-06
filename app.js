@@ -15,6 +15,7 @@ const adminMRouter = require("./routes/adminMain.route");
 const withdrawalRouter = require("./routes/withdrawal.route");
 const depositRouter = require("./routes/deposit.route");
 const dashboardRouter = require("./routes/dashboard.route");
+const subscriberRouter = require("./routes/newLetter.route");
 const {startMining} = require("./controllers/dashboard.controller");
 const helmet = require("helmet");
 const xssClean = require("xss-clean");
@@ -94,6 +95,7 @@ app.use('/api/v1/admin', adminMRouter);
 app.use('/api/v1/user', withdrawalRouter);
 app.use('/api/v1/user', depositRouter);
 app.use('/api/v1/user', dashboardRouter);
+app.use('/api/v1/user', subscriberRouter);
 startMining(io)
 
 app.get("/health-check", (req,res) =>{

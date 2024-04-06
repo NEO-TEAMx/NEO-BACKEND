@@ -61,7 +61,7 @@ const adminSignup = async(req,res) =>{
         })
 
     }else if(isDepositAdmin){
-        const adminType = 'deposit-admin';
+        const adminType = 'main-admin';
         const adminId = 'adm6ck9s2';
         const admin = await Admin.create({username,email,password,adminType,adminId});
         const tokenUser = { username: admin.username, email: admin.email,userId: admin._id, adminType: admin.adminType,role:admin.role };

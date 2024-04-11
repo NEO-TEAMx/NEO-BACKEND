@@ -21,7 +21,7 @@ const register = async(req,res) =>{
     const referringUser = referralCode  ? (await User.findOne({referralCode})) : null;
     // const referral_link = `http://localhost:8081/html/signup.html?referralCode=${genRefCode}`
 
-    const referral_link = `https://neo-protocol.netlify.app/html/signup.html?referralCode=${genRefCode}`
+    const referral_link = `https://neo-protocol.com/html/signup.html?referralCode=${genRefCode}`
 
     if(!username||!email||!password||!confirmPassword){
         throw new BadRequestApiError("Please provide the needed value(s)")
@@ -141,7 +141,7 @@ const forgetPassword = async(req,res) =>{
   
       // send forgot password link email
 
-      const origin = 'https://neo-protocol.netlify.app'
+      const origin = 'https://neo-protocol.com'
      
         await sendResetPaasswordEmail({
             username: user.username,

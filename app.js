@@ -99,7 +99,6 @@ app.use('/api/v1/user', subscriberRouter);
 startMining(io)
 
 app.get("/health-check", (req,res) =>{
-    
     res.status(200).json({
         success:true, 
         msg: 'Health check successful!!'

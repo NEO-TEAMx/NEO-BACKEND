@@ -13,7 +13,7 @@ async function getNeoToUsdtRate(){
         return neoToUsdt;
     } catch (error) {
         console.error('Error fetching conversion rate:', error.message);
-        throw error;
+        return error;
     }
 }
 

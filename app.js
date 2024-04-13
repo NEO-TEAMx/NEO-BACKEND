@@ -24,6 +24,7 @@ const run = require("./seedDB");
 const jwt = require("jsonwebtoken");
 const app = express();
 const allowedOrigins = [
+    'hhtps://neo-protocol.com',    
     'http://localhost:8081',
     'http://localhost:7070',
     'http://localhost:4040',

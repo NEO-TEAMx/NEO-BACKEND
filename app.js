@@ -96,7 +96,7 @@ app.use('/api/v1/admin', adminMRouter);
 app.use('/api/v1/user', withdrawalRouter);
 app.use('/api/v1/user', depositRouter);
 app.use('/api/v1/user', dashboardRouter);
-app.use('/api/v1/user', subscriberRouter);
+app.use('/api/v1', subscriberRouter);
 startMining(io)
 
 app.get("/health-check", (req,res) =>{

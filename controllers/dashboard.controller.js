@@ -82,7 +82,7 @@ const hashEquivalent = async(req,res) =>{
     const {hash_amount} = req.body;
 
     const equivalentVal = hash_amount * 0.00015;
-    return res.json({equivalentVal: equivalentVal.toFixed(4)})
+    return res.json({equivalentVal: equivalentVal.toFixed(6)})
 };
 
 //neo equivalent
@@ -276,19 +276,19 @@ const startMiningt = (io) =>{
             // console.log(formatTime(yield_time))
 
             await user.save() 
-            console.log(user)
+            // console.log(user)
             const minningDuration = moment.duration(24, 'hours');
            
             const intervalId = setInterval(async() =>{
-                console.log("start")
+                // console.log("start")
                 let elapsedTime = moment().diff(user.yield_time);
                 let remainingTime = minningDuration - elapsedTime;
-                console.log(remainingTime)
-                console.log(elapsedTime)
-                console.log(formatTime(minningDuration))
-                console.log(formatTime(elapsedTime))
-                console.log(formatTime(remainingTime))
-                // user.yield_time = remainingTime
+                // console.log(remainingTime)
+                // console.log(elapsedTime)
+                // console.log(formatTime(minningDuration))
+                // console.log(formatTime(elapsedTime))
+                // console.log(formatTime(remainingTime))
+                // // user.yield_time = remainingTime
 
                 if(remainingTime <= 0){
                     if(user.hash_rate <= 0){
@@ -356,7 +356,7 @@ const startMiningt = (io) =>{
 
 function startCronJob(socket, val){
     if(!cronJob){
-        cronJob = cron.schedule(" * * * * * ", () =>{
+        cronJob = cron.schedule(" * * * * * *", () =>{
             socket.emit("miningData", val)
         });
     }

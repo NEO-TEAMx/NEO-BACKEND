@@ -160,7 +160,7 @@ const sendResetPaasswordEmail = async({username,email,token,origin}) =>{
             <div class="hold">
                 <div class="center-img">
                     <div class="img-container">
-                        <img src="assets/neo-logo.png" alt="">
+                        <img src="./assets/neo-logo.png" alt="">
                     </div>
                 </div>
                 <div class="welcome">

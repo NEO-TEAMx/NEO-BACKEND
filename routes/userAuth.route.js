@@ -6,7 +6,8 @@ const {
     forgetPassword,
     resetPassword,
     updatePassword,
-    showMe
+    showMe,
+    contactMail
 } = require("../controllers/userAuth.controller");
 const userAuthMiddleware = require("../middlewares/auth/userAuth");
 const router = express.Router();
@@ -18,5 +19,6 @@ router.post("/reset-password", resetPassword);
 router.post("/forget-password", forgetPassword);
 router.delete('/logout', userAuthMiddleware, logout);
 router.get("/show-me", userAuthMiddleware, showMe);
+router.post("/contact", contactMail)
 
 module.exports = router;

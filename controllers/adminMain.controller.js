@@ -86,13 +86,25 @@ const addDeposit = async(req,res) =>{
         throw new BadRequestApiError("Amount must be provided!")
     }
 
-    const deposit = await User.findOne({_id:userId});
-    if(!deposit){
+    const user = await User.findOne({_id:userId});
+    if(!user){
         throw new BadRequestApiError("No user found")
     }
-    deposit.total_balance += amount;
-    await deposit.save();
-    return res.status(StatusCodes.OK).json({success:true, msg: "Deposit successfully made", deposit})
+    user.total_balance += amount;
+
+    //referral logic
+    if(user.referredBy){
+        const referringUser = await User.findById(user.referredBy);
+
+        if(referringUser){
+            let val = (10*amount)/100; // user gets 10% of the amount bing deposited
+            val += referringUser.total_balance
+            await referringUser.save();
+        }
+    }
+
+    await user.save();
+    return res.status(StatusCodes.OK).json({success:true, msg: "Deposit successfully made", user})
 }
 
 module.exports = {

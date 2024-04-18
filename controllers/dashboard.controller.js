@@ -5,6 +5,7 @@ const Swap = require("../models/swap.model");
 const {getNeoToUsdtRate} = require("../__helpers__/generateNeoEqu");
 const moment = require("moment");
 const cron = require("node-cron");
+const Deposit = require("../models/deposit.model");
 
 const userDashboard = async(req,res) =>{
     
@@ -40,14 +41,14 @@ const buyHash = async(req,res) =>{
     user.total_balance -= hash_amount;
    
     // referral logic
-    if(user.referredBy){
-        const referringUser = await User.findById(user.referredBy)
+    // if(user.referredBy){
+    //     const referringUser = await User.findById(user.referredBy)
         
-        if(referringUser){
-            referringUser.hash_rate += 0.0000075
-            await referringUser.save();
-        }
-    }
+    //     if(referringUser){
+    //         referringUser.hash_rate += 0.0000075
+    //         await referringUser.save();
+    //     }
+    // }
 
     await user.save();
 
@@ -69,8 +70,7 @@ const getReferredUsers = async(req,res)=>{
 
     const referralData = referredUsers.map((user) => ({
         userId: user._id,
-        username: user.username,
-        commission: 0.0000075
+        username: user.username
     }));
 
     return res.status(200).json({referralData, refLink})
@@ -161,7 +161,7 @@ const startMining = (io) =>{
                             clearInterval(intervalId);
                             
                             const finalYieldPercentage = 0;
-                            const totalYieldBalance = 0.000000002 * 24 * 60;
+                            const totalYieldBalance = 0.00000002 * 24 * 60 * 60;
                             user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
                             user.yield_percentage = finalYieldPercentage;
                             user.yield_time = null;
@@ -173,7 +173,7 @@ const startMining = (io) =>{
                             clearInterval(intervalId);
                             
                             const finalYieldPercentage = 0;
-                            const  totalYieldBalance = user.hash_rate * 24 * 60;
+                            const  totalYieldBalance = user.hash_rate * 5;
                             user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
                             user.yield_percentage = finalYieldPercentage;
                             user.yield_time = null;
@@ -196,8 +196,8 @@ const startMining = (io) =>{
                     }else{
                         if(user.hash_rate <= 0){
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
-                            let remainingMinutes = remainingTime / (60 * 1000);
-                            let currentYeildBalance = 0.000000002 * (24 * 60 - remainingMinutes);
+                            let remainingMinutes = remainingTime / (60 * 60 * 1000);
+                            let currentYeildBalance = (0.00000002 * (24 * 60 * 60 - remainingMinutes))*0.001;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;
@@ -214,8 +214,8 @@ const startMining = (io) =>{
                             return;
                         }else{
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
-                            let remainingMinutes = remainingTime / (60 * 1000);
-                            let currentYeildBalance = user.hash_rate * (24 * 60 - remainingMinutes);
+                            let remainingMinutes = remainingTime / (60 * 60 * 1000);
+                            let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.0007;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;

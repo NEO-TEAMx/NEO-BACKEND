@@ -10,6 +10,7 @@ const {isPasswordStrong} = require("../__helpers__/isPasswordStrong");
 const sendCeoMail = require("../EmailFormats/welcomeMail");
 const sendResetPaasswordEmail = require("../EmailFormats/resetPasswordEmail");
 const jwt =  require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const register = async(req,res) =>{
     const {username,email,password,confirmPassword,referralCode} =  req.body;
@@ -239,7 +240,49 @@ const showMe = async(req,res) =>{
    return res.status(StatusCodes.OK).json({ user: req.user });
 }
 
+const contactMail = async(req,res) =>{
+    const {username, subject, email,body} = req.body;
 
+    if(!username||!subject||!email||!body){
+        throw new BadRequestApiError("Please provide the needed detail(s)")
+    }
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        service: 'gmail',
+        auth: {
+            user: process.env.userHelp,
+            pass: process.env.passHelp
+        }
+    });
+
+    const mailOptions = {
+        from: email, 
+        to: "neoprotocol.help@gmail.com",   
+        subject:  `Message from ${email}: ${subject}`,
+        text: body
+    }
+
+    try {
+        transporter.sendMail(mailOptions, (err) =>{
+            if (err) {
+                // console.log(err)
+                return;
+            } else {
+                return true
+            }
+        });
+        
+        return res.status(200).json({
+            success: true,
+            msg: "Message sent successfully"
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
+}
 module.exports = {
     register,
     login,
@@ -247,5 +290,6 @@ module.exports = {
     resetPassword,
     forgetPassword,
     updatePassword,
-    showMe
+    showMe,
+    contactMail
 }

@@ -259,7 +259,7 @@ const contactMail = async(req,res) =>{
 
     const mailOptions = {
         from: email, 
-        to: "neo.cloud.mining@gmail.com"
+        to: "neo.cloud.mining@gmail.com",
         // to: "neoprotocol.help@gmail.com",   
         subject:  `Message from ${email}: ${subject}`,
         text: body

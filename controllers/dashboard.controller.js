@@ -20,7 +20,7 @@ const userDashboard = async(req,res) =>{
 const buyHash = async(req,res) =>{
     const {hash_amount} = req.body;
     const {_id:userId} = req.params;
-
+    const neoToUsdt = await getNeoToUsdtRate();
     if(!hash_amount){
         throw new BadRequestApiError("Input the amount of hash to purchase")
     }
@@ -35,21 +35,15 @@ const buyHash = async(req,res) =>{
         throw new BadRequestApiError("Please credit your wallet, to buy hash")
     }
 
-    const rate = hash_amount * 0.00015; 
+    // get the current price of neo
+    // (amount/current_price)/600
+    // const rate = hash_amount * 0.00015; 
 
-    user.hash_rate += rate;
+    const val = (hash_amount/neoToUsdt)/600;
+
+    user.hash_rate += val;
     user.total_balance -= hash_amount;
    
-    // referral logic
-    // if(user.referredBy){
-    //     const referringUser = await User.findById(user.referredBy)
-        
-    //     if(referringUser){
-    //         referringUser.hash_rate += 0.0000075
-    //         await referringUser.save();
-    //     }
-    // }
-
     await user.save();
 
     return res.status(StatusCodes.OK).json({success:true, msg: "Successfully purchased hash"})
@@ -126,11 +120,6 @@ const neoToUsdt = async(req,res) =>{
     return res.status(StatusCodes.OK).json({success:true, swap})
 }
 
-function formatTime(val){
-    const parsedDate = moment(val);
-    return parsedDate.format('HH:mm:ss')
-}
-
 let cronJob;
 
 const startMining = (io) =>{
@@ -144,8 +133,6 @@ const startMining = (io) =>{
             await user.save();
             const startTime = Date.now();
             const endTime = startTime + user.mining_duration * 1000;
-
-            // console.log(user)
 
             if(user.mining_status){
                 return;
@@ -161,7 +148,7 @@ const startMining = (io) =>{
                             clearInterval(intervalId);
                             
                             const finalYieldPercentage = 0;
-                            const totalYieldBalance = 0.00000002 * 24 * 60 * 60;
+                            const totalYieldBalance = 0.00000003 * 24 * 60 * 60;
                             user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
                             user.yield_percentage = finalYieldPercentage;
                             user.yield_time = null;
@@ -172,9 +159,12 @@ const startMining = (io) =>{
                         }else{
                             clearInterval(intervalId);
                             
+                            // (hash*24*60*60)*0.118
+
                             const finalYieldPercentage = 0;
-                            const  totalYieldBalance = user.hash_rate * 5;
-                            user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
+                            const totalYieldBalance = (user.hash_rate * 24 * 60 *60)*0.118
+                            // const  totalYieldBalance = user.hash_rate * 5;
+                            user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(10)));
                             user.yield_percentage = finalYieldPercentage;
                             user.yield_time = null;
                             user.mining_status = false;
@@ -197,7 +187,7 @@ const startMining = (io) =>{
                         if(user.hash_rate <= 0){
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
                             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-                            let currentYeildBalance = (0.00000002 * (24 * 60 * 60 - remainingMinutes))*0.001;
+                            let currentYeildBalance = (0.00000003 * (24 * 60 * 60 - remainingMinutes))*0.001;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;
@@ -215,7 +205,7 @@ const startMining = (io) =>{
                         }else{
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
                             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-                            let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.0007;
+                            let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.000000165;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;

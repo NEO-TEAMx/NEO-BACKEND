@@ -161,7 +161,7 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
             <div class="hold">
                 <div class="center-img">
                     <div class="img-container">
-                        <img src="./assets/neo-logo.png" alt="">
+                        <img src="./assets/NEO LOGO P.png" alt="">
                     </div>
                 </div>
                 <div class="welcome">
@@ -172,7 +172,7 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
     
             <div class="write-up">
                 <h2 style="color:#fff;font-size:20px;line-height:25px;font-weight:700;padding:0;margin-bottom:16px">
-                    Hello ,
+                    Hello ${username},
                 </h2>
                 <p style="font-size: 18px; font-family:DM Sans,'Google Sans',sans-serif; line-height:32px;color:#fff;font-weight:400;margin-top:0px;margin-bottom:32px">
                     Your deposit request is currently under processing. We appreciate your patience and will notify you once it's credited.

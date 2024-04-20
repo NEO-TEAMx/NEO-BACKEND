@@ -158,7 +158,7 @@ const SendNewsLetterMail = async({email}) =>{
             <div class="hold">
                 <div class="center-img">
                     <div class="img-container">
-                        <img src="./assets/neo-logo.png" alt="">
+                        <img src="./assets/NEO LOGO P.png" alt="">
                     </div>
                 </div>
                 <div class="welcome">

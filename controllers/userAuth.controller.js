@@ -252,8 +252,8 @@ const contactMail = async(req,res) =>{
         port: 465,
         service: 'gmail',
         auth: {
-            user: process.env.userHelp,
-            pass: process.env.passHelp
+            user: process.env.user,
+            pass: process.env.pass
         }
     });
 

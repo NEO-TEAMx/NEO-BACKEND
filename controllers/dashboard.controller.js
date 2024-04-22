@@ -187,7 +187,7 @@ const startMining = (io) =>{
                         if(user.hash_rate <= 0){
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
                             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-                            let currentYeildBalance = (0.00000003 * (24 * 60 * 60 - remainingMinutes))*0.001;
+                            let currentYeildBalance = (0.00000002 * (24 * 60 * 60 - remainingMinutes))*0.0001;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;
@@ -205,7 +205,7 @@ const startMining = (io) =>{
                         }else{
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
                             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-                            let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.000000165;
+                            let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.000000013;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;

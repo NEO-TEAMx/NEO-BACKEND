@@ -11,100 +11,79 @@ const sendCeoMail = async({username, email}) =>{
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register</title>
-    </head>
+        <title>Email</title>
     
-    <body style="background: #202124; box-sizing: border-box; padding: 0; margin: 0;">
-    
-        <div class="container p-5">
-            <div class="flex" style="display: flex; justify-content: space-between;">
-                <div>
-                    <h2 style="color: #28a745; font-family: 'Times New Roman', Times, serif; font-size: 16px;">Neoprotocol</h2>
-                </div>
-                <button style="margin-top: -10px;" class="btn btn-success">Sign in</button>
-            </div>
-    
-            <div class="hold" style="display: flex; align-items: center; justify-content: center;">
-                <div class="img-container" style="width: 200px; height: 200px; background-color: transparent; border-radius: 50%; overflow: hidden;">
-                    <img src="./assets/NEO LOGO W.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-            </div>
-    
-            <div class="write-up" style="margin-top: 2rem;">
-                <h2 style="color:#fff; font-size:16px; font-weight:700; margin-bottom:16px;">Hello,</h2>
-                <p style="font-size:14px; color:#fff; font-weight:400; margin-top:10px; margin-bottom:20px;">
-                    Welcome to the crypto mining adventure at Neo cloud mining. Our team of experts is dedicated to optimizing your mining experience, ensuring seamless operations, and staying ahead of industrial trends.
-                </p>
-                <p style="font-size:14px; color:#fff; font-weight:400; margin-bottom:20px;">
-                    Feel free to explore our platform's features, and should you have any inquiries or suggestions, our support team is readily available to assist you. We value your feedback as it plays a crucial role in shaping the evolution of our services.
-                </p>
-                <p style="font-size:14px; color:#fff; font-weight:400; margin-bottom:13px;">
-                    Thank you for choosing Neo mining; we are excited to have you onboard.
-                </p>
-            </div>
-    
-            <div>
-                <p style="font-size:14px; color:#fff; font-weight:400; margin-bottom:10px;">With Love,</p>
-                <p style="font-size:16px; color:#fff; font-weight:600; margin-bottom:2rem;">The Neo Team</p>
-            </div>
-    
-            <table role="presentation" style="width:100%; min-width:100%; border-radius:6px; border:2px solid transparent;">
-                <tbody>
-                    <tr>
-                        <td style="font-size:0; text-align:start;">
-                            <div style="font-size:14px; line-height:1.5rem;">
-                                <p style="margin-top: 12px;">
-                                    <a style="color:#ff5663; text-decoration:underline;" rel="noreferrer">Unsubscribe</a>
-                                </p>
-                            </div>
-                        </td>
-                        <td>
-                            <p style="font-size:12px; line-height:1.5rem; color:#fff; margin-top:0px; text-align:right; margin-bottom:0px;">
-                                Copyright © Neoprotocol
-                            </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    
-        <!-- External CSS and JS Libraries -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/9a3c5f73a5"></script>
-    
-        <!-- Media query for smaller screens -->
         <style>
-            @media screen and (max-width: 768px) {
-                .img-container {
-                    margin-top: 2rem;
-                    width: 120px;
-                    height: 120px;
-                    background-color: transparent;
-                    border-radius: 50%;
-                    overflow: hidden;
-                    /* Ensure the image stays within the container */
+            @media screen and (max-width: 320px) {
+                .container {
+                    max-width: 100%;
+                    padding: 10px !important;
+                }
+                .logo {
+                    width: 60px;
+                    height: 60px;
+                }
+                .contents {
+                    margin: 0;
+                }
+                .image {
+                    width: 300px !important;
+                    height: 150px !important;
+                }
+                .btn {
+                    padding: 8px 16px;
+                    font-size: 14px;
                 }
     
-                .follow-us a {
-                    width: 30px;
-                    height: 30px;
-                    padding: 5px;
+                h1 {
+                    font-size: 16px !important;
                 }
     
-                .follow-us a i {
-                    font-size: 12px;
+                .arrow {
+                    font-size: 12px !important;
                 }
-    
-                .reshape {
-                    font-size: 22px;
-                }
+                /* background: #102b3f; */
             }
         </style>
+    </head>
+    
+    <body style="background: linear-gradient(
+        90deg,
+        hsla(30, 11%, 4%, 1) 0%,
+        hsla(0, 0%, 0%, 1) 100%
+      );
+      ">
+      <div style="background-image: url('https://i.ibb.co/c26qdh4/image.png'); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;">
+        <div class="container" style="max-width: 600px; height: 100%; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; margin-top: 1rem;">
+            <!-- Logo -->
+            <div style="width: 80px; height: 80px; background-color: black; border-radius: 50%; border: 2px solid green; margin-bottom: 20px;">
+                <a href="">
+                    <img style="width: 100%; height: 100%;" src="https://i.ibb.co/3SfyXhY/neo-logo.png" alt="neo-logo" border="0">
+                </a>
+            </div>
+            <div class="contents">
+                <!-- Email Content -->
+                <h1 style="color: #e2cfea; text-align: center; font-size: 24px; font-weight: 600; line-height: 24px; margin-bottom: 1rem; color: green;">Welcome to Neo-Protocol</h1>
+                <p class="arrow" style="color: #e2cfea; text-align: center; font-size: 14px; line-height: 14px; margin-bottom: 2rem;">«Leading the Way with Innovative Mining Technologies»</p>
+                <hr style="color: #a06cd5;">
+    
+                <h2 style="color: #e2cfea; text-align: start; font-size: 20px; font-weight: 600; line-height: 20px; margin-bottom: 2rem;">Hi Tuga,</h2>
+                <p style="color: #e2cfea; text-align: start; font-size: 16px; line-height: 18px; margin-bottom: 1rem;">Your account has been successfully created. Sign in to your account to create new designs, be inspired by our templates and solve problems</p>
+            </div>
+            <div class="image" style="width: 380px; height: 200px; margin-top: 10px; margin-bottom: 2rem;">
+                <a href=""><img style="width: 100%; height: 100%; border-radius: 12px;" src="https://i.ibb.co/x7GFfG2/neo-hero.jpg" alt="neo-hero" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'></a><br />
+            </div>
+            <a style="align-self: center; display: inline-block; padding: 10px 20px; background-color: green; color: #fff; text-decoration: none; border-radius: 5px; font-size: 16px;" href="https://example.com" class="btn">Sign in now</a>
+        </div>
+        <p class="arrow" style="color: #e2cfea; text-align: start; font-size: 14px; line-height: 14px; margin-bottom: px;">With Love,</p>
+        <h2 style="color: green; text-align: start; font-size: 20px; font-weight: 600; line-height: 20px;">Neo Team.</h2>
+      </div>
+    
     
     </body>
     
     </html>
+    
     
     `;
 

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { generateUniquieId } = require("../__helpers__/generateId");
+// const { generateUniquieId } = require("../__helpers__/generateId");
 
 const depositSchema = new mongoose.Schema({
     

@@ -74,8 +74,11 @@ const getReferredUsers = async(req,res)=>{
 //hash equivalent
 const hashEquivalent = async(req,res) =>{
     const {hash_amount} = req.body;
+    const neoToUsdt = await getNeoToUsdtRate();
 
-    const equivalentVal = hash_amount * 0.00015;
+    // const equivalentVal = hash_amount * 0.00015;
+    const equivalentVal = (hash_amount/neoToUsdt)/600;
+   
     return res.json({equivalentVal: equivalentVal.toFixed(6)})
 };
 
@@ -144,23 +147,10 @@ const startMining = (io) =>{
                     const elapsedTime = currentTime - startTime     
                     const remainingTime = Math.max(0, endTime - currentTime)
                     if(currentTime>=endTime){
-                        if(user.hash_rate <= 0){
+                        if(user.hash_rate > 0){
+                            console.log("hash")
                             clearInterval(intervalId);
-                            
-                            const finalYieldPercentage = 0;
-                            const totalYieldBalance = 0.00000003 * 24 * 60 * 60;
-                            user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
-                            user.yield_percentage = finalYieldPercentage;
-                            user.yield_time = null;
-                            user.mining_status = false;
-                            await user.save();
-                            return;
-
-                        }else{
-                            clearInterval(intervalId);
-                            
-                            // (hash*24*60*60)*0.118
-
+                                                   
                             const finalYieldPercentage = 0;
                             const totalYieldBalance = (user.hash_rate * 24 * 60 *60)*0.118
                             // const  totalYieldBalance = user.hash_rate * 5;
@@ -170,42 +160,44 @@ const startMining = (io) =>{
                             user.mining_status = false;
                             await user.save();
                             return;
-                        }
-                        // clearInterval(intervalId);
+                        
+                        }else{
+                            clearInterval(intervalId);
+                            console.log("no hash")
+                             console.log("working from no hash1")                    
+                            const finalYieldPercentage = 0;
+                            const totalYieldBalance = 0.00000003 * 24 * 60 * 60;
+                            user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
+                            user.yield_percentage = finalYieldPercentage;
+                            user.yield_time = null;
+                            user.mining_status = false;
+                            await user.save();
+                            return;
 
-                        // // set  progress and others to full
-                        // const finalYieldPercentage = 100;
-                        // const totalYieldBalance = 0.000000023 * 24 * 60;
-                        // user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
-                        // user.yield_percentage = finalYieldPercentage;
-                        // user.yield_time = null;
-                        // user.mining_status = false
-                        // await user.save();
-                        // return;
- 
+                        }
+                        
                     }else{
-                        if(user.hash_rate <= 0){
+                        // console.log("no hash")
+                        if(user.hash_rate > 0){
+                           console.log("hash")
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
                             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-                            let currentYeildBalance = (0.00000002 * (24 * 60 * 60 - remainingMinutes))*0.0001;
+                            let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.0000013;
+                            // let currentYeildBalance = (0.00000002 * (24 * 60 * 60 - remainingMinutes))*0.000001;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;
                             user.mining_status = true;
 
-                            // console.log(`Remaining time: ${formatTime(remainingTime)}`)
-                            // console.log(`yield time: ${formatTime(user.yield_time)}`)
-                            // console.log(`percentage: ${user.yield_percentage}`)
-                            // console.log(`balance ${user.yield_balance}`)
-                            // console.log(remainingTime)                   
-                            // console.log(elapsedTime)
-                            // console.log(user.mining_status)
                             await user.save();
                             return;
                         }else{
+                            console.log("no hash")
+                            console.log("working ftom here2")
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
                             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-                            let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.000000013;
+                            let currentYeildBalance = (0.00000002 * (24 * 60 * 60 - remainingMinutes))*0.000001;
+                            // let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.000000013;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;
@@ -215,27 +207,9 @@ const startMining = (io) =>{
                             return;
                         }
                     }
-                    // let progress = (elapsedTime / (user.mining_duration * 1000)) * 100;
-                    // let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
-                    // let remainingMinutes = remainingTime / (60 * 1000);
-                    // let currentYeildBalance = 0.000000023 * (24 * 60 - remainingMinutes);
-                    // user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
-                    // user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
-                    // user.yield_time = remainingTime;
-                    // user.mining_status = true;
-
-                // console.log(`Remaining time: ${formatTime(remainingTime)}`)
-                // console.log(`yield time: ${formatTime(user.yield_time)}`)
-                // console.log(`percentage: ${user.yield_percentage}`)
-                // console.log(`balance ${user.yield_balance}`)
-                // console.log(remainingTime)                   
-                // console.log(elapsedTime)
-                // console.log(user.mining_status)
-                // await user.save();
-                // return;
-            },2000)
+               
+            },4000)
             if(!user.mining_status || user.yield_percentage === 0){
-                // cronJ.start();
                 startCronJob(socket, user)
             }
             
@@ -247,106 +221,9 @@ const startMining = (io) =>{
     })
 }
 
-const startMiningt = (io) =>{
-    io.on('connection', async(socket) =>{
-        console.log("A user connected!")
-        // const user = await User.findById(socket.userId)
-        // let = {
-        //     yield_time,
-        //     yield_balance,
-        //     yield_percentage,
-        //     hash_rate,
-        //     mining_status
-        // } = user;
-
-        socket.on('startMining', async() =>{
-            const user = await User.findById(socket.userId)
-            
-            user.yield_time = moment();
-            // console.log(formatTime(yield_time))
-
-            await user.save() 
-            // console.log(user)
-            const minningDuration = moment.duration(24, 'hours');
-           
-            const intervalId = setInterval(async() =>{
-                // console.log("start")
-                let elapsedTime = moment().diff(user.yield_time);
-                let remainingTime = minningDuration - elapsedTime;
-                // console.log(remainingTime)
-                // console.log(elapsedTime)
-                // console.log(formatTime(minningDuration))
-                // console.log(formatTime(elapsedTime))
-                // console.log(formatTime(remainingTime))
-                // // user.yield_time = remainingTime
-
-                if(remainingTime <= 0){
-                    if(user.hash_rate <= 0){
-                        clearInterval(intervalId);
-                        console.log("start1")
-                        const finalYieldPercentage = 100;
-                        const totalYieldBalance = 0.000000023 * 24 * 60;
-                        user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
-                        user.yield_percentage = 0;
-                        user.yield_time = null;
-                        await user.save();
-                        return;
-                    }else{
-                        clearInterval(intervalId);
-                        console.log("start2")
-                        const finalYieldPercentage = 100;
-                        const  totalYieldBalance = user.hash_rate * 24 * 60;
-                        user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
-                        user.yield_percentage = 0;
-                        user.yield_time = null;
-                        await user.save();
-                        return;
-                    }
-                }else{
-                    if(user.hash_rate <= 0){
-                        console.log("Start3")
-                        let progress = 100 - (remainingTime / minningDuration) * 100;
-                        let remainingMinutes = remainingTime / (60 * 1000);
-                        let currentYeildBalance = 0.00000023 * (24 * 60 - remainingMinutes);
-                        user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
-                        user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
-                        user.yield_time = remainingTime;
-                        
-                        await user.save();
-                        return;
-                    }
-                    // console.log("start4")
-                    let progress = 100 - (remainingTime / minningDuration) * 100;
-                    let remainingMinutes = remainingTime / (60 * 1000);
-                    let currentYeildBalance = user.hash_rate * (24 * 60 - remainingMinutes);
-                    user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
-                    user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
-                    user.yield_time = remainingTime;
-
-                    await user.save();
-                    return;
-                }
-
-                // await user.save();
-            },5000)
-            
-            if(!user.mining_status || user.yield_percentage === 0){
-                // cronJ.start();
-                startCronJob(socket, user)
-            }
-            
-            if(user.yield_percentage === 100){
-                stopCronJob()
-            }
-        });
-
-    });        
-}        
-
-
 function startCronJob(socket, val){
     if(!cronJob){
-        cronJob = cron.schedule(" * * * * * *", () =>{
+        cronJob = cron.schedule("* * * * * *", () =>{
             socket.emit("miningData", val)
         });
     }

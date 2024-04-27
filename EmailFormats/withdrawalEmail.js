@@ -5,275 +5,108 @@ const sendWithdrawalEmail = async({email,transactionId,amount,payableAmount}) =>
 
     
     const message = `
-
     <!DOCTYPE html>
     <html lang="en">
     
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/9a3c5f73a5.js" crossorigin="anonymous"></script>
+        
     
-        <style>
-            body {
-                background: #202124;
-                /* background: #f6f8fd; */
-            }
-    
-            a{
-                text-decoration: none;
-            }
-    
-            span {
-                color: #ff5663;
-            }
-    
-            h2 {
-                font-family: 'Times New Roman', Times, serif;
-            }
-    
-            .flex {
-                display: flex;
-                justify-content: space-between;
-            }
-    
-            .img-container {
-                overflow: hidden;
-                width: 120px;
-                height: 120px;
-                border: 2px solid green;
-                border-radius: 50%;
-                background: black
-            }
-    
-            .img-container img {
-                width: 100%;
-                height: auto;
-                /* image-rendering: pixelated; */
-            }
-    
-            .center-img {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-top: 5rem;
-            }
-    
-            .hold {
-                text-align: center;
-            }
-    
-    
-    
-            .hold .welcome h2 {
-                position: relative;
-                top: -45px;
-                text-shadow: 0 0 5px #fff, 0 0 5px #fff, 0 0 5px #fff, 0 0 5px #fff; /* Adjust blur radius values */
-                font-weight: 800;
-            }
-    
-            
-            .follow-us {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-self: flex-end;
-                justify-content: end;
-                align-items: end;
-            }
-    
-            .follow-us a {
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-                width: 50px;
-                height: 50px;
-                padding: 10px;
-                border-radius: 50%;
-                background-color: #28a745;
-                text-decoration: none;
-                margin-left: 10px;
-            }
-    
-            .follow-us a i {
-                color: #fff;
-                font-size: 20px;
-            }
-    
-            @media screen and (max-width: 768px){
-       
-            .img-container {
-                overflow: hidden;
-                width: 100px;
-                height: 100px;
-                border: 2px solid green;
-                border-radius: 50%;
-                background: black
-            }
-    
-            .center-img {
-                margin-top: 2rem;
-            }
-    
-            .hold .welcome h2 {
-                position: relative;
-                top: -35px;
-            }
-    
-            .follow-us a {
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-                width: 30px;
-                height: 30px;
-                padding: 5px;
-                border-radius: 50%;
-                background-color: #28a745;
-                text-decoration: none;
-                margin-left: 10px;
-            }
-    
-            .follow-us a i {
-                color: #fff;
-                font-size: 12px;
-            }
-    
-            .reshape {
-                font-size: 22px;
-            }
-            }
-    
-        </style>
     </head>
+    <!-- Withdrawal mail-->
+    <body style="background: linear-gradient(90deg, hsla(30, 11%, 4%, 1) 0%, hsla(0, 0%, 0%, 1) 100%);">
+     
     
-    <body>
-        <div class="container p-5">
-            <div class="flex">
-                <div>
-                    <h2 class="text-success">Neoprotocol</h2>
-                </div>
-                
-            </div>
-    
-            <div class="hold">
-                <div class="center-img">
-                    <div class="img-container">
-                        <img src="./assets/NEO LOGO P.png" alt="">
-                    </div>
-                </div>
-                <div class="welcome">
-                    <h2 class="text-success">Withdrawal</h2>
-                </div>
-            </div>
-    
-    
-            <div class="write-up">
-                <h2 style="color:#fff;font-size:20px;line-height:25px;font-weight:700;padding:0;margin-bottom:16px">
-                    Hello ${email},
-                </h2>
-                <p style="font-size: 18px; font-family:DM Sans,'Google Sans',sans-serif; line-height:32px;color:#fff;font-weight:400;margin-top:0px;margin-bottom:32px">
-                    We are delighted to inform you that your withdrawal request has been successfully processed.
-                </p>
-            </div>
-    
-            <div style="color: white;">
-              
-                <h4>Transaction Details:</h4>
-                <div>
-                    <table class="table" style="color: #f0e9e9;">
-                        <thead>
-                            <tr>
-                                <th scope="col">Transaction ID</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Tax</th>
-                                <th scope="col">Net Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td scope="row">${transactionId}</td>
-                                <td>${amount}</td>
-                                <td>5%</td>
-                                <td>${payableAmount}</td>
-                            </tr>        
-                        </tbody>
-                    </table>
-                
-                
-            </div>
-            
-    
-    
-    
-            <div>
-                    <p
-                        style="font-size:16px;font-family:DM Sans,'Google Sans',sans-serif;line-height:1.2;color:#fff;font-weight:400;margin-bottom:0.2rem">
-                        With Love,
-                    </p>
-                    <p
-                        style="font-size:16px;font-family:DM Sans,'Google Sans',sans-serif;line-height:1.2;color:#fff;font-weight:600;margin-bottom:2rem">
-                        The Neo Team
-                    </p>
-            </div>
-        
-                <table role="presentation" style="width:100%;min-width:100%;border-radius:6px;border:2px solid transparent">
-                    <tbody>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0"
+            style="margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; margin-top: 1rem; background-image: url('https://i.ibb.co/c26qdh4/image.png'); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;">
+            <tr>
+                <td align="center" style="padding: 40px 0;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="">
                         <tr>
-                            <td style="vertical-align:top;text-align:left;border:0">
-                                <h2 class="text-success reshape">Neoprotocol</h2>
-                            </td>
-        
-                            <td style="text-align:center;background:no-repeat 50%;border:0">
-                                <div
-                                    style="font-size:16px;line-height:1.5rem;font-weight:400;font-family:DM Sans,'Google Sans',sans-serif;color:#000;margin-top:0px;margin-bottom:0px">
-                                    <div class="follow-us">
-                                        <a href="" class="bg-success">
-                                            <i class="fa-brands fa-twitter"></i>
-                                        </a>
-        
-                                        <a href="" class="bg-success">
-                                            <i class="fa-brands fa-linkedin-in"></i>
-                                        </a>
-        
-                                        <a href="" class="bg-success">
-                                            <i class="fa-brands fa-instagram"></i>
-                                        </a>
-        
-                                        <a href="" class="bg-success">
-                                            <i class="fa-brands fa-facebook-f"></i>
-                                        </a>
-                                    </div>
-        
-                                </div>
-                            </td>
-                        </tr>
-        
-        
-                        <tr>
-                            <td style="font-size:0!important;line-height:100%;text-align:center">
-                            </td>
-                            <td>
+                            <td align="center">
+                                <!-- comp-name -->
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0"
+                                    style="width: 100%; margin-bottom: 2rem;">
+                                    <tr>
+                                        <td>
+                                            <h2
+                                                style="color: green; text-align: start; font-size: 22px; font-weight: 600; line-height: 22px; margin-top: 0;">
+                                                Neoprotocol</h2>
+                                        </td>
+                                    </tr>
+                                </table>
+    
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                    <tr>
+                                        <td
+                                            style="width: 80px; height: 80px; background-color: black; border-radius: 50%; border: 2px solid green; margin-bottom: 20px;">
+                                            <a href="#">
+                                                <img style="display: block; width: 100%; height: auto;"
+                                                    src="https://i.ibb.co/3SfyXhY/neo-logo.png" alt="neo-logo" border="0">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- Email Content -->
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0"
+                                    style="margin-bottom: 1rem;">
+                                    <tr>
+                                        <td>
+                                            <h1
+                                                style="text-align: center; font-size: 20px; font-weight: 600; line-height: 20px; margin-bottom: 1rem; color: green;">
+                                                WITHDRAWAL</h1>
+                                            <hr style="color: #a06cd5;">
+                                            <h2
+                                                style="color: #fff; text-align: start; font-size: 20px; font-weight: 600; line-height: 20px; margin-bottom: 2rem;">
+                                                Hello ${email},</h2>
+                                            <p
+                                                style="color: #fff; text-align: start; font-size: 15px; line-height: 1.5x; margin-bottom: 1rem;">
+                                                We are delighted to inform you that your withdrawal request has been
+                                                processed successfully.</p>
+                                        </td>
+                                    </tr>
+                                </table>
+    
+                                <!-- Deposit Table -->
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="1"
+                                    style="width: 100%; border-collapse: collapse; margin-bottom: 1rem; color: #fff;">
+                                    <thead>
+                                        <tr>
+                                            <th style="padding: 8px;">Tx-Id </th>
+                                            <th style="padding: 8px;">Amount</th>
+                                            <th style="padding: 8px;">Tax</th>
+                                            <th style="padding: 8px;">Net-Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <h1
+                                            style="text-align: center; font-size: 16px; font-weight: 600; line-height: 16px; margin-bottom: 1rem; color: green;">
+                                            Transaction-Details</h1>
+                                        <tr>
+                                            <td style="padding: 8px; overflow: hidden;">${transactionId}</td>
+                                            <td style="padding: 8px;">${amount}</td>
+                                            <td style="padding: 8px;">5%</td>
+                                            <td style="padding: 8px;">${payableAmount}</td>
+                                        </tr>
+                                        <!-- Add more rows as needed -->
+                                    </tbody>
+                                </table>
+    
+    
+                                <!-- Signature -->
                                 <p
-                                    style="font-size:14px;line-height:1.5rem;font-weight:400;font-family:DM Sans,'Google Sans',sans-serif;color:#fff;margin-top:0px;width:100%;text-align:right;margin-bottom:0px">
-                                    Copyright ©
-                                    Neoprotocol
-                                </p>
+                                    style="color: #fff; text-align: start; font-size: 14px; line-height: 14px; margin-bottom: 10px;">
+                                    With Love,</p>
+                                <h2
+                                    style="color: green; text-align: start; font-size: 20px; font-weight: 600; line-height: 20px; margin-top: 0;">
+                                    Neo Team.</h2>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-    
-         
-    
-        </div>
-    
-    
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+                    </table>
+                </td>
+            </tr>
+        </table>
     </body>
     
     </html>

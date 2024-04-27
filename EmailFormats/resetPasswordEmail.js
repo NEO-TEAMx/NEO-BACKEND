@@ -5,104 +5,112 @@ const sendResetPaasswordEmail = async({username,email,token,origin}) =>{
 
     const resetURl = `${origin}/html/new-password.html?token=${token}&email=${email}`
     const message = `
+            
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Password-reset</title>
-    </head>
-    
-    <body style="background: #202124; box-sizing: border-box; padding: 0; margin: 0;">
-    
-        <div class="container p-5">
-            <div class="flex" style="display: flex; justify-content: space-between;">
-                <div>
-                    <h2 style="color: #28a745; font-family: 'Times New Roman', Times, serif; font-size: 18px;">Neoprotocol</h2>
-                </div>
-            </div>
-    
-            <div class="hold" style="display: flex; align-items: center; justify-content: center;">
-                <div class="img-container" style="width: 200px; height: 200px; background-color: transparent; border-radius: 50%; overflow: hidden;">
-                    <img src="./assets/NEO LOGO P.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-            </div>
-    
-            <div class="write-up" style="margin-top: 2rem;">
-                <h2 style="color:#fff; font-size:16px; font-weight:700; margin-bottom:16px;">Hello ${username},</h2>
-                <p style="font-size:14px; color:#fff; font-weight:400; margin-top:10px; margin-bottom:20px;">
-                    No worries, Click the button below to reset and choose a new password.
-                </p>
-                <button style=" border: 1px solid #28a745 !important;" class="btn text-success btn-border-danger mb-3" >
-                    <a href="${resetURl}"></a>
-                </button>
-            </div>
-           
-    
-            <div>
-                <p style="font-size:14px; color:#fff; font-weight:400; margin-bottom:10px;">With Love,</p>
-                <p style="font-size:16px; color:#fff; font-weight:600; margin-bottom:2rem;">The Neo Team</p>
-            </div>
-    
-            <table role="presentation" style="width:100%; min-width:100%; border-radius:6px; border:2px solid transparent;">
-                <tbody>
+    <style>
+        @media screen and (max-width: 320px) {
+            .container {
+                max-width: 100% !important;
+                padding: 10px !important;
+            }
+            .logo {
+                width: 60px !important;
+                height: 60px !important;
+            }
+            .contents {
+                margin: 0 !important;
+            }
+            .image {
+                width: 300px !important;
+                height: 150px !important;
+            }
+            .btn {
+                padding: 8px 16px !important;
+                font-size: 14px !important;
+            }
+
+            h1 {
+                font-size: 16px !important;
+            }
+
+            .arrow {
+                font-size: 12px !important;
+            }
+            /* background: #102b3f; */
+        }
+    </style>
+</head>
+<!-- password reset mail-->
+<body style="background: linear-gradient(
+    90deg,
+    hsla(30, 11%, 4%, 1) 0%,
+    hsla(0, 0%, 0%, 1) 100%
+  );">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style=" margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; margin-top: 1rem; background-image: url('https://i.ibb.co/c26qdh4/image.png'); background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: fixed;">
+        <tr >
+            <td align="center"style="padding: 40px 0;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="">
                     <tr>
-                        <td style="font-size:0; text-align:start;">
-                            <div style="font-size:14px; line-height:1.5rem;">
-                                <p style="margin-top: 12px;">
-                                    <a style="color:#ff5663; text-decoration:underline;" rel="noreferrer">Unsubscribe</a>
-                                </p>
-                            </div>
-                        </td>
-                        <td>
-                            <p style="font-size:12px; line-height:1.5rem; color:#fff; margin-top:0px; text-align:right; margin-bottom:0px;">
-                                Copyright © Neoprotocol
-                            </p>
+                        <td align="center">
+                            <!-- comp-name -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 100%; margin-bottom: 2rem;">
+                                <tr>
+                                    <td>
+                                     <h2 style="color: green; text-align: start; font-size: 22px; font-weight: 600; line-height: 22px; margin-top: 0;">Neoprotocol</h2>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- Logo -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td style="width: 200px; height: 200px; background-color: black; border-radius: 50%; border: 2px solid green; margin-bottom: 20px;">
+                                        <a href="#">
+                                            <img style="display: block; width: 100%; height: auto;" src="https://i.ibb.co/897hvhx/NEO-LOGO-P.png" alt="neo-logo" border="0">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- Email Content -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 1rem;">
+                                <tr>
+                                    <td>
+                                        <h2 style="color: #fff; text-align: start; font-size: 20px; font-weight: 600; line-height: 20px; margin-bottom: 2rem;">Hello ${username},</h2>
+                                        <p style="color: #fff; text-align: start; font-size: 16px; line-height: 1.5; margin-bottom: 1rem;">No worries, Click the button below to reset and choose a new password.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                    
+                            <!-- Button -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 1rem;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="${resetURl}" style="display: inline-block; padding: 10px 20px; background-color: transparent; border: 1px solid green; color: green; text-decoration: none; border-radius: 5px; font-size: 16px;" class="btn">Reset Password</a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
+                                <tr>
+                                    <td>
+                                        <p class="arrow" style="color: #fff; text-align: start; font-size: 14px; line-height: 1.5; margin-bottom: 10px; align-self: flex-start;">With Love,</p>
+                                        <h2 style="color: green; text-align: start; font-size: 20px; font-weight: 600; line-height: 20px; margin-top: 0;">Neo Team.</h2>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-    
-        <!-- External CSS and JS Libraries -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/9a3c5f73a5"></script>
-    
-        <!-- Media query for smaller screens -->
-        <style>
-            @media screen and (max-width: 768px) {
-                .img-container {
-                    margin-top: 2rem;
-                    width: 120px;
-                    height: 120px;
-                    background-color: transparent;
-                    border-radius: 50%;
-                    overflow: hidden;
-                    /* Ensure the image stays within the container */
-                }
-    
-                .follow-us a {
-                    width: 30px;
-                    height: 30px;
-                    padding: 5px;
-                }
-    
-                .follow-us a i {
-                    font-size: 12px;
-                }
-    
-                .reshape {
-                    font-size: 22px;
-                }
-            }
-        </style>
-    
-    </body>
-    
-    </html>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
     
 
     `;

@@ -3,11 +3,12 @@ const NL = require("../models/newsLetter");
 const SendNewsLetterMail = require("../EmailFormats/newLetterEmail");
 
 const subscribeNL = async(req,res) =>{
+    
     const {email} = req.body;
-    if(!req.body){
+    if(!email){
         throw new BadRequestApiError("Email is required")
     }
-
+    
     const createNL = await NL.create({email});
 
     await SendNewsLetterMail({email:email})

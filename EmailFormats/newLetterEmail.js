@@ -86,7 +86,7 @@ const SendNewsLetterMail = async({email}) =>{
                                             <hr style="color: #a06cd5;">
                                             <h2
                                                 style="color: #e2cfea; text-align: start; font-size: 20px; font-weight: 600; line-height: 20px; margin-bottom: 2rem;">
-                                                Hello ${username},</h2>
+                                                Hello ${email},</h2>
                                             <p
                                                 style="color: #fff; text-align: start; font-size: 14px; line-height: 1.5; margin-bottom: 1rem;">
                                                 Thank you for subscribing and expressing interest in staying updated with
@@ -107,7 +107,7 @@ const SendNewsLetterMail = async({email}) =>{
                                                 We value your trust and are committed to delivering valuable content
                                                 straight to your inbox. If you ever have any questions, feedback, or
                                                 suggestions, feel free to reach out to us at <a
-                                                href="mailto:Neoprotocol.help@gmail.com">Neo-protocol@mail.com</a>
+                                                href="mailto:Neoprotocol.help@gmail.com">Neoprotocol.help@gmail.com</a>
                                                 Stay tuned for our upcoming newsletter editions and get ready to explore all
                                                 that's happening in the world of crypto mining.
                                             </p>

@@ -66,6 +66,10 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
                                 </table>
     
                                 <!-- Deposit Table -->
+                                <h1
+                                    style="text-align: center; font-size: 16px; font-weight: 600; line-height: 16px; margin-bottom: 1rem; color: green;">
+                                    Transaction-Details
+                                </h1>
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="1"
                                     style="width: 100%; border-collapse: collapse; margin-bottom: 1rem; color: #fff;">
                                     <thead>
@@ -75,9 +79,7 @@ const sendDepositEmail = async({email,transactionId,amount,username}) =>{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <h1
-                                            style="text-align: center; font-size: 16px; font-weight: 600; line-height: 16px; margin-bottom: 1rem; color: green;">
-                                            Transaction-Details</h1>
+                                        
                                         <tr>
                                             <td style="padding: 8px;">${amount}</td>
                                             <td style="padding: 8px;">${transactionId}</td>

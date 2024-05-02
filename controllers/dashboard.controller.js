@@ -164,7 +164,7 @@ const startMining = (io) =>{
                         }else{
                             clearInterval(intervalId);
                             console.log("no hash")
-                             console.log("working from no hash1")                    
+                            //  console.log("working from no hash1")                    
                             const finalYieldPercentage = 0;
                             const totalYieldBalance = 0.00000003 * 24 * 60 * 60;
                             user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
@@ -192,8 +192,8 @@ const startMining = (io) =>{
                             await user.save();
                             return;
                         }else{
-                            console.log("no hash")
-                            console.log("working ftom here2")
+                            // console.log("no hash")
+                            console.log("there is no hash! working from here2")
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
                             let remainingMinutes = remainingTime / (60 * 60 * 1000);
                             let currentYeildBalance = (0.00000002 * (24 * 60 * 60 - remainingMinutes))*0.000001;
@@ -204,6 +204,8 @@ const startMining = (io) =>{
                             user.mining_status = true;
 
                             await user.save();
+                            console.log("balance "+user.yield_balance)
+                            console.log("percent "+ user.yield_percentage)
                             return;
                         }
                     }

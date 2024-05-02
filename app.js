@@ -70,7 +70,8 @@ io.use((socket,next) =>{
     const accessToken = socket.handshake.query.accessToken;
 
     if(!accessToken){
-        return next(new Error("Authentication failed. Please login!"))
+        throw new Error("Authentication Error occurred!")
+        // return next(new Error("Authentication failed. Please login!"))
     }
 
     try {
@@ -84,7 +85,7 @@ io.use((socket,next) =>{
             }
     } catch (error) {
             console.log(error)    
-            next(error)
+            // next(error)
     }
     
 });

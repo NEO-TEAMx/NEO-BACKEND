@@ -126,8 +126,10 @@ const neoToUsdt = async(req,res) =>{
 let cronJob;
 
 const startMining = (io) =>{
+   try{
     io.on('connection', (socket) =>{
-        // console.log('user connected!!')
+        console.log('user connected!!')
+        
         socket.on("startMining", async() =>{
             const user = await User.findById(socket.userId);
             
@@ -196,12 +198,14 @@ const startMining = (io) =>{
                             console.log("there is no hash! working from here2")
                             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
                             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-                            let currentYeildBalance = (0.00000002 * (24 * 60 * 60 - remainingMinutes))*0.000001;
+                            let currentYeildBalance = (0.00000021 * (24 * 60 * 60 - remainingMinutes))*0.000001;
                             // let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.000000013;
                             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
                             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
                             user.yield_time = remainingTime;
                             user.mining_status = true;
+
+                            console.log("balance "+user.yield_balance)
 
                             await user.save();
                             console.log("balance "+user.yield_balance)
@@ -210,7 +214,7 @@ const startMining = (io) =>{
                         }
                     }
                
-            },4000)
+            },3500)
             if(!user.mining_status || user.yield_percentage === 0){
                 startCronJob(socket, user)
             }
@@ -219,8 +223,14 @@ const startMining = (io) =>{
                 stopCronJob()
             }
 
-        })
+        });
+        socket.on("error", (error) =>{
+            console.log(error)
+        });
     })
+   }catch(e){
+    console.log(e)
+   } 
 }
 
 function startCronJob(socket, val){
@@ -234,14 +244,9 @@ function startCronJob(socket, val){
 function stopCronJob(){
     if(cronJob){
         cronJob.stop()
-        console.log("cron job stopped!!")
+        // console.log("cron job stopped!!")
     }
 }
-
-
-
-
-
 
 
 module.exports = {

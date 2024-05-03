@@ -228,6 +228,9 @@ const startMining = (io) =>{
             console.log(error)
         });
     })
+    io.on('error', (error)=>{
+        console.log(error,  "error occurred")
+    })
    }catch(e){
     console.log(e)
    } 

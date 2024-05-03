@@ -81,7 +81,7 @@ io.use((socket,next) =>{
                 
                 socket.userId = payload.userId
                 
-                return next()
+                next()
             }
     } catch (error) {
             console.log(error)    

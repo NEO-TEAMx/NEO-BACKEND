@@ -24,6 +24,7 @@ const run = require("./seedDB");
 const jwt = require("jsonwebtoken");
 const app = express();
 const allowedOrigins = [  
+    "ws://neoprotocol.onrender.com",
     "https://neo-protocol.com",  
     'http://localhost:8081',
     'http://localhost:7070',
@@ -70,7 +71,7 @@ io.use((socket,next) =>{
     const accessToken = socket.handshake.query.accessToken;
 
     if(!accessToken){
-        throw new Error("Authentication Error occurred!")
+        throw new Error("Authentication Error occurred!");
         // return next(new Error("Authentication failed. Please login!"))
     }
 

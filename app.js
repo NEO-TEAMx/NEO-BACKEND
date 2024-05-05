@@ -24,7 +24,6 @@ const run = require("./seedDB");
 const jwt = require("jsonwebtoken");
 const app = express();
 const allowedOrigins = [  
-    // "ws://neoprotocol.onrender.com",
     "https://neo-protocol.com",  
     'http://localhost:8081',
     'http://localhost:7070',
@@ -81,12 +80,12 @@ io.use((socket,next) =>{
                 const payload = jwt.verify(accessToken, process.env.SECRET)
                 
                 socket.userId = payload.userId
-                
+                console.log(socket.userId)
                 next()
             }
     } catch (error) {
-            console.log(error)    
-            // next(error)
+            // console.log(error)    
+            next(error)
     }
     
 });

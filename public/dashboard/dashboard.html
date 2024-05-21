@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="https://kit.fontawesome.com/1b9f7a129a.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="sub-dashboard.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" type="image/png" href="./assets/images/neo-logo.png" sizes="16x16 32x32">
+  <title>Dashboard</title>
+
+  <style>
+
+    .hidden {
+        display: none;
+    }
+
+    .spinner {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          /* transform: translate(-50%, -50%); */
+           width: 11.2px;
+           height: 11.2px;
+           animation: spinner-o824ag 1s infinite linear;
+          display: none;
+        }
+        
+        .spinner div {
+           position: absolute;
+           width: 100%;
+           height: 100%;
+           background: #00d664;
+           border-radius: 50%;
+           animation: spinner-vse6n7 1.25s infinite ease;
+        }
+        
+        .spinner div:nth-child(1) {
+           --rotation: 90;
+        }
+        
+        .spinner div:nth-child(2) {
+           --rotation: 180;
+        }
+        
+        .spinner div:nth-child(3) {
+           --rotation: 270;
+        }
+        
+        .spinner div:nth-child(4) {
+           --rotation: 360;
+        }
+        
+        @keyframes spinner-vse6n7 {
+           0%, 100% {
+              transform: rotate(calc(var(--rotation) * 1deg)) translateY(0);
+           }
+        
+           50% {
+              transform: rotate(calc(var(--rotation) * 1deg)) translateY(300%);
+           }
+        }
+        
+        @keyframes spinner-o824ag {
+           to {
+              transform: rotate(360deg);
+           }
+        }
+
+  </style>
+
+</head>
+
+<body class="body">
+   
+       
+<div class="spinner">
+  <div></div>   
+  <div></div>    
+  <div></div>    
+  <div></div>    
+</div>
+
+
+  <div class="dashboard hidden">
+    <div class="container">
+
+      <div class="hide" style="margin-top:0;">
+        <div class="d-small-header">
+          <div class="open" id="open-btn">
+            <button id="open-menu-btn"><i class="uil uil-list-ui-alt"></i></button>
+          </div>
+        </div>
+      </div> 
+
+      <aside>
+        <div class="aside">
+          <div class="top">
+            <div class="logo">
+              <img src="../assets/images/neo-logo.png" alt="">
+              <h2>NEO</h2>
+            </div>
+
+            <div class="close" id="close-btn">
+              <button id="close-menu-btn"><i class="uil uil-times"></i></button>
+            </div>
+          </div>
+
+          <div class="sidebar">
+
+            <ul>
+              <li class="active"><a href="dashboard.html"><i class="material-icons">dashboard</i>
+                  <h3>Dashboard</h3>
+                </a></li>
+              <li><a href="../index.html"><i class="material-icons">home</i>
+                  <h3>Home</h3>
+                </a></li>
+              <li><a href="hash.html"><i class="material-icons">attach_money</i>
+                  <h3>Buy Hash</h3>
+                </a></li>
+              <li><a href="swap.html"><i class="material-icons">autorenew</i>
+                  <h3> Swap</h3>
+                </a></li>
+              <li><a href="withdraw.html"><i class="material-icons">arrow_downward</i>
+                  <h3> Withdrawal</h3>
+                </a></li>
+              <li><a href="deposit.html"><i class="material-icons">credit_card</i>
+                  <h3>Deposit</h3>
+                </a></li>
+              <li><a href="faq.html"><i class="material-icons">help</i>
+                  <h3>FAQs</h3>
+                </a></li>
+              <li><a href="referral.html"><i class="material-icons">person_add</i>
+                  <h3>Referral</h3>
+                </a></li>
+              <li><a href="deposit-history.html"><i class="material-icons">history</i>
+                  <h3>Deposit History</h3>
+                </a></li>
+              <li><a href="withdrawal-history.html"><i class="material-icons">history</i>
+                  <h3>Withdrawal History</h3>
+                </a>
+              </li>
+              <li onclick="logoutFunc()"><a><i class="material-icons">logout</i>
+                  <h3>Log Out</h3>
+                </a></li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <!------------------------------------------------ END OF ASIDE ------------------------------------------------------->
+
+
+
+      <main class="mining-section">
+        <div class="word">
+          <h2>DASHBOARD</h2>
+        </div>
+
+        <div id="mining-container">
+          <h3 style="  font-family: 'Times New Roman', Times, serif;">Mining</h3>
+          <div class="progress-bar-container">
+            <svg class="progress-bar" viewBox="0 0 100 100">
+              <circle class="bg-circle" cx="50" cy="50" r="45" />
+              <circle class="progress-circle" cx="50" cy="50" r="45" />
+            </svg>
+            <div class="progress-text"><span id="percentage"></span>%</div>
+            <div class="timer-text" id="timer"></div>
+          </div>
+
+          <p>Yield Balance: <span id="yield_balance"></span> NEO</p>
+          <button id="start-mining-btn" onclick="startMining()">Start Mining</button>
+          <div class="top-left">
+            <div>
+              <h4>Hash Rate</h4>
+            </div>
+            <div>
+              <p><span id="hash_rate"></span>NEO/Hr</p>
+            </div>
+          </div>
+          <div class="top-right">
+            <h4>Total Balance</h4>
+            <p> <span id="balance"></span>$</p>
+          </div>
+          <div class="swap-btn-container">
+            <a href="swap.html">
+              <button id="swap-btn">
+                <i class="material-icons">autorenew</i>
+                Swap
+              </button>
+            </a>
+          </div>
+
+        </div>
+
+        <section class="price-chart-section" style="display: none;">
+          <h4>NEO REAL TIME PRICE CHART</h4>
+          <div class="responsive-container">
+            <div id="price-chart-container"></div>
+          </div>
+        </section>
+
+        <section class="tip-section">
+          <div class="tip-sub-heading">
+            <h2>Hints</h2> <i class="fas fa-lightbulb"></i>
+          </div>
+          <div class="tip-container owl-carousel">
+
+            <div class="tip-card">
+              <div class="tip-card-header">
+                <h2>Transactions</h2>
+              </div>
+              <div class="tip-card-content">
+                <div class="tip-icon">
+                  <i class="fa-solid fa-sack-dollar"></i>
+                </div>
+                <div class="tip-text">
+                  <p>To mitigate the risk of fund loss, make certain to deposit into the BEP20 wallet address provided
+                    and withdraw to a BEP20 wallet address.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tip-card">
+              <div class="tip-card-header">
+                <h2>Boost</h2>
+              </div>
+              <div class="tip-card-content">
+                <div class="tip-icon">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div class="tip-text">
+                  <p>To enhance your daily earnings, consider acquiring additional hash power, as this can effectively
+                    increase your overall hashrate and help you earn more.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tip-card">
+              <div class="tip-card-header">
+                <h2>Refferal</h2>
+              </div>
+              <div class="tip-card-content">
+                <div class="tip-icon">
+                  <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <div class="tip-text">
+                  <p>Referring individuals can earn you a referral bonus in the form of hashrate, effectively boosting
+                    your mining speed and overall earnings.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tip-card">
+              <div class="tip-card-header">
+                <h2>Security</h2>
+              </div>
+              <div class="tip-card-content">
+                <div class="tip-icon">
+                  <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="tip-text">
+                  <p>Protect your assets by safeguarding your login details to prevent any potential asset loss. Keep
+                    your account information secure to ensure the safety of your assets.</p>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </section>
+
+        <footer class="fixed-footer">
+          <div class="footer-icons">
+            <div class="footer-icon">
+              <a href="deposit.html"><i class="material-icons">credit_card</i></a>
+            </div>
+            <div class="footer-icon">
+              <a href="withdraw.html"><i class="material-icons">arrow_downward</i></a>
+            </div>
+            <div class="footer-icon">
+              <a href="hash.html"><i class="material-icons">attach_money</i></a>
+            </div>
+            <div class="footer-icon">
+              <a href="mailto:Neo-protocol@mail.com"><i class="material-icons">email</i></a>
+            </div>
+          </div>
+        </footer>
+
+        <!-- <footer class="section-p1">
+          <div class="col">
+            <h4>Contact</h4>
+            <p><span><strong><i class="uil uil-envelope"></i></strong> </span><a
+                href="mailto:Neo-protocol@mail.com">Neo-protocol@mail.com</a></p>
+            <p> <span><strong><i class="uil uil-location-point"></i></strong></span> 562 Willingtom Road, Street 32, San
+              Francisco</p>
+            <p><span><strong><i class="uil uil-clock-nine"></i></strong> </span> 10:00 - 18:00, Mon - Sat</p>
+            <div class="follow">
+              <h4>Follow Us On</h4>
+              <div class="icon">
+                <a href=" https://twitter.com/@Neo_Blockchain" target="_blank"><i class="uil uil-twitter-alt"></i></a>
+                <a href=" https://linkedin.com" target="_blank"><i class="uil uil-linkedin-alt"></i></a>
+                <a href=" https://youtube.com" target="_blank"><i class="uil uil-youtube"></i></a>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <h4>About</h4>
+            <a href="#">Contact Us</a>
+          </div>
+
+          <div class="col">
+            <h4>My Account</h4>
+            <a href="../html/index.html">Sign Out</a>
+            <a href="#">Help</a>
+          </div>
+          <div class="col install">
+            <h4>Install App</h4>
+            <p></p>
+            <p>Coming Soon To App Store &amp Google Play!!</p>
+            <div class="row">
+              <a href="#"> <img src="../assets/images/app_store.svg" alt=""></a>
+              <a href="#"><img src="../assets/images/google_play.svg" alt=""></a>
+
+            </div>
+          </div>
+
+          <div class="copyright">
+            <p> © <span id="currentYear"></span> Neo-Protocol, All Rights Resrerved.</p>
+          </div>
+        </footer> -->
+
+        <!-- 
+        <script>
+
+
+          // TradingView widget initialization
+          new TradingView.widget(
+            {
+              "width": 360,
+              "height": 400,
+              "symbol": "KUCOIN:ANCUSDT",
+              "interval": "1",
+              "timezone": "Etc/UTC",
+              "theme": "dark",
+              "style": "1",
+              "locale": "en",
+              "toolbar_bg": "#f1f3f6",
+              "enable_publishing": false,
+              "allow_symbol_change": true,
+              "container_id": "price-chart-container",
+
+              "overrides": {
+                "paneProperties.background": "#1b1b1b",
+                "paneProperties.vertGridProperties.color": "#363c4e",
+                "paneProperties.horzGridProperties.color": "#363c4e",
+                "scalesProperties.textColor": "#8b949e",
+                "mainSeriesProperties.candleStyle.upColor": "#00d395",
+                "mainSeriesProperties.candleStyle.downColor": "#ff4d61",
+                "mainSeriesProperties.candleStyle.drawWick": true,
+                "mainSeriesProperties.candleStyle.drawBorder": true,
+                "mainSeriesProperties.candleStyle.borderColor": "#378658",
+                "mainSeriesProperties.candleStyle.borderUpColor": "#00d395",
+                "mainSeriesProperties.candleStyle.borderDownColor": "#ff4d61",
+              },
+              "studies": [
+                {
+                  "id": "custom_indicator",
+                  "script": "var signals = [1, 0, -1, 1, -1, 0, 1, -1, 0, 1];\n\nvar upSignal = signals.map((signal, index) => signal === 1 ? { time: index, position: 'aboveBar', color: 'green', text: 'Buy' } : null);\n\nvar downSignal = signals.map((signal, index) => signal === -1 ? { time: index, position: 'belowBar', color: 'red', text: 'Sell' } : null);\n\nupSignal = upSignal.filter(Boolean);\ndownSignal = downSignal.filter(Boolean);\n\nvar signalsArray = upSignal.concat(downSignal);\n\nvar signalsOutput = [];\n\nif (signalsArray.length > 0) {\n  signalsArray.forEach(function (signal) {\n    signalsOutput.push({ time: signal.time, position: signal.position, color: signal.color, shape: 'arrow_up', text: signal.text });\n  });\n}\n\nsignalsOutput",
+                  "inputs": [],
+                  "styles": [
+                    {
+                      "id": "color",
+                      "color": "#ffffff"
+                    }
+                  ]
+                }
+              ]
+            }
+
+          );
+        </script> -->
+
+
+      </main>
+
+      <!-- <script>
+
+        const MINING_DURATION_SECONDS = 24 * 60 * 60; // 1 day in seconds
+        const PROGRESS_UPDATE_INTERVAL_MS = 1000; // Progress update interval in milliseconds
+
+        let progress = 0;
+        let progressInterval = null;
+        let balance = 0;
+
+        // Retrieve the progress and balance from Local Storage
+        const storedProgress = localStorage.getItem('progress');
+        const storedBalance = localStorage.getItem('balance');
+
+        // Check if progress and balance data exist and update the display
+        if (storedProgress && storedBalance) {
+          progress = parseFloat(storedProgress);
+          balance = parseFloat(storedBalance);
+          updateProgressBar();
+          updateBalance();
+        }
+
+        function startMining() {
+          // Check if mining is already in progress
+          if (progressInterval !== null) {
+            return;
+          }
+
+          const progressCircle = document.querySelector('.progress-circle');
+          const progressText = document.querySelector('.progress-text');
+          const balanceElement = document.querySelector('#balance');
+          const startMiningBtn = document.querySelector('#start-mining-btn');
+          const timerText = document.querySelector('.timer-text'); // Timer element
+
+          const startTime = Date.now();
+          const endTime = startTime + MINING_DURATION_SECONDS * 1000;
+
+          // Update button text and disable it during mining
+          startMiningBtn.textContent = 'Currently Mining';
+          startMiningBtn.disabled = true;
+
+          progressInterval = setInterval(() => {
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - startTime;
+            const remainingTime = Math.max(0, endTime - currentTime); // Remaining time in milliseconds
+
+            if (currentTime >= endTime) {
+              clearInterval(progressInterval);
+              progressInterval = null;
+              progressCircle.style.strokeDasharray = `100, 100`;
+              progressText.textContent = `100%`;
+              timerText.textContent = '00:00:00'; // Set timer text to 00:00:00
+
+              // Update button text and enable it after mining
+              startMiningBtn.textContent = 'Start Mining';
+              startMiningBtn.disabled = false;
+
+              // Clear progress and balance from Local Storage
+              localStorage.removeItem('progress');
+              localStorage.removeItem('balance');
+
+              return;
+            }
+
+            progress = (elapsedTime / (MINING_DURATION_SECONDS * 1000)) * 100;
+            updateProgressBar();
+
+            // Update balance display
+            balance += 0.5; // Example: Increment balance by 0.5 USDT per interval
+            updateBalance();
+
+            // Update timer text
+            const formattedTime = formatTime(remainingTime);
+            timerText.textContent = formattedTime;
+
+            // Store the progress and balance in Local Storage
+            localStorage.setItem('progress', progress.toFixed(2));
+            localStorage.setItem('balance', balance.toFixed(2));
+          }, PROGRESS_UPDATE_INTERVAL_MS);
+        }
+
+        function updateProgressBar() {
+          const progressCircle = document.querySelector('.progress-circle');
+          const progressText = document.querySelector('.progress-text');
+          progressCircle.style.strokeDasharray = `${progress}, 100`;
+          progressText.textContent = `${Math.round(progress)}%`;
+        }
+
+        function updateBalance() {
+          const balanceElement = document.querySelector('#balance');
+          balanceElement.textContent = balance.toFixed(2);
+        }
+
+        // Format time in HH:MM:SS format
+        function formatTime(milliseconds) {
+          const seconds = Math.floor(milliseconds / 1000);
+          const minutes = Math.floor(seconds / 60);
+          const hours = Math.floor(minutes / 60);
+
+          const formattedHours = padZero(hours);
+          const formattedMinutes = padZero(minutes % 60);
+          const formattedSeconds = padZero(seconds % 60);
+
+          return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+        }
+
+        // Add leading zero if the number is less than 10
+        function padZero(number) {
+          return number < 10 ? `0${number}` : `${number}`;
+        }
+
+        // Attach event listener to start mining button
+        const startMiningBtn = document.querySelector('#start-mining-btn');
+        startMiningBtn.addEventListener('click', startMining);
+
+        // Start mining if progress and balance are available
+        if (progress > 0 && balance > 0) {
+          startMining();
+        }
+
+      </script> -->
+
+
+
+      <script>
+        const sideMenu = document.querySelector(".aside");
+        const menuBtn = document.querySelector("#open-menu-btn")
+        const closeBtn = document.querySelector("#close-btn")
+
+        menuBtn.addEventListener('click', () => {
+          sideMenu.style.display = "block";
+        });
+
+        closeBtn.addEventListener('click', () => {
+          sideMenu.style.display = "none";
+        });
+
+
+        // function startProgressBarAnimation() {
+        //   const progressBar = document.querySelector('.progress-circle');
+        //   let progress = 0;
+
+        //   // Start the progress animation
+        //   const interval = setInterval(() => {
+        //     progress += 5; // Increment progress
+        //     progressBar.style.strokeDasharray = `${progress}, 100`;
+        //     if (progress >= 100) {
+        //       progress = 0; 
+        //     }
+        //   }, 10); 
+        // };
+
+    
+        // const strtMiningBtn = document.getElementById('start-mining-btn');
+        // strtMiningBtn.addEventListener('click', startProgressBarAnimation);
+
+
+
+      </script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+      <script type="text/javascript">
+        $(document).ready(function () {
+          $('.tip-container').owlCarousel({
+            loop: true,
+            nav: false,
+            dots: true,
+            margin: 50,
+            autoplay: true,
+            autoplayTimeout: 4000,
+            smartSpeed: 800,
+            responsive: {
+              0: {
+                items: 1
+              },
+              600: {
+                items: !1
+              },
+              700: {
+                items: 2
+              },
+              800: {
+                items: 2
+              },
+              1000: {
+                items: 3
+              }
+            }
+          })
+        });
+      </script>
+
+    </div>
+  </div>
+  <script src="../assets/js/main.browser.js"></script>
+  <script src="../assets/js/index.page.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+  <script src="https://cdn.socket.io/4.7.3/socket.io.min.js"
+    integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg"
+    crossorigin="anonymous">
+  </script>
+  <!-- <script>
+    const {io} = "https://cdn.socket.io/4.7.5/socket.io.esm.min.js"
+    
+    async function startMinifng(){
+      console.log("from html")
+      if(await isAuthenticated()){
+        try{
+        const accessToken = getCookie("accessToken")
+
+        const socket = io("http://localhost:4040",{
+          query:{
+            accessToken: accessToken                
+          },
+          withCredentials:true,
+          extraHeaders: {
+            // 'Access-Contorl-Allow-Origin': 'https://neo-protocol.com'
+
+            'Access-Contorl-Allow-Origin': 'http://localhost:8081'
+          }
+        });
+
+
+        socket.emit('startMining')
+        socket.on('miningData', (data) =>{
+          console.log(socket.id)
+          console.log(socket.connect)
+          console.log({data})
+        });
+
+        socket.on('connect_error', (error)=>{
+          if(socket.active){
+            return true
+          }else{
+            socket.connect()
+            console.log(error.message)
+          }
+        });  
+      }catch(error){
+        console.log(error)
+      }
+      }else{
+        redirectToLogin()
+      }
+
+    }
+
+    
+  </script>-->
+
+  <!-- <script src="https://cdn.socket.io/4.7.3/socket.io.min.js"
+    integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg"
+    crossorigin="anonymous">
+  </script>  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+</body>
+
+</html>

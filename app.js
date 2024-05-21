@@ -53,6 +53,7 @@ const corsOpt = {
 app.set('trust proxy', 1)
 app.set('io',io);
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, './public')))
 app.use(cors(corsOpt));
 app.use(cookieParser(process.env.SECRET));
 // app.use(morgan("dev"));

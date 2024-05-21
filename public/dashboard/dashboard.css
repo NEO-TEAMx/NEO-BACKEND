@@ -1,0 +1,1467 @@
+.body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  font-family: poppins, sans-serif;
+  font-size: 0.88rem;
+  user-select: none;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background: linear-gradient(
+  90deg,
+  hsla(30, 11%, 4%, 1) 0%,
+  rgb(14, 13, 13) 100%
+);
+}
+
+.dashboard {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: #ffff;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-family: "Times New Roman", Times, serif;
+}
+
+h3 {
+  font-size: 0.87rem;
+}
+
+small {
+  font-size: 0.75rem;
+}
+
+span {
+  color: #00d664;
+}
+
+.hide {
+  display: none;
+  position: fixed;
+  top: 0;
+  margin:0;
+  width: 100%;
+  background: #100f0f;
+  margin-bottom: 1.5rem;
+  z-index: 999;
+}
+
+.d-small-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  /* position: absolute;
+  top: 0; */
+}
+
+.d-small-header button {
+display: none;
+background: none;
+border: none;
+cursor: pointer;
+font-size: 24px;
+color: #00d664;
+transition: color 0.3s ease;
+}
+
+.d-small-header button:hover {
+color: #036c34;
+}
+.small-header .open button {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 35px;
+}
+
+
+
+/* .small-header {
+  width: auto;
+  display: flex;
+  align-items: center;
+  Overflow:hidden;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin:0;
+  background: linear-gradient(
+    90deg,
+    hsla(30, 11%, 4%, 1) 0%,
+    rgb(14, 13, 13) 100%
+  );
+}
+
+.small-header h1{
+  margin:0;
+} */
+
+/* 
+.d-small-header .open button {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 25px;
+  margin-top:0;
+  margin:0;
+}
+
+.d-small-header .open{
+  margin-top:0;
+  margin:0;
+} */
+
+.container {
+  display: grid;
+  width: 98%;
+  margin: 0 auto;
+  gap: 1.8rem;
+  grid-template-columns: 16rem auto;
+}
+
+.aside {
+  height: 100vh;
+  background-color: #101112;
+  position: fixed;
+}
+
+.aside .top {
+  background: rgb(7, 7, 7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.8rem;
+  padding: 0 5px;
+}
+
+.aside .logo {
+  display: flex;
+  /* gap: 0.8rem; */
+}
+
+.aside .logo img {
+  display: block;
+  width: 50px;
+  height: 50px;
+}
+
+.aside .logo h2 {
+  text-align: center;
+  margin-top: 12px;
+  color: #00d664;
+  font-size: 1.2rem;
+}
+
+.aside button {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: #00d664;
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
+.aside .close {
+  display: none;
+  cursor: pointer;
+}
+
+/*------------------------------------------------------------ SIDEBAR --------------------------------------------------------------*/
+
+.aside .sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  top: 1rem;
+  padding: 0 20px;
+}
+
+.aside h3 {
+  font-weight: 500;
+}
+
+.aside a {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 18px 20px;
+  border-radius: 5px;
+  position: relative;
+  transition: transform 0.3s;
+  height: 35px;
+  margin-bottom: 15px;
+}
+
+.aside a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #00d664;
+  transition: 0.3s;
+}
+
+.aside a:hover {
+  background: rgba(0, 214, 100, 0.1);
+  color: #00d664;
+  transform: translateX(5px);
+}
+
+.aside a i {
+  margin-right: 8px;
+  transition: transform 0.3s;
+}
+
+.aside a:hover i {
+  transform: translateX(5px);
+}
+
+.aside li:last-child a {
+  position: relative;
+  top: 20px;
+  bottom: 0;
+  width: 100%;
+}
+
+.aside .sidebar .active {
+  background: rgba(0, 214, 100, 0.1);
+  color: #00d664;
+}
+
+/*------------------------------------------------------------ SIDEBAR ENDS--------------------------------------------------------------*/
+
+/*------------------------------------------------------------  SIDEBAR MEDIA QUERIES BEGINS--------------------------------------------------------------*/
+@media screen and (max-width: 1200px) {
+  hmtl,body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  } 
+  .container {
+    width: 100%;
+    grid-template-columns: auto;
+  }
+
+  .aside {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 25rem;
+    z-index: 9999;
+    height: 100%;
+    padding: 10px;
+    box-shadow: 1rem 2rem 3rem #010603;
+    animation: showMenu 500ms ease forwards;
+  }
+
+  @keyframes showMenu {
+    to {
+      left: 0;
+    }
+  }
+
+  .aside .close {
+    display: inline-block;
+    cursor: pointer;
+  }
+  /* 
+  .aside li:last-child a {
+    position: absolute;
+    bottom: 6rem;
+    width: 100%;
+  } */
+
+  .aside li:last-child a {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .aside .sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 86vh;
+    position: relative;
+    top: 3rem;
+    padding: 0 20px;
+  }
+  
+}
+
+
+
+@media screen and (max-width: 768px) {
+  hmtl,body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  } 
+  .aside li:last-child a {
+    position: relative;
+    top: 60px;
+    width: 100%;
+  }
+
+  .aside .sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 86vh;
+    position: relative;
+    top: 3rem;
+    padding: 0 20px;
+  }
+  
+  .aside {
+    height: 100%;
+    background-color: #101112;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 400px) {
+  hmtl,body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  } 
+  .aside li:last-child a {
+    position: relative;
+    top: 230px;
+    width: 100%;
+  }
+
+  .aside a {
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 15px 15px;
+    border-radius: 5px;
+    position: relative;
+    transition: transform 0.3s;
+    height: 25px;
+    margin-bottom: 10px;
+  }
+
+  .aside .sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 86vh;
+    position: relative;
+    top: 3rem;
+    padding: 0 20px;
+  }
+
+  .aside {
+    height: 100%;
+    background-color: #101112;
+    overflow: hidden;
+  }
+  
+}
+
+
+@media screen and (max-width: 360px) {
+  hmtl,body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  } 
+  
+ .aside li:last-child a {
+    position: relative;
+    top: 90px;
+    width: 100%;
+  }
+  
+  .small-header {
+     padding: 5px 20px !important;
+}
+
+}
+
+
+/*------------------------------------------------------------  SIDEBAR MEDIA QUERIES ENDS--------------------------------------------------------------*/
+
+/*------------------------------------------------------------  MINING SECTION BEGINS--------------------------------------------------------------*/
+
+.mining-section {
+  margin-top: 1.4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.mining-section .word h2 {
+  color: #00d664;
+  font-weight: 800;
+  font-size: 2.3rem;
+  line-height: 3rem;
+  margin: 1rem 0rem 1rem 0rem;
+  margin-left: -650px;
+}
+
+.mining-section h3 {
+  color: #00d664;
+  font-weight: 600;
+  font-size: 2.3rem;
+  line-height: 3rem;
+  margin-top: 1.2rem;
+}
+
+#mining-container {
+  text-align: center;
+  background-image: url(../assets/images/exchange-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: black;
+  border-radius: 8px;
+  border: 1px solid rgb(30, 49, 30);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+  color: #fff;
+  margin-bottom: 3rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  position: relative;
+}
+
+#mining-container .swap-btn-container {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#swap-btn {
+  margin-right: 5px;
+  color: #00d664;
+  background-color: transparent;
+  border: 1px solid #00d664;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+#swap-btn i {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-top: -4px;
+}
+
+#swap-btn {
+  transition: transform 0.3s;
+}
+
+#swap-btn:active {
+  transform: scale(0.6);
+}
+
+#mining-container span {
+  color: #00d664;
+}
+
+#mining-container p {
+  margin-top: 10px;
+}
+
+.progress-bar-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.progress-bar {
+  transform: rotate(-90deg);
+  position: relative;
+}
+
+.bg-circle {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 5;
+}
+
+.progress-circle {
+  fill: none;
+  stroke: #00d664;
+  stroke-width: 5;
+  stroke-dasharray: 0, 100;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1d linear;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: red;
+}
+
+.timer-text {
+  position: absolute;
+  top: 70%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff6f6;
+}
+
+#start-mining-btn {
+  background-color: #0b6736;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 2rem;
+}
+
+#start-mining-btn:hover {
+  background-color: #0bc163;
+  border: none;
+  /* Add this line to remove the border */
+  outline: none;
+}
+
+.top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: left;
+  padding: 10px;
+  font-weight: bold;
+  border: 1px solid #0a502a;
+  border-radius: 5px;
+  margin: 1.5rem 1.5rem;
+  box-shadow: 2px 2px 4px #0e921f9a;
+  text-align: center;
+}
+
+.top-left h4 {
+  padding: 0;
+  margin: 0;
+  color: rgb(151, 151, 151);
+}
+
+.top-left p {
+  padding: 0;
+  margin: 0;
+  color: #00d664;
+}
+
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  padding: 10px;
+  font-weight: bold;
+  border: 1px solid #0a502a;
+  border-radius: 5px;
+  margin: 1.5rem 1.5rem;
+  box-shadow: -2px 2px 4px rgba(14, 146, 31, 0.603);
+  text-align: center;
+}
+
+.top-right h4 {
+  padding: 0;
+  margin: 0;
+  color: rgb(151, 151, 151);
+}
+
+.top-right p {
+  padding: 0;
+  margin: 0;
+  color: #00d664;
+}
+
+/*------------------------------------------------------------  MINING SECTION ENDSS--------------------------------------------------------------*/
+/* 
+.responsive-container {
+  width: 100%;
+  padding-bottom: 50%;
+  position: relative;
+}
+
+#price-chart-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+} */
+
+/*------------------------------------------------------------  MINING-SECTION MEDIA QUERIES BEGINS--------------------------------------------------------------*/
+
+@media screen and (max-width: 1200px) {
+  .hide {
+    display: block;
+  }
+
+  .d-small-header button {
+    display: inline-block;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 2.3rem;
+    color: #00d664;
+    transition: color 0.3s ease;
+  }
+
+  .d-small-header button:hover {
+    color: white;
+  }
+
+  .d-small-header #close-menu-btn {
+    display: none;
+  }
+
+  .mining-section {
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mining-section .word h2 {
+    color: #00d664;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: normal;
+    text-align: center;
+  }
+
+  .mining-section h3 {
+    color: #00d664;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: normal;
+    margin-top: 1.2rem;
+  }
+
+  #mining-container {
+    text-align: center;
+    background-image: url(../assets/images/exchange-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: black;
+    border-radius: 8px;
+    border: 1px solid rgb(30, 49, 30);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    color: #fff;
+    margin-bottom: 3rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    position: relative;
+    width: 700px;
+  }
+
+  .price-chart-section h4 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .price-chart-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .responsive-container {
+    width: fit-content;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    padding-bottom: 25rem;
+    position: relative;
+  }
+
+  #price-chart-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: -160px;
+  }
+
+  footer.section-p1 {
+    background-color: #000000;
+    margin: 0;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mining-section {
+    margin-top: 4rem;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mining-section .word h2 {
+    color: #00d664;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: normal;
+    margin-left: 0;
+    margin-top: 2rem;
+  }
+
+  .mining-section h3 {
+    color: #00d664;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: normal;
+    margin-top: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  #mining-container {
+    text-align: center;
+    background-image: url(../assets/images/exchange-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: black;
+    border-radius: 8px;
+    border: 1px solid rgb(30, 49, 30);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    color: #fff;
+    margin-bottom: 3rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    position: relative;
+    width: 98%;
+  }
+
+  .price-chart-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .responsive-container {
+    width: auto;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding-bottom: 35rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #price-chart-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: -180px;
+  }
+
+  #mining-container .swap-btn-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  #swap-btn {
+    font-size: 0;
+    margin-right: -5px;
+    color: #00d664;
+    background-color: transparent;
+    border: none;
+  }
+
+  .progress-bar-container {
+    position: relative;
+    width: 130px;
+    height: 130px;
+  }
+
+  .progress-bar {
+    transform: rotate(-90deg);
+    position: relative;
+  }
+
+  .bg-circle {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 5;
+  }
+
+  .progress-circle {
+    fill: none;
+    stroke: #00d664;
+    stroke-width: 5;
+    stroke-dasharray: 0, 100;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1d linear;
+  }
+
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+  }
+
+  .timer-text {
+    position: absolute;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff6f6;
+  }
+
+  #start-mining-btn {
+    background-color: #0b6736;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 2rem;
+  }
+
+  #start-mining-btn:hover {
+    background-color: #0bc163;
+    border: none;
+    /* Add this line to remove the border */
+    outline: none;
+  }
+
+  .top-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: left;
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid #0a502a;
+    border-radius: 5px;
+    margin: 10px;
+    box-shadow: 2px 2px 4px #0e921f9a;
+    text-align: center;
+  }
+
+  .top-left h4 {
+    padding: 0;
+    margin: 0;
+    color: rgb(151, 151, 151);
+  }
+
+  .top-left p {
+    padding: 0;
+    margin: 0;
+    color: #00d664;
+  }
+
+  .top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid #0a502a;
+    border-radius: 5px;
+    margin: 10px;
+    box-shadow: -2px 2px 4px rgba(14, 146, 31, 0.603);
+    text-align: center;
+  }
+
+  .top-right h4 {
+    padding: 0;
+    margin: 0;
+    color: rgb(151, 151, 151);
+  }
+
+  .top-right p {
+    padding: 0;
+    margin: 0;
+    color: #00d664;
+  }}
+
+@media (max-width: 360px) {
+  .mining-section {
+    padding: 0 10px;
+    margin-top: -1.3rem;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .price-chart-section {
+    display: none;
+  }
+
+  .mining-section .word h2 {
+    color: #00d664;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: normal;
+    margin-left: 0;
+    /* margin-top: -0.3rem; */
+  }
+
+  #mining-container .swap-btn-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .progress-bar-container {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-top: 2rem;
+  }
+
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+  }
+
+  .timer-text {
+    position: absolute;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff6f6;
+  }
+
+  #start-mining-btn {
+    background-color: #0b6736;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 2rem;
+  }
+
+  #start-mining-btn:hover {
+    background-color: #0bc163;
+    border: none;
+    outline: none;
+  }
+
+  .top-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: left;
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid #0a502a;
+    border-radius: 5px;
+    margin: 10px;
+    box-shadow: 2px 2px 4px #0e921f9a;
+    text-align: center;
+  }
+
+  .top-left h4 {
+    padding: 0;
+    margin: 0;
+    color: rgb(151, 151, 151);
+  }
+
+  .top-left p {
+    padding: 0;
+    margin: 0;
+    color: #00d664;
+  }
+
+  .top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid #0a502a;
+    border-radius: 5px;
+    margin: 10px;
+    box-shadow: -2px 2px 4px rgba(14, 146, 31, 0.603);
+    text-align: center;
+  }
+
+  .top-right h4 {
+    padding: 0;
+    margin: 0;
+    color: rgb(151, 151, 151);
+  }
+
+  .top-right p {
+    padding: 0;
+    margin: 0;
+    color: #00d664;
+  }
+  
+}
+
+
+@media (min-width: 768px) {
+  .price-chart-section {
+    display: none;
+  }
+}
+
+@media (max-width: 320px) {
+  .mining-section {
+    padding: 0;
+    margin-top: -1.3rem;
+  }
+
+  .price-chart-section {
+    display: none;
+  }
+
+  .mining-section .word h2 {
+    color: #00d664;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: normal;
+    margin-left: 0;
+    /* margin-top: -0.3rem; */
+  }
+
+  .mining-section h3 {
+    visibility: hidden;
+}
+
+  #mining-container{
+    width:85%;
+    margin: 0;
+    margin-left: -10px;
+  }
+
+  #mining-container .swap-btn-container {
+    padding: 5px;
+  }
+
+  .progress-bar-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-top: 2rem;
+  }
+
+
+  #start-mining-btn {
+    border-radius: 4px;
+    padding: 6px 6px;
+    font-size: 14px;
+  }
+
+  .top-left {
+    width: 80px;
+  }
+
+  .top-right {
+    width: 80px;
+  }
+
+.tip-section {
+    padding: 0 5px;
+    width: 100%;
+    margin-bottom: -20px;
+}
+
+.tip-container
+{
+  width: 95%;
+}
+
+.tip-sub-heading {
+  margin: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.tip-sub-heading h2 {
+  color: #00d664;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  margin: 0;
+}
+
+.tip-card-header h2 {
+  color: #00d664;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.tip-sub-heading i {
+  color: yellow;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.tip-card {
+  width: 200px;
+}
+
+.tip-card-header i {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.tip-card-header h2 {
+  margin: 0;
+  font-size: 16px;
+  
+}
+
+.tip-card-content {
+  padding: 10px;
+  display: flex;
+}
+
+.tip-icon {
+  display: inline-block;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.tip-text p{
+  font-size: 11px;
+}
+
+.footer-icons {
+  gap: 18px;
+}
+}
+
+
+/*------------------------------------------------------------  TIP SECTION BEGINS--------------------------------------------------------------*/
+
+.tip-section {
+  padding: 0 5px;
+  position: absolute;
+  left: 20px;
+  bottom: -130px; 
+  width: 93%;
+  z-index: 2;
+}
+
+.tip-sub-heading {
+  margin: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.tip-sub-heading h2 {
+  color: #00d664;
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 3rem;
+  margin: 0;
+}
+
+.tip-card-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tip-card-header h2 {
+  color: #00d664;
+  font-weight: 800;
+  font-size: 2.3rem;
+  line-height: 3rem;
+  margin: 0;
+}
+
+.tip-sub-heading i {
+  color: yellow;
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  margin: 0;
+}
+
+.tip-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 1rem;
+}
+
+.tip-card {
+  width: auto;
+  background: black;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.tip-card-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #333;
+}
+
+.tip-card-header i {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.tip-card-header h2 {
+  margin: 0;
+  font-size: 18px;
+  
+}
+
+.tip-card-content {
+  padding: 15px;
+  display: flex;
+}
+
+.tip-icon {
+  display: inline-block;
+  font-size: 40px;
+  margin-right: 15px;
+}
+
+.tip-icon i{
+  color: #00d664;
+}
+
+.tip-text {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.tip-text p{
+  text-align: justify;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.owl-dots {
+  text-align: center;
+  margin-top: 15px !important;
+}
+
+
+@media screen and (max-width: 768px) {
+  .tip-section {
+    padding: 0 15px;
+    position: absolute;
+    left: 0;
+    /* bottom: -250px; */
+    width: 100%;
+    z-index: 2;
+  }
+}
+
+/*------------------------------------------------------------  TIP SECTION ENDS--------------------------------------------------------------*/
+
+
+
+/*------------------------------------------------------------  FOOTER BEGINS--------------------------------------------------------------*/
+footer .section-p1 {
+  background-color: #000000;
+  margin-left: -25px;
+  left: 0;
+}
+
+.fixed-footer {
+  position: relative;
+  z-index: -1;
+  /* left: -20px; */
+  bottom: -260px;
+  width: 100%;
+  background-color: #000000;
+  color: white;
+  padding: 30px 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+}
+
+.footer-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-icon i {
+  font-size: 24px;
+  margin-bottom: 5px;
+  border-radius: 9px !important ;
+}
+
+.footer-icon span {
+  font-size: 14px;
+}
+
+@media screen and (max-width: 768px) {
+  .fixed-footer {
+    position: relative;
+    width: 100%;
+    background-color: #000000;
+    color: white;
+    padding: 20px 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+  }
+
+  .footer-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .footer-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-icon i {
+    font-size: 24px; /* Adjust the font size of the icons as needed */
+    margin-bottom: 5px;
+  }
+
+  .footer-icon span {
+    font-size: 14px;
+  }
+}
+
+/*------------------------------------------------------------  FOOTER ENDS--------------------------------------------------------------*/
+

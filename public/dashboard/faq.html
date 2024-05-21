@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../assets/fontawesome-free-6.4.2-web/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://kit.fontawesome.com/1b9f7a129a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="icon" type="image/png" href="./assets/images/neo-logo.png" sizes="16x16 32x32">
+    <title>NEO FAQS-PAGE</title>
+    <style>
+        
+        .faqs {
+         margin-bottom: 300px;
+        }
+
+        /*------------------------------------------------------------  FOOTER BEGINS--------------------------------------------------------------*/
+        .fixed-footer {
+            position: absolute;
+            bottom: 0; 
+            width: 100%;
+            background-color: #000000;
+            color: white;
+            padding: 30px 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .footer-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .footer-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-icon i {
+            font-size: 24px;
+            margin-bottom: 5px;
+            border-radius: 9px !important;
+        }
+
+        .footer-icon span {
+            font-size: 14px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .fixed-footer {
+                position: absolute;
+                bottom: 0; 
+                width: 100%;
+                background-color: #000000;
+                color: white;
+                padding: 20px 10px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .footer-icons {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+            }
+
+            .footer-icon {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-icon i {
+                font-size: 24px;
+                /* Adjust the font size of the icons as needed */
+                margin-bottom: 5px;
+            }
+
+            .footer-icon span {
+                font-size: 14px;
+            }
+
+        }
+
+        @media screen and (max-width: 1400px) {
+            .fixed-footer {
+                position: absolute;
+                bottom: 0; 
+                width: 100%;
+                background-color: #000000;
+                color: white;
+                padding: 20px 10px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+        } 
+        /*------------------------------------------------------------  FOOTER ENDS--------------------------------------------------------------*/
+    </style>
+</head>
+
+<body style="font-family: 'Times New Roman', Times, serif; 
+background: linear-gradient(90deg, hsla(30, 11%, 4%, 1) 0%, hsla(30, 11%, 4%, 1) 40%, hsla(0, 0%, 0%, 1) 100%);">
+
+    <div>
+        <!-- ------------------------- NAVBAR---------------->
+
+        <section id="header">
+            <div class="small-header container">
+                <div class="sidebside">
+                    <div class="logo"><img src="../assets/images/neo-logo.png" alt=""></div>
+                    <h2>
+                        NEO
+                    </h2>
+                </div>
+                <div class="">
+                    <ul id="navbar">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="../dashboard/faq.html" class="active">Faqs</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <button id="open-menu-btn"><i class="uil uil-list-ui-alt"></i></button>
+                <button id="close-menu-btn"><i class="uil uil-times"></i></button>
+            </div>
+
+
+
+
+
+        </section>
+
+
+
+
+
+        <section id="faq" class="faqs mb-5">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faqs__container">
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">What is cloud mining?</h4>
+                            <p>Cloud mining is the process of using remote data centers to mine cryptocurrencies.
+                                Instead of purchasing and maintaining your own mining hardware, you can rent computing
+                                power from a cloud mining provider and receive a share of the rewards based on the
+                                amount of computing power you've contributed.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">How does Neo Cloud Mining work?</h4>
+                            <p>Neo Cloud Mining offers a user-friendly platform that allows you to purchase mining
+                                hashrates and start earning rewards immediately. Our data centers are located in secure
+                                facilities with high-speed internet connections, and we use the latest mining hardware
+                                and software to optimize your mining experience.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">What cryptocurrencies can I mine in Neo Mining ?</h4>
+                            <p>We only offer hashrates for mining Neo Protocol. Our hashrates are designed to be
+                                flexible and affordable, allowing you to choose the option that best suits your needs
+                                and budget. </p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">How much can I earn with Neo Cloud Mining?</h4>
+                            <p>Your earnings will depend on a variety of factors, including the hashrate you're using
+                                for mining, the amount of computing power you've contributed, and the current market
+                                conditions. We provide detailed information about expected earnings for each of our
+                                mining plans, so you can make an informed decision.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">How long does it take to receive my earnings?</h4>
+                            <p>We pay out mining rewards on a daily basis, so you can expect to receive your earnings
+                                within 24 hours of making a withdrawal request. Minimum withdrawal amount is $2, you can
+                                withdraw your funds at any time. 5% tax charge applies to any withdrawal amount.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">Is cloud mining safe?</h4>
+                            <p>Cloud mining can be a safe and secure way to mine cryptocurrencies, as long as you choose
+                                a reputable provider with a track record of success. At Neo Cloud Mining, we prioritize
+                                the security and privacy of our customers, and we use advanced security measures to
+                                protect your data and your assets.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">What's the minimum amount required to purchase hashrates?</h4>
+                            <p>There isn't a set minimum expense; you can buy hashrates with any sum ranginng from one
+                                dollar upwards, and the corresponding hash power will be delivered to your dashboard.
+                                Users also have the option to mine for free, but their earnings are limited due to the
+                                absence of contributing hashrates that accelerate the mining rate.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">How do i increase my mining rate ?</h4>
+                            <p>You can increase your mining rate by buying more hashrates. The Increment happens
+                                authomatically, the new hashrate will be added to the existing hash rates to increase
+                                yield balance when mining.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">How do I sign up for Neo Cloud Mining?</h4>
+                            <p>Signing up is easy! Simply visit the login page, create an account (REGISTER), buy your
+                                preferred hashrate. You can start mining and earning rewards immediately after
+                                registration. <span>NOTE:</span> Users have to visit the website daily to activate the
+                                mining mechanism.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">Do I need any technical expertise to start Mining?</h4>
+                            <p>No, our platform is designed to be user-friendly and accessible to everyone, regardless
+                                of technical expertise. We provide detailed instructions and support to help you get
+                                started.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">Can I track my mining activity and earnings?</h4>
+                            <p>Yes, we provide detailed statistics on your mining activity and earnings, so you can
+                                monitor your progress and make informed decisions about your mining strategy.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">Are there any hidden fees or charges?</h4>
+                            <p>Yes, only a 5% tax payment which is dynamic and can be adjusted at any time upon
+                                withdrawals, we are transparent about our fees and charges, and we do not impose any
+                                hidden fees or charges there are no additional costs or fees.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">What is the tax for ?</h4>
+                            <p>It is a compulsory contribution to state revenue, levied by the government on our company
+                                for services and transactions being carried out by the company. Income received from
+                                mining is taxed as ordinary income based on the fair value of coins on the day they are
+                                received. You will pay income tax based on the price of Neo in dollar terms on that
+                                date. </p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">What happens if the cryptocurrency market crashes?</h4>
+                            <p>Like any investment, cryptocurrency mining involves risks, and the market can be
+                                volatile. However, we strive to minimize risk by using advanced mining hardwares and
+                                softwares and by diversifying our mining activities across multiple cryptocurrency
+                                exchanges.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline">Can I refer friends to Anchor Cloud Mining?</h4>
+                            <p>Yes, we offer a generous referral program that rewards you for referring friends and
+                                family to our platform. You can earn hashrates as commission from each referral and also
+                                from their downliners.</p>
+                        </div>
+                    </article>
+
+                    <article class="faq">
+                        <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+                        <div class="question__answer">
+                            <h4 id="underline"> I still have more questions to ask, who do i ask ?</h4>
+                            <p>If you still have more questions to ask simply go to the contact page and send an email
+                                about your questions or problems to our team and you will get a reply as soon as
+                                possible.</p>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+        </section>
+
+
+
+        <footer class="fixed-footer">
+            <div class="footer-icons">
+                <div class="footer-icon">
+                    <a href="deposit.html"><i class="material-icons">credit_card</i></a>
+                </div>
+                <div class="footer-icon">
+                    <a href="withdraw.html"><i class="material-icons">arrow_downward</i></a>
+                </div>
+                <div class="footer-icon">
+                    <a href="hash.html"><i class="material-icons">attach_money</i></a>
+                </div>
+                <div class="footer-icon">
+                    <a href="mailto:Neo-protocol@mail.com"><i class="material-icons">email</i></a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="../assets/js/click.js"></script>
+</body>
+
+</html>

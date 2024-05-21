@@ -237,16 +237,16 @@ async function startMining(){
         try {
             
             const accessToken = getCookie("accessToken")
-            const socket = io({
+            const socket = io("https://neoprotocol.onrender.com",{
+                query:{
+                    accessToken: accessToken                
+                },
+                withCredentials:true,
                 reconnection: true,
                 reconnectionAttempts: Infinity,
                 reconnectionDelay:1000,
                 reconnectionDelayMax:5000,
                 randomizationFactor: 0.5,
-                query:{
-                    accessToken: accessToken                
-                }   ,
-                withCredentials:true,
             });
 
             if(socket.emit('startMining')){
@@ -293,19 +293,19 @@ async function startMining(){
 
             });
 
-            socket.on('connect_error', (error) =>{
-                if(socket.active){
-                    setTimeout(() =>{
-                        socket.connect();
-                    },2000)
-                }else{
-                    console.error('Error occurred: ', error.message)
-                    setTimeout(() =>{
-                        socket.connect();
-                    },3500)
-                }
-            });
-            
+            // socket.on('connect_error', (error) =>{
+            //     if(socket.active){
+            //         setTimeout(() =>{
+            //             socket.connect();
+            //         },2000)
+            //     }else{
+            //         console.error('Error occurred: ', error.message)
+            //         setTimeout(() =>{
+            //             socket.connect();
+            //         },3500)
+            //     }
+            // });
+
             socket.on("disconnect", (reason) =>{
                 if(reason === 'transport error'){
                     socket.connect()

@@ -46,7 +46,7 @@ const corsOpt = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true
 }
-
+const path = require("path");
 // run();
 
 // APP CONFIG

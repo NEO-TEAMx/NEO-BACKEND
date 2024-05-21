@@ -595,59 +595,6 @@
     integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg"
     crossorigin="anonymous">
   </script>
-  <!-- <script>
-    const {io} = "https://cdn.socket.io/4.7.5/socket.io.esm.min.js"
-    
-    async function startMinifng(){
-      console.log("from html")
-      if(await isAuthenticated()){
-        try{
-        const accessToken = getCookie("accessToken")
-
-        const socket = io("http://localhost:4040",{
-          query:{
-            accessToken: accessToken                
-          },
-          withCredentials:true,
-          extraHeaders: {
-            // 'Access-Contorl-Allow-Origin': 'https://neo-protocol.com'
-
-            'Access-Contorl-Allow-Origin': 'http://localhost:8081'
-          }
-        });
-
-
-        socket.emit('startMining')
-        socket.on('miningData', (data) =>{
-          console.log(socket.id)
-          console.log(socket.connect)
-          console.log({data})
-        });
-
-        socket.on('connect_error', (error)=>{
-          if(socket.active){
-            return true
-          }else{
-            socket.connect()
-            console.log(error.message)
-          }
-        });  
-      }catch(error){
-        console.log(error)
-      }
-      }else{
-        redirectToLogin()
-      }
-
-    }
-
-    
-  </script>-->
-
-  <!-- <script src="https://cdn.socket.io/4.7.3/socket.io.min.js"
-    integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg"
-    crossorigin="anonymous">
-  </script>  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 </body>
 

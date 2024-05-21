@@ -18,8 +18,6 @@ window.addEventListener("load", function() {
     hidePreloader();
 });
 
-// let {io} = "https://cdn.socket.io/4.7.5/socket.io.esm.min.js"
-
 async function dashboard(){
     // clearErrors();
     let yield_balancep = document.querySelector("#yield_balance");
@@ -76,13 +74,7 @@ async function dashboard(){
                 yield_time,
                 mining_status
             } = data.user;
-
-            // window.onbeforeunload = function(){
-            //     if(mining_status){
-            //         return 'Mining is in progress. Are you sure you want to leave?'
-            //     }
-            // }
-            
+ 
             const parsedDate = moment(yield_time);
             const formattedTime = parsedDate.format('HH:mm:ss')
             yield_balancep.textContent = yield_balance.toFixed(8),
@@ -248,7 +240,8 @@ async function startMining(){
             const socket = io({
                 reconnection: true,
                 reconnectionAttempts: Infinity,
-                reconnectionDelayMax:10000,
+                reconnectionDelay:1000,
+                reconnectionDelayMax:5000,
                 randomizationFactor: 0.5,
                 query:{
                     accessToken: accessToken                
@@ -300,8 +293,23 @@ async function startMining(){
 
             });
 
-
+            socket.on('connect_error', (error) =>{
+                if(socket.active){
+                    setTimeout(() =>{
+                        socket.connect();
+                    },2000)
+                }else{
+                    console.error('Error occurred: ', error.message)
+                    setTimeout(() =>{
+                        socket.connect();
+                    },3500)
+                }
+            });
+            
             socket.on("disconnect", (reason) =>{
+                if(reason === 'transport error'){
+                    socket.connect()
+                }
                 console.log("Disconnected", reason)
             });
             

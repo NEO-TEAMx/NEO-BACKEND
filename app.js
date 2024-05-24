@@ -67,13 +67,20 @@ app.use((req,res,next) =>{
     res.setHeader('Access-Control-Allow-Credentials', 'true')
     next()
 });
+
+// io.on('connection', socket =>{
+//     console.log("new ws connection!!")
+
+//     socket.emit('minings', "Mining wil soon start!!")
+// })
+
 io.use((socket,next) =>{
     const accessToken = socket.handshake.query.accessToken;
 
-    if(!accessToken){
-        throw new Error("Authentication Error occurred!");
-        // return next(new Error("Authentication failed. Please login!"))
-    }
+    // if(!accessToken){
+    //     // throw new Error("Authentication Error occurred!");
+    //     return next(new Error("Authentication failed. Please login!"))
+    // }
 
     try {
             if(accessToken){
@@ -81,11 +88,11 @@ io.use((socket,next) =>{
                 const payload = jwt.verify(accessToken, process.env.SECRET)
                 
                 socket.userId = payload.userId
-                console.log(socket.userId)
+                // console.log(socket.userId)
                 next()
             }
     } catch (error) {
-            // console.log(error)    
+            console.log(error)    
             next(error)
     }
     

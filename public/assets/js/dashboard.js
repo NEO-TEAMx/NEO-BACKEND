@@ -1,3 +1,4 @@
+
 function showPreloader(){
     document.querySelector(".spinner").style.display = 'block';
     document.querySelector(".dashboard").classList.add("hidden");
@@ -237,16 +238,16 @@ async function startMining(){
         try {
             
             const accessToken = getCookie("accessToken")
-            const socket = io("https://neoprotocol.onrender.com",{
+            const socket = io({
                 query:{
                     accessToken: accessToken                
                 },
                 withCredentials:true,
                 reconnection: true,
-                reconnectionAttempts: Infinity,
+                // reconnectionAttempts: Infinity,
                 reconnectionDelay:1000,
-                reconnectionDelayMax:5000,
-                randomizationFactor: 0.5,
+                // reconnectionDelayMax:5000,
+                // randomizationFactor: 0.5,
             });
 
             if(socket.emit('startMining')){
@@ -293,18 +294,18 @@ async function startMining(){
 
             });
 
-            // socket.on('connect_error', (error) =>{
-            //     if(socket.active){
-            //         setTimeout(() =>{
-            //             socket.connect();
-            //         },2000)
-            //     }else{
-            //         console.error('Error occurred: ', error.message)
-            //         setTimeout(() =>{
-            //             socket.connect();
-            //         },3500)
-            //     }
-            // });
+            socket.on('connect_error', (error) =>{
+                if(socket.active){
+                    setTimeout(() =>{
+                        socket.connect();
+                    },2000)
+                }else{
+                    console.error('Error occurred: ', error.message)
+                    setTimeout(() =>{
+                        socket.connect();
+                    },3500)
+                }
+            });
 
             socket.on("disconnect", (reason) =>{
                 if(reason === 'transport error'){
@@ -325,18 +326,18 @@ async function startMining(){
                 console.log("Reconnected after ", attemptNumber, " attempts")
             });
             
-            socket.on('connect_error', (error) =>{
-                if(socket.active){
-                    setTimeout(() =>{
-                        socket.connect();
-                    },2000)
-                }else{
-                    console.error('Error occurred: ', error.message)
-                    setTimeout(() =>{
-                        socket.connect();
-                    },3500)
-                }
-            });
+            // socket.on('connect_error', (error) =>{
+            //     if(socket.active){
+            //         setTimeout(() =>{
+            //             socket.connect();
+            //         },2000)
+            //     }else{
+            //         console.error('Error occurred: ', error.message)
+            //         setTimeout(() =>{
+            //             socket.connect();
+            //         },3500)
+            //     }
+            // });
         } catch (error) {
             console.log(error)
             return error;

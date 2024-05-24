@@ -130,10 +130,11 @@ const startMining = (io) =>{
     io.on('connection', (socket) =>{
         console.log('user connected!!')
         
+
         socket.on("startMining", async() =>{
             // console.log("local mining")
             const user = await User.findById(socket.userId);
-            console.log(user.username)
+            
             user.mining_duration = 24 * 60 *60;
         
             await user.save();

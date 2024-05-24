@@ -238,18 +238,20 @@ async function startMining(){
         try {
             
             const accessToken = getCookie("accessToken")
+            // const socket = io({
+            //     query:{
+            //         accessToken: accessToken                
+            //     },
+            //     withCredentials:true,
+            //     reconnection: true,
+            //     reconnectionAttempts: Infinity,
+            //     reconnectionDelay:1000,
+            //     // reconnectionDelayMax:5000,
+            //     // randomizationFactor: 0.5,
+            // });
             const socket = io({
-                query:{
-                    accessToken: accessToken                
-                },
-                withCredentials:true,
-                reconnection: true,
-                reconnectionAttempts: Infinity,
-                reconnectionDelay:1000,
-                // reconnectionDelayMax:5000,
-                // randomizationFactor: 0.5,
+                query: {accessToken}
             });
-
             if(socket.emit('startMining')){
                 socket.emit("startMining")
                 startMiningBtn.textContent = 'Currently Mining';
@@ -294,35 +296,13 @@ async function startMining(){
 
             });
 
-            // socket.on('connect_error', (error) =>{
-            //     if(socket.active){
-            //         setTimeout(() =>{
-            //             socket.connect();
-            //         },2000)
-            //     }else{
-            //         console.error('Error occurred: ', error.message)
-            //         setTimeout(() =>{
-            //             socket.connect();
-            //         },3500)
-            //     }
-            // });
-
             socket.on("disconnect", (reason) =>{
                 console.log("Disconnected", reason)
+                setTimeout(() =>{
+                    socket.connect();
+                },3500)
             });
-            
-            socket.on("reconnect_attempt", () =>{
-                console.log('Attempting to reconnect')
-            });
-
-            socket.on("reconnection_failed", () =>{
-                console.log("reconnection failed")
-            });
-
-            socket.on("reconnect", (attemptNumber) =>{
-                console.log("Reconnected after ", attemptNumber, " attempts")
-            });
-            
+             
             // socket.on('connect_error', (error) =>{
             //     if(socket.active){
             //         setTimeout(() =>{

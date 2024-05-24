@@ -207,8 +207,6 @@ const startMining = (io) =>{
                             user.yield_time = remainingTime;
                             user.mining_status = true;
 
-                            console.log("balance "+user.yield_balance)
-
                             await user.save();
                             console.log("balance "+user.yield_balance)
                             console.log("percent "+ user.yield_percentage)

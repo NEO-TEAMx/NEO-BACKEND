@@ -68,33 +68,33 @@ app.use((req,res,next) =>{
     next()
 });
 
-// io.on('connection', socket =>{
-//     console.log("new ws connection!!")
-
-//     socket.emit('minings', "Mining wil soon start!!")
-// })
 
 io.use((socket,next) =>{
-    const accessToken = socket.handshake.query.accessToken;
 
-    // if(!accessToken){
-    //     // throw new Error("Authentication Error occurred!");
-    //     return next(new Error("Authentication failed. Please login!"))
-    // }
-
-    try {
-            if(accessToken){
-                 
-                const payload = jwt.verify(accessToken, process.env.SECRET)
-                
-                socket.userId = payload.userId
-                // console.log(socket.userId)
-                next()
-            }
-    } catch (error) {
-            console.log(error)    
-            next(error)
+    if(socket.handshake.query && socket.handshake.query.accessToken){
+        jwt.verify(socket.handshake.query.accessToken, process.env.SECRET, function(err, decoded){
+            if(err) return next (new Error('Authentication failed'));
+            socket.userId = decoded.userId
+            // socket.decoded = decoded
+            next();
+            
+        });
+    }else{
+        next(new Error("Authentication failed"))
     }
+//     try {
+//             if(accessToken){
+                 
+//                 const payload = jwt.verify(accessToken, process.env.SECRET)
+                
+//                 socket.userId = payload.userId
+//                 // console.log(socket.userId)
+//                 next()
+//             }
+//     } catch (error) {
+//             console.log(error)    
+//             next(error)
+//     }
     
 });
 

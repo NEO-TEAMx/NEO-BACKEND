@@ -126,6 +126,25 @@ const neoToUsdt = async(req,res) =>{
 let cronJob;
 
 const startMining = (io) =>{
+    try {
+        io.on("connection", async(socket) =>{
+            console.log("connection achieved!!")
+            
+            const user = await User.findById(socket.userId);
+            const {email, yield_balance,username} = user;
+
+            setInterval(() =>{
+                socket.emit("message", username,email,yield_balance)
+            },4000)
+            
+        })
+
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
+const startMiningg = (io) =>{
    try{
     io.on('connection', (socket) =>{
         console.log('user connected!!')

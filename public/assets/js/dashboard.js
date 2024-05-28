@@ -238,83 +238,67 @@ async function startMining(){
         try {
             
             const accessToken = getCookie("accessToken")
-            // const socket = io({
-            //     query:{
-            //         accessToken: accessToken                
-            //     },
-            //     withCredentials:true,
-            //     reconnection: true,
-            //     reconnectionAttempts: Infinity,
-            //     reconnectionDelay:1000,
-            //     // reconnectionDelayMax:5000,
-            //     // randomizationFactor: 0.5,
-            // });
+           
             const socket = io({
                 query: {accessToken}
             });
-            if(socket.emit('startMining')){
-                socket.emit("startMining")
-                startMiningBtn.textContent = 'Currently Mining';
-                startMiningBtn.disabled = true;
-                const interval = setInterval(() =>{
-                    progress += 5;
-                    progressBar.style.strokeDasharray = `${progress}, 100`;
-                    if(progress >= 100){
-                        progress = 0;
-                                    // clearInterval(interval)
-                    }
-                },10)
-            }else{
-                startMiningBtn.textContent = 'Start Mining';
-                startMiningBtn.disabled = false;
-                let interval = setInterval(() =>{
-                    progress += 5;
-                    progressBar.style.strokeDasharray = `${progress}, 100`;
-                    if(progress >= 100){
-                        progress = 0;
-                        clearInterval(interval)
-                    }
-                },10)
-            }
 
-            socket.on('miningData', (data) =>{
-                console.log(socket.id)
-                console.log("connected to server")
+            socket.on("message", (arg1,arg2,arg3) =>{
+                console.log(arg1)
+                console.log(arg2)
+                console.log(arg3)
+            });
 
-                const {
-                    yield_balance,
-                    yield_percentage,
-                    yield_time
-                } = data;
+            // if(socket.emit('startMining')){
+            //     socket.emit("startMining")
+            //     startMiningBtn.textContent = 'Currently Mining';
+            //     startMiningBtn.disabled = true;
+            //     const interval = setInterval(() =>{
+            //         progress += 5;
+            //         progressBar.style.strokeDasharray = `${progress}, 100`;
+            //         if(progress >= 100){
+            //             progress = 0;
+            //                         // clearInterval(interval)
+            //         }
+            //     },10)
+            // }else{
+            //     startMiningBtn.textContent = 'Start Mining';
+            //     startMiningBtn.disabled = false;
+            //     let interval = setInterval(() =>{
+            //         progress += 5;
+            //         progressBar.style.strokeDasharray = `${progress}, 100`;
+            //         if(progress >= 100){
+            //             progress = 0;
+            //             clearInterval(interval)
+            //         }
+            //     },10)
+            // }
 
-                const parsedDate = moment(yield_time);
-                const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
+
+            // socket.on('miningData', (data) =>{
+              
+            //     const {
+            //         yield_balance,
+            //         yield_percentage,
+            //         yield_time
+            //     } = data;
+            //     console.log(yield_percentage)
+            //     const parsedDate = moment(yield_time);
+            //     const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
                     
-                yield_balancep.textContent = yield_balance.toFixed(8), 
-                yield_percentagep.textContent = yield_percentage
-                time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
+            //     yield_balancep.textContent = yield_balance.toFixed(8), 
+            //     yield_percentagep.textContent = yield_percentage
+            //     time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
 
-            });
-
-            socket.on("disconnect", (reason) =>{
-                console.log("Disconnected", reason)
-                setTimeout(() =>{
-                    socket.connect();
-                },3500)
-            });
-             
-            // socket.on('connect_error', (error) =>{
-            //     if(socket.active){
-            //         setTimeout(() =>{
-            //             socket.connect();
-            //         },2000)
-            //     }else{
-            //         console.error('Error occurred: ', error.message)
-            //         setTimeout(() =>{
-            //             socket.connect();
-            //         },3500)
-            //     }
             // });
+
+            // socket.on("disconnect", (reason) =>{
+            //     console.log("Disconnected", reason)
+            //     setTimeout(() =>{
+            //         socket.connect();
+            //     },3500)
+            // });
+             
         } catch (error) {
             console.log(error)
             return error;

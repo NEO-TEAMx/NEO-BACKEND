@@ -131,12 +131,91 @@ const startMining = (io) =>{
             console.log("connection achieved!!")
             
             const user = await User.findById(socket.userId);
-            const {email, yield_balance,username} = user;
+           // const {email, yield_balance,username} = user;
 
-            setInterval(() =>{
-                socket.emit("message", username,email,yield_balance)
+            user.mining_duration = 24 * 60 * 60;
+            await user.save();
+
+            const startTime = Date.now();
+            const endTime = startTime + user.mining_duration * 1000;
+            if(user.mining_status){
+                return;
+            }
+
+            const intervalId  = setInterval(async() =>{
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - startTime     
+                const remainingTime = Math.max(0, endTime - currentTime)
+                
+                if(currentTime >= endTime){
+                    if(user.hash_rate > 0){
+                        console.log("Hash mining started!!")
+                        clearInterval(intervalId);
+
+                        const finalYieldPercentage = 0;
+                        const totalYieldBalance = (user.hash_rate * 24 * 60 *60)*0.118;
+                        user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(10)));
+                        user.yield_percentage = finalYieldPercentage;
+                        user.yield_time = null;
+                        user.mining_status = false;
+                        await user.save();
+                        return;
+                        
+                    }else{
+                        clearInterval(intervalId);
+                        console.log("Mining no Hash!!")
+                        const finalYieldPercentage = 0;
+                        const totalYieldBalance = 0.00000003 * 24 * 60 * 60;
+                        user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
+                        user.yield_percentage = finalYieldPercentage;
+                        user.yield_time = null;
+                        user.mining_status = false;
+                        await user.save();
+                        return;
+
+                    }
+                }else{
+                    if(user.hash_rate > 0){
+                        console.log("Hash mining started!!")
+                        let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
+                        let remainingMinutes = remainingTime / (60 * 60 * 1000);
+                        let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.0000013;
+                        user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
+                        user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
+                        user.yield_time = remainingTime;
+                        user.mining_status = true;
+
+                        await user.save();
+                        return;
+                    }else{
+                        console.log("Mining no Hash!!")
+
+                        let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
+                        let remainingMinutes = remainingTime / (60 * 60 * 1000);
+                        let currentYeildBalance = (0.00000021 * (24 * 60 * 60 - remainingMinutes))*0.000001;
+                        user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
+                        user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
+                        user.yield_time = remainingTime;
+                        user.mining_status = true;
+
+                        await user.save();
+                        return;
+                    }
+                }
+                
             },4000)
-            
+            if(!user.mining_status || user.yield_percentage === 0){
+                if(!cronJob){
+                    cronJob = cron.schedule("* * * * * *", () =>{
+                        socket.emit("message", user.mining_status, user.yield_balance, user.yield_percentage,user.yield_time)
+                    });
+                }
+            }
+            if(user.yield_percentage === 100){
+                if(cronJob){
+                    cronJob.stop()
+                }
+            }
         })
 
     } catch (error) {

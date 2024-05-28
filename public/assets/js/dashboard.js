@@ -243,10 +243,11 @@ async function startMining(){
                 query: {accessToken}
             });
 
-            socket.on("message", (arg1,arg2,arg3) =>{
+            socket.on("message", (arg1,arg2,arg3,arg4) =>{
                 console.log(arg1)
                 console.log(arg2)
                 console.log(arg3)
+                console.log(arg4)
             });
 
             // if(socket.emit('startMining')){

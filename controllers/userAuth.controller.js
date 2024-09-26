@@ -3,10 +3,11 @@ const {BadRequestApiError,NotFoundApiError} = require("../Errors")
 const Utoken = require("../models/token.model/uToken");
 const crypto = require("crypto");
 const { attachCookieToRes } = require("../utils/jwt");
-const shortid = require("shortid");
+// const shortid = require("shortid");
 const {StatusCodes} = require("http-status-codes");
 const {emailLogin,usernameLogin} = require("../__helpers__/loginHelpers");
 const {isPasswordStrong} = require("../__helpers__/isPasswordStrong");
+const  {generateUniqueShortId} = require("../__helpers__/generateId")
 const sendCeoMail = require("../EmailFormats/welcomeMail");
 const sendResetPaasswordEmail = require("../EmailFormats/resetPasswordEmail");
 const jwt =  require("jsonwebtoken");
@@ -16,7 +17,7 @@ const register = async(req,res) =>{
     const {username,email,password,confirmPassword,referralCode} =  req.body;
     const isEmailTaken = await User.findOne({email});
     const isUsernameTaken = await User.findOne({username});
-    const genRefCode = shortid.generate();
+    const genRefCode = generateUniqueShortId();
     const isStrongpassword = isPasswordStrong(password);
 
     const referringUser = referralCode  ? (await User.findOne({referralCode})) : null;

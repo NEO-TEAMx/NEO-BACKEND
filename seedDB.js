@@ -16,7 +16,7 @@ const run = async() =>{
         
         // await connectDB(process.env.MONGOURI)
         // await Admin.deleteMany();   
-        await User.deleteMany();
+        // await User.deleteMany();
         // await Withdrawal.deleteMany();
         // await Deposit.deleteMany();
         // await Utoken.deleteMany();

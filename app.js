@@ -18,7 +18,6 @@ const dashboardRouter = require("./routes/dashboard.route");
 const subscriberRouter = require("./routes/newLetter.route");
 const {startMining} = require("./controllers/dashboard.controller");
 const helmet = require("helmet");
-const xssClean = require("xss-clean");
 const socketio = require("socket.io");
 const run = require("./seedDB");
 const jwt = require("jsonwebtoken");
@@ -56,8 +55,7 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, './public')))
 app.use(cors(corsOpt));
 app.use(cookieParser(process.env.SECRET));
-// app.use(morgan("dev"));
-app.use(xssClean());
+app.use(morgan("dev"));
 app.use(helmet());
 app.use((req,res,next) =>{
     // res.setHeader('Access-Control-Allow-Origin', allowedOrigins)

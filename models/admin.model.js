@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator =  require("validator");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
+const argon = require("argon2");
 
 const adminSchema = new mongoose.Schema({
     username: {
@@ -41,15 +42,36 @@ const adminSchema = new mongoose.Schema({
     }
 });
 
-adminSchema.pre("save", async function(){
-    if(!this.isModified("password")) return;
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+// adminSchema.pre("save", async function(){
+//     if(!this.isModified("password")) return;
+//     const salt = await bcrypt.genSalt(10);
+//     this.password = await bcrypt.hash(this.password, salt);
+// });
+
+// adminSchema.methods.comparePassword = async function(cp){
+//     return isMatch = await bcrypt.compare(cp, this.password);
+//     // return isMatch;
+// }
+// Hash the password before saving the user
+adminSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  try {
+    this.password = await argon.hash(this.password); // Argon2 automatically handles salting
+    next();
+  } catch (err) {
+    return next(err);
+  }
 });
 
-adminSchema.methods.comparePassword = async function(cp){
-    return isMatch = await bcrypt.compare(cp, this.password);
-    // return isMatch;
-}
+// Compare the password during login
+adminSchema.methods.comparePassword = async function (candidatePassword) {
+  try {
+    return await argon.verify(this.password, candidatePassword);
+  } catch (err) {
+    throw new Error('Password comparison failed');
+  }
+};
+
 
 module.exports = mongoose.model("AdminModel", adminSchema);

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator =  require("validator");
-const bcrypt = require("bcrypt");
-const shortid = require("shortid");
+// const bcrypt = require("bcrypt");
+const argon = require("argon2");
 const moment = require("moment");
 
 const userSchema = new mongoose.Schema({
@@ -84,14 +84,26 @@ const userSchema = new mongoose.Schema({
     }
 },{timestamps:true, toJSON:{virtuals:true}, toObject:{virtuals:true}});
 
-userSchema.pre("save", async function(){
-   if(!this.isModified("password")) return;
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+
+// Hash the password before saving the user
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  try {
+    this.password = await argon.hash(this.password); // Argon2 automatically handles salting
+    next();
+  } catch (err) {
+    return next(err);
+  }
 });
 
-userSchema.methods.comparePassword = async function(cp){
-    return isMatch = await bcrypt.compare(cp,this.password)
-}; 
+// Compare the password during login
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  try {
+    return await argon.verify(this.password, candidatePassword);
+  } catch (err) {
+    throw new Error('Password comparison failed');
+  }
+};
 
 module.exports = mongoose.model("User", userSchema);

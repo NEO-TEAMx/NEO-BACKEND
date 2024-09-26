@@ -244,36 +244,42 @@ async function startMining(){
             });
 
             socket.on("message", (arg1,arg2,arg3,arg4) =>{
-                console.log(arg1)
-                console.log(arg2)
-                console.log(arg3)
-                console.log(arg4)
+                // console.log(arg1)
+                // console.log(arg2) //yield balance
+                // console.log(arg3) // percentage
+                // console.log(arg4) // time
+
+                const parsedDate = moment(arg4);
+                const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
+                yield_balancep.textContent = arg2.toFixed(8),
+                yield_percentagep.textContent = arg3,
+                time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
             });
 
-            // if(socket.emit('startMining')){
-            //     socket.emit("startMining")
-            //     startMiningBtn.textContent = 'Currently Mining';
-            //     startMiningBtn.disabled = true;
-            //     const interval = setInterval(() =>{
-            //         progress += 5;
-            //         progressBar.style.strokeDasharray = `${progress}, 100`;
-            //         if(progress >= 100){
-            //             progress = 0;
-            //                         // clearInterval(interval)
-            //         }
-            //     },10)
-            // }else{
-            //     startMiningBtn.textContent = 'Start Mining';
-            //     startMiningBtn.disabled = false;
-            //     let interval = setInterval(() =>{
-            //         progress += 5;
-            //         progressBar.style.strokeDasharray = `${progress}, 100`;
-            //         if(progress >= 100){
-            //             progress = 0;
-            //             clearInterval(interval)
-            //         }
-            //     },10)
-            // }
+            if(socket.emit('startMining')){
+                socket.emit("startMining")
+                startMiningBtn.textContent = 'Currently Mining';
+                startMiningBtn.disabled = true;
+                const interval = setInterval(() =>{
+                    progress += 5;
+                    progressBar.style.strokeDasharray = `${progress}, 100`;
+                    if(progress >= 100){
+                        progress = 0;
+                                    // clearInterval(interval)
+                    }
+                },10)
+            }else{
+                startMiningBtn.textContent = 'Start Mining';
+                startMiningBtn.disabled = false;
+                let interval = setInterval(() =>{
+                    progress += 5;
+                    progressBar.style.strokeDasharray = `${progress}, 100`;
+                    if(progress >= 100){
+                        progress = 0;
+                        clearInterval(interval)
+                    }
+                },10)
+            }
 
 
             // socket.on('miningData', (data) =>{

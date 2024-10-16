@@ -79,9 +79,9 @@ async function dashboard(){
             const parsedDate = moment(yield_time);
             const formattedTime = parsedDate.format('HH:mm:ss')
             yield_balancep.textContent = yield_balance.toFixed(8),
-            total_balancep.textContent = total_balance.toFixed(5),
+            total_balancep.textContent = total_balance.toFixed(2),
             yield_percentagep.textContent = Math.ceil(yield_percentage),
-            hash_ratep.textContent = hash_rate === 0 ? hash_rate.toFixed(4) : hash_rate.toFixed(7),
+            hash_ratep.textContent = hash_rate === 0 ? hash_rate.toFixed(2) : hash_rate.toFixed(2),
             time.textContent = yield_time === null ? "24:00:00" : formattedTime
             
             setTimeout(function(){
@@ -243,18 +243,18 @@ async function startMining(){
                 query: {accessToken}
             });
 
-            socket.on("message", (arg1,arg2,arg3,arg4) =>{
-                // console.log(arg1)
-                // console.log(arg2) //yield balance
-                // console.log(arg3) // percentage
-                // console.log(arg4) // time
+            // socket.on("message", (arg1,arg2,arg3,arg4) =>{
+            //     // console.log(arg1)
+            //     // console.log(arg2) //yield balance
+            //     // console.log(arg3) // percentage
+            //     // console.log(arg4) // time
 
-                const parsedDate = moment(arg4);
-                const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
-                yield_balancep.textContent = arg2.toFixed(8),
-                yield_percentagep.textContent = arg3,
-                time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
-            });
+            //     const parsedDate = moment(arg4);
+            //     const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
+            //     yield_balancep.textContent = arg2.toFixed(8),
+            //     yield_percentagep.textContent = arg3,
+            //     time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
+            // });
 
             if(socket.emit('startMining')){
                 socket.emit("startMining")
@@ -282,22 +282,27 @@ async function startMining(){
             }
 
 
-            // socket.on('miningData', (data) =>{
+            socket.on('message', ({mining_status,yield_balance,yield_percentage,yield_time,}) =>{
               
-            //     const {
-            //         yield_balance,
-            //         yield_percentage,
-            //         yield_time
-            //     } = data;
-            //     console.log(yield_percentage)
-            //     const parsedDate = moment(yield_time);
-            //     const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
+                // const {
+                //     yield_balance,
+                //     yield_percentage,
+                //     yield_time,
+                //     mining_status
+                // } = data;
+                console.log(mining_status)
+                console.log(yield_balance) // yieldB
+                console.log(yield_percentage) // perce
+                console.log(yield_time) // time
+  
+                const parsedDate = moment(yield_time);
+                const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
                     
-            //     yield_balancep.textContent = yield_balance.toFixed(8), 
-            //     yield_percentagep.textContent = yield_percentage
-            //     time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
+                yield_balancep.textContent = yield_balance.toFixed(8), 
+                yield_percentagep.textContent = yield_percentage
+                time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
 
-            // });
+            });
 
             // socket.on("disconnect", (reason) =>{
             //     console.log("Disconnected", reason)

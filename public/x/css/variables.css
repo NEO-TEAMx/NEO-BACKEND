@@ -1,0 +1,16 @@
+/* Colors */
+:root {
+  --Primary: #01ef67;
+  --White: #ffffff;
+  --Black: #010b13;
+  --Secondary: #79828a;
+  --Background: #010b13;
+  --Border: rgba(255, 255, 255, 0.15);
+}
+
+:root {
+  --Geologica: "Geologica";
+  --Fixed-button-width: 5.5rem;
+  --Fixed-button-height: 4.25rem;
+  --Footer-height: 5.5rem;
+}

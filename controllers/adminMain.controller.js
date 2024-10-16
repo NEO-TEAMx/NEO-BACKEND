@@ -16,6 +16,21 @@ const getAllUsers = async(req,res) =>{
     return res.status(StatusCodes.OK).json({success:true, count: users.length, users})
 }
 
+const updateyieldBalance = async(req,res) => {
+    const {id:userId} = req.params;
+    const {yield_balance} = req.body;
+    if(!yield_balance){
+        throw new BadRequestApiError("Field cannot be empry!!")
+    }
+    const user = await User.findOne({_id:userId});
+    if(!user){
+        throw new BadRequestApiError("No User With such ID")
+    }
+    user.yield_balance += yield_balance;
+    await user.save();
+    return res.status(StatusCodes.OK).json({success:true,  msg:"Update Successful!"})
+}
+
 const allDeposit = async(req,res)=>{
     const {transaction_id, email} = req.query;
     const queryObject = {};
@@ -114,4 +129,5 @@ module.exports = {
     approveWithdrawal,
     allDeposit,
     allWithdrawal,
+    updateyieldBalance
 }

@@ -1,0 +1,43 @@
+.mask {
+  display: inline-block;
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  flex-shrink: 0;
+  transition: 0.2s;
+}
+/* socials */
+.x {
+  width: 2rem;
+  height: 2rem;
+  -webkit-mask-image: url("../images/socials/x.svg");
+  mask-image: url("../images/socials/x.svg");
+}
+.youtube {
+  width: 2rem;
+  height: 2rem;
+  -webkit-mask-image: url("../images/socials/youtube.svg");
+  mask-image: url("../images/socials/youtube.svg");
+}
+.telegram {
+  width: 2rem;
+  height: 2rem;
+  -webkit-mask-image: url("../images/socials/telegram.svg");
+  mask-image: url("../images/socials/telegram.svg");
+}
+
+.link {
+  width: 0.875rem;
+  height: 0.875rem;
+  -webkit-mask-image: url("../images/mask/link.svg");
+  mask-image: url("../images/mask/link.svg");
+}
+.back {
+  width: 2.75rem;
+  height: 2.75rem;
+  -webkit-mask-image: url("../images/mask/back.svg");
+  mask-image: url("../images/mask/back.svg");
+}

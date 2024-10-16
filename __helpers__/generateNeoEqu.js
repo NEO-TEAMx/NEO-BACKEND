@@ -1,4 +1,5 @@
 const axios = require('axios');
+const {BadRequestApiError} = require("../Errors");
 
 async function getNeoToUsdtRate(){
     try {
@@ -7,7 +8,8 @@ async function getNeoToUsdtRate(){
         return neoToUsdt;
     } catch (error) {
         console.error('Error fetching conversion rate:', error.message);
-        return error;
+        // return error;
+        throw new BadRequestApiError("Error occurred. Try again!!")
     }
 }
 

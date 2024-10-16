@@ -1,808 +1,1017 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-  <!-- <link rel="stylesheet" href="../assets/fontawesome-free-6.4.2-web/css/fontawesome.min.css"> -->
-  <link rel="stylesheet" href="./assets/css/style.css" />
-  <script src="https://kit.fontawesome.com/1b9f7a129a.js" crossorigin="anonymous"></script>
-  <title>Home</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" />
-  <link rel="icon" type="image/png" href="./assets/images/neo-logo.png" sizes="16x16 32x32">
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<link rel="icon" type="image/png" sizes="48x48" href="./x/images/neo-logo.png">
+<script src="https://kit.fontawesome.com/1b9f7a129a.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link href="/x/assets/82019e32/swiper-bundle.min.css" rel="stylesheet">
+<link href="/x/assets/901b9f7/dist/css/bootstrap.css" rel="stylesheet">
+<link href="./x/css/main.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" />
+<!-- <script src="/x/assets/dd77202/jquery.js"></script> -->
+
+    <title>Neo-Protocol</title>
+
 <style>
+     /* oberserver css starts */
+.hiddens {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translate(-100%);
+  transition: all 1s;
+}
 
-.hiddenBody {
-    display: none;
-} 
+.show {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate(0);
+}
 
-.spinner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      /* transform: translate(-50%, -50%); */
-       width: 11.2px;
-       height: 11.2px;
-       animation: spinner-o824ag 1s infinite linear;
-    }
-    
-    .spinner div {
-       position: absolute;
-       width: 100%;
-       height: 100%;
-       background: #00d664;
-       border-radius: 50%;
-       animation: spinner-vse6n7 1.25s infinite ease;
-    }
-    
-    .spinner div:nth-child(1) {
-       --rotation: 90;
-    }
-    
-    .spinner div:nth-child(2) {
-       --rotation: 180;
-    }
-    
-    .spinner div:nth-child(3) {
-       --rotation: 270;
-    }
-    
-    .spinner div:nth-child(4) {
-       --rotation: 360;
-    }
-    
-    @keyframes spinner-vse6n7 {
-       0%, 100% {
-          transform: rotate(calc(var(--rotation) * 1deg)) translateY(0);
-       }
-    
-       50% {
-          transform: rotate(calc(var(--rotation) * 1deg)) translateY(300%);
-       }
-    }
-    
-    @keyframes spinner-o824ag {
-       to {
-          transform: rotate(360deg);
-       }
-    }
+.hiddenright {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translate(100%);
+  transition: all 1.3s;
+}
 
-    .error {
-    color: rgb(207, 22, 22);
-    margin-top: 5px;
+.showright {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate(0);
+}
+
+.hiddenblur{
+  opacity: 0;
+  filter: blur(5px);
+  transition: all 2s;
+}
+
+.showblur {
+  opacity: 1;
+  filter: blur(0);
+}
+
+.hiddendown {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(100%);
+  transition: all 1s;
+}
+
+.showup {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* oberserver css ends */
+
+  .banner-wrapper {
+  position: fixed;
+  background-image: url('gcx_banner_bg.png');
+  background-repeat: repeat-x;
+  background-size: cover;
+  z-index: 999;
+  width: 100%;
+  padding-left: var(--Fixed-button-width);
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+#w0{
+  margin-top: 56px;
+}
+
+.banner-text {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  text-align: left;
+}
+
+.banner-button {
+  background-color: #fff;
+  color: #010B13;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+  padding: 8px 32px;
+  border-radius: 49px;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  text-wrap: nowrap;
+  margin: 0 30px;
+}
+
+.banner-wrapper .navbar{
+  padding-top: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+
+.banner-button:hover{
+  background-color: var(--Primary, #01EF67);
+  box-shadow: 0px 0px 16px 0px rgba(1, 239, 103, 0.10);
+  color: #010B13;
+  text-decoration: none;
+}
+
+
+.banner-close {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+
+.banner-content__wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.banner-close:hover{
+  color: #01EF67;
+
+}
+
+@media (max-width: 767px) {
+  .banner-wrapper{
+    padding-left: 0;
+
   }
 
-  .success {
-    color: rgb(12, 56, 12);
-    margin-top: 5px;
+
+  .banner-button {
+    width: 105px;
+    height: 32px;
+
+    padding: 8px 13px;
+
   }
 
+  .banner-close {
+    width: 12.47px;
+    height: 12px;
+    top: 26px;
+    left: 331px;
+  }
+  .banner-text{
+    font-family: Geologica;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: left;
+
+  }
+
+  .banner-button{
+    margin: 0 20px;
+  }
+}
+
+@media (max-width: 500px){
+  .banner-text{
+    max-width: 140px;
+  }
+  .banner-button{
+    margin: 0 20px;
+  }
+}
+
+@media (max-width: 400px){
+  .banner-text{
+    max-width: 140px;
+  }
+  .banner-button{
+    margin: 0 20px;
+  }
+}
 </style>
+</head>
+<body style="text-transform: capitalize;">
 
-<body class="" style="font-family: 'Times New Roman', Times, serif; 
-background: linear-gradient(
-  90deg,
-  hsla(30, 11%, 4%, 1) 0%,
-  rgb(14, 13, 13) 100%
-);
-">
+<!-- Google Tag Manager -->
+<!-- <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PRN6G3K');
+</script> -->
 
-<div class="spinner">
-  <div></div>   
-  <div></div>    
-  <div></div>    
-  <div></div>    
-</div>
+<!-- End Google Tag Manager -->
 
-  <div class="holder hiddenBody">
-    <!-- ------------------------- NAVBAR---------------->
+<div class="wrap">
 
-    <section id="header">
-      <div class="small-header container">
-        <a href="./index.html">
-          <div class="sidebside">
-            <div class="logo"><img src="./assets/images/neo-logo.png" alt=""></div>
-            <h2>
-              NEO
-            </h2>
-          </div>
-        </a>
-        <div class="">
-          <ul id="navbar">
-            <li><a class="active" href="index.html">Home</a></li>
-            <li><a href="#about-us">About</a></li>
-            <li><a href="#faq">FAQs</a></li>
-            <li><a href="./html/contact.html">Contact</a></li>
-            <li><a href="./html/signin.html">Login</a></li>
-            <!-- <div class="dashboard">  <li><a class="dashboard" href="Dashboard.html">Dashboard</a></li></div> 
-                 -->
-          </ul>
+  <section id="header">
+    <div class="small-header container">
+      <a style="text-decoration: none !important;" href="./index.html">
+        <div class="sidebside">
+          <div class="logo"><img src="./assets/images/neo-logo.png" alt=""></div>
+          <h2>
+            NEO
+          </h2>
         </div>
-        <button id="open-menu-btn"><i class="uil uil-list-ui-alt"></i></button>
-        <button id="close-menu-btn"><i class="uil uil-times"></i></button>
+      </a>
+      <div class="">
+        <ul id="navbar">
+          <li><a class="active" href="index.html">Home</a></li>
+          <li><a href="#about-us">About</a></li>
+          <li><a href="#faq">FAQs</a></li>
+          <li><a href="./html/contact.html">Contact</a></li>
+          <li><a href="./html/signin.html">Login</a></li>
+          <!-- <div class="dashboard">  <li><a class="dashboard" href="Dashboard.html">Dashboard</a></li></div>
+               -->
+        </ul>
+      </div>
+      <button id="open-menu-btn"><i class="uil uil-list-ui-alt"></i></button>
+      <button id="close-menu-btn"><i class="uil uil-times"></i></button>
+    </div>
+    <hr>
+  </section>
+
+    <main>
+
+
+<section class="section__main" >
+  <div class="container hiddens">
+    <h1 class="section-title">
+      <span>super neo cloud mining</span>&nbsp;to enhance support efficiency,</h1>
+    <p class="section__main--text"> neo offers contemporary, high-efficiency rental services for Neo mining. Our utilization of cutting-edge ASIC and GPU machines ensures optimal returns.</p>
+      <a href="./html/signup.html" class="primary-button" id="" target="_blank">
+        Get started
+      </a>
+    <!-- <div class="socials">
+      <a href=" https://twitter.com/@Neo_Blockchain" class="d-flex" id="x-twitter" target="_blank" rel="nofollow"><i class="mask x"></i></a>
+      <a href=" https://youtube.com" class="d-flex" id="x-youtube" target="_blank" rel="nofollow"><i class="mask youtube"></i></a>
+      <a href=" https://telegram.com" class="d-flex" id="x-telegram" target="_blank" rel="nofollow"><i class="mask telegram"></i></a>
+    </div> -->
+  </div>
+</section>
+
+<section class="section__generation">
+  <div class="container">
+    <h2 class="section-title hiddenblur">
+      <span>next generation</span>&nbsp;of mining machines    </h2>
+    <div class="generation-blocks">
+      <div class="generation-block hiddendown">
+        <div class="generation-block__number">01.</div>
+        <div class="generation-block__text">
+          <span>non-custodial</span>
+          <br>
+          retain full control of your wallet        </div>
+        <img style="width: 600px; margin-bottom: -1rem;" src="./x/images/wallet3in1-removebg-preview.png" class="generation-block__image" alt="block image">
+      </div>
+      <div class="generation-block hiddendown">
+        <div class="generation-block__number">02.</div>
+        <div class="generation-block__text">
+          <span>mine on your behalf</span>
+          <br>
+        in neo</div>
+        <img style=" width: auto; border-radius: 14px 14px 14px 14px;" src="./x/images/mineneo-removebg-preview.png" class="generation-block__image" alt="block image">
+      </div>
+      <div class="generation-block hiddendown">
+        <div class="generation-block__number">03.</div>
+        <div class="generation-block__text">
+          <span>100% revenue return</span>
+          <br>
+          grow with neoprotocol      </div>
+        <img style="width: 300px; margin-bottom: -1rem;" src="./x/images/3d3-removebg-preview.png" class="generation-block__image" alt="block image">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why-choose-us">
+    <div class="main-containers container">
+
+      <div class="text hiddendown">
+        <h2> Why Choose <span>Neo</span></h2>
+        <p style="color: #fff; display: block !important;">Our goal is to provide our investors with a reliable source
+          of high income, while minimizing any possible
+          risks and offering a high-quality service.</p>
       </div>
 
+      <div class="row-justify-content">
 
-
-
-
-    </section>
-
-    <!---------------------------------HERO-SECTION--------------------------->
-
-    <section class="py-5 hero" style="margin: 2.05rem 0;">
-      <div class="container">
-        <div class="d-sm-flex align-items-center justify-content-between flex" style="gap: 5rem;">
-          <div class="resize">
-            <h1 class="text-light hidden" style="font-weight: 600; color: #000;">SUPER <span
-                style="color: #00d664;">NEO</span>
-              CLOUD MINING </h1>
-            <p class="lead my-4 text-light hidden" style="text-align: justify; word-spacing: 0;">To enhance support
-              efficiency,
-              Neo offers contemporary, high-efficiency rental services for Neo mining. Our utilization of cutting-edge
-              ASIC and GPU machines ensures optimal returns.</p>
-            <a href="./html/signup.html" class="btn btn-lg hidden" style="background: #00813c;">Get Started</a>
-          </div>
-          <div class="hero-image" style="width: 1100px; margin-top: 30px;">
-            <img class="hidden" src="./assets/images/neo-hero.jpeg" alt="" />
-          </div>
-
+        <div class="containers hiddendown">
+          <div class="before-flex">
+            <div class="flex">
+              <div class="icon">
+                <span class="material-symbols-sharp">electric_bolt</span>
+              </div>
+              <h4 class="choose-card__title base--color">Automated Mining</h4>
+            </div>
+            <p>Our mining team comprise of blockchain developers and IT engineers, we got you covered with the
+              knowledge
+              and skills of our team.</p>
+          </div><!-- choose-card end -->
         </div>
 
-      </div>
-    </section>
-
-
-    <!-- 
-        <section>
-            <div class="container">
-                <div class="accordion" id="accordionPanelsStayOpenExample bg-dark">
-                    <div class="accordion-item bg-dark" style="background: #000;">
-                      <h2 class="accordion-header">
-                        <button class="accordion-button bg-dark text-light"  style="" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                          Accordion Item #1
-                        </button>
-                      </h2>
-                      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show bg-dark text-light">
-                        <div class="accordion-body">
-                          <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                        </div>
-                      </div>
-                    </div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                          Accordion Item #2
-                        </button>
-                      </h2>
-                      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-                        <div class="accordion-body">
-                          <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                        </div>
-                      </div>
-                    </div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                          Accordion Item #3
-                        </button>
-                      </h2>
-                      <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                        <div class="accordion-body">
-                          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+        <div class="containers hiddendown">
+          <div class="before-flex">
+            <div class="flex">
+              <div class="icon">
+                <span class="material-symbols-sharp">diversity_3</span>
+              </div>
+              <h4 class="choose-card__title base--color">Backed By Top Investors</h4>
             </div>
-        </section> -->
-
-
-    <section id="content1" class="section-p1 container">
-      <H1 class="hiddenblur">STATISTICS</H1>
-      <div class="grid-container">
-        <div class="hard-img hiddenblur">
-          <img src="./assets/images/download.jpeg" alt="">
+            <p>Our investors include austin hilton, maureen hayes, the New York Stock Exchange, Union Square Ventures
+              uk
+              and many more.</p>
+          </div><!-- choose-card end -->
         </div>
 
-        <div class="flex hiddenblur">
-          <div class="container hiddenblur">
-            <div class="flexs">
-              <span class="material-symbols-sharp">schedule</span>
-              <h4>SUPER FAST MINERS</h4>
+        <div class="containers hiddendown">
+          <div class="before-flex">
+            <div class="flex">
+              <div class="icon">
+                <span class="material-symbols-sharp">settings_input_component</span>
+              </div>
+              <h4 class="choose-card__title base--color">Superior Mining Machines</h4>
             </div>
-            <h3>Mine<span>NEO</span>Daily</h3>
-            <p>No battery or CPU drainage.<br>No mining gadget required. Fast and risk free.</p>
-            <a href="Faq.html">Learn More</a>
-          </div>
+            <p>We have the latest hardware for different algorithms, achieving maximum power and speed with the best
+              technology.</p>
+          </div><!-- choose-card end -->
+        </div>
 
-          <div class="container hiddenblur">
-            <div class="flexs">
-              <span class="material-symbols-sharp">account_circle</span>
-              <h4>TOTAL ACCOUNTS</h4>
+        <div class="containers hiddendown">
+          <div class="before-flex">
+            <div class="flex">
+              <div class="icon">
+                <span class="material-symbols-sharp">rocket_launch</span>
+              </div>
+              <h4 class="choose-card__title base--color">Crazy Daily Returns</h4>
             </div>
-            <h3>100k+</h3>
-            <p>We have over 100k+ active miners on our platform.</p>
-            <div class="join"><a href="./html/signup.html">Join Now</a></div>
-          </div>
-
-          <div class="container hiddenblur">
-            <div class="flexs">
-              <span class="material-symbols-sharp">punch_clock</span>
-              <h4>24/7 ACCESS</h4>
-            </div>
-            <h3>Powerful Miners</h3>
-            <p>Login - Deposit - Withdraw anytime, we offer the best mining algorithm available.</p>
-            <a href="Faq.html">Learn More</a>
+            <p>Coins mined are reflected on the dashboard of the miner during active automated mining.</p>
           </div>
         </div>
 
-      </div>
-    </section>
-
-
-
-
-
-
-    <section class="why-choose-us">
-      <div class="main-containers container">
-
-
-        <div class="text hiddendown">
-
-          <h2> Why Choose <span>Neo</span></h2>
-          <p style="color: #fff; display: block !important;">Our goal is to provide our investors with a reliable source
-            of high income, while minimizing any possible
-            risks and offering a high-quality service.</p>
-
+        <div class="containers hiddendown">
+          <div class="before-flex">
+            <div class="flex">
+              <div class="icon">
+                <span class="material-symbols-sharp">security</span>
+              </div>
+              <h4 class="choose-card__title base--color">Top-Level-Security</h4>
+            </div>
+            <p>Rest assured we provide leading security protocols and strong encryption. your personal data is
+              protected.</p>
+          </div><!-- choose-card end -->
         </div>
 
-
-
-        <div class="row-justify-content">
-
-
-
-          <div class="containers hiddendown">
-            <div class="before-flex">
-              <div class="flex">
-                <div class="icon">
-                  <span class="material-symbols-sharp">electric_bolt</span>
-                </div>
-                <h4 class="choose-card__title base--color">Automated Mining</h4>
+        <div class="containers hiddendown">
+          <div class="before-flex">
+            <div class="flex">
+              <div class="icon">
+                <i class="uil uil-cloud-shield"></i>
               </div>
-              <p>Our mining team comprise of blockchain developers and IT engineers, we got you covered with the
-                knowledge
-                and skills of our team.</p>
-            </div><!-- choose-card end -->
-          </div>
-
-
-          <div class="containers hiddendown">
-            <div class="before-flex">
-              <div class="flex">
-                <div class="icon">
-                  <span class="material-symbols-sharp">diversity_3</span>
-                </div>
-                <h4 class="choose-card__title base--color">Backed By Top Investors</h4>
-              </div>
-              <p>Our investors include austin hilton, maureen hayes, the New York Stock Exchange, Union Square Ventures
-                uk
-                and many more.</p>
-            </div><!-- choose-card end -->
-          </div>
-
-
-          <div class="containers hiddendown">
-            <div class="before-flex">
-              <div class="flex">
-                <div class="icon">
-                  <span class="material-symbols-sharp">settings_input_component</span>
-                </div>
-                <h4 class="choose-card__title base--color">Superior Mining Machines</h4>
-              </div>
-              <p>We have the latest hardware for different algorithms, achieving maximum power and speed with the best
-                technology.</p>
-            </div><!-- choose-card end -->
-          </div>
-
-
-          <div class="containers hiddendown">
-            <div class="before-flex">
-              <div class="flex">
-                <div class="icon">
-                  <span class="material-symbols-sharp">rocket_launch</span>
-                </div>
-                <h4 class="choose-card__title base--color">Crazy Daily Returns</h4>
-              </div>
-              <p>Coins mined are reflected on the dashboard of the miner during active automated mining.</p>
+              <h4 class="choose-card__title base--color">High Reliability</h4>
             </div>
-          </div>
+            <p>We are trusted by a huge number of people. We are working hard constantly to improve the level of our
+              security system and minimize possible risks.</p>
+          </div><!-- choose-card end -->
+        </div>
 
-          <div class="containers hiddendown">
-            <div class="before-flex">
-              <div class="flex">
-                <div class="icon">
-                  <span class="material-symbols-sharp">security</span>
-                </div>
-                <h4 class="choose-card__title base--color">Top-Level-Security</h4>
+        <div class="containers hiddendown">
+          <div class="before-flex">
+            <div class="flex">
+              <div class="icon">
+                <i class="fas fa-wallet"></i>
               </div>
-              <p>Rest assured we provide leading security protocols and strong encryption. your personal data is
-                protected.</p>
-            </div><!-- choose-card end -->
-          </div>
+              <h4 class="choose-card__title base--color">Flexible Transaction</h4>
+            </div>
+            <P>You can make deposit from or withdraw directly to your crypto wallet at any time.</P>
+          </div><!-- choose-card end -->
+        </div>
 
-
-
-          <div class="containers hiddendown">
-            <div class="before-flex">
-              <div class="flex">
-                <div class="icon">
-                  <i class="uil uil-cloud-shield"></i>
-                </div>
-                <h4 class="choose-card__title base--color">High Reliability</h4>
+        <div class="containers hiddendown">
+          <div class="before-flex">
+            <div class="flex">
+              <div class="icon">
+                <i class="uil uil-server"></i>
               </div>
-              <p>We are trusted by a huge number of people. We are working hard constantly to improve the level of our
-                security system and minimize possible risks.</p>
-            </div><!-- choose-card end -->
-          </div>
-
-
-          <div class="containers hiddendown">
-            <div class="before-flex">
-              <div class="flex">
-                <div class="icon">
-                  <i class="fas fa-wallet"></i>
-                </div>
-                <h4 class="choose-card__title base--color">Flexible Transaction</h4>
-              </div>
-              <P>You can make deposit or withdraw directry from your crypto wallet at any time.</P>
-            </div><!-- choose-card end -->
-          </div>
-
-
-          <div class="containers hiddendown">
-            <div class="before-flex">
-              <div class="flex">
-                <div class="icon">
-                  <i class="uil uil-server"></i>
-                </div>
-                <h4 class="choose-card__title base--color">Dedicated Server</h4>
-              </div>
-              <p>We are using a dedicated server for the website which allows us exclusive use of the resources of the
-                entire server.</p>
-            </div><!-- choose-card end -->
-          </div>
-
-
-
-
+              <h4 class="choose-card__title base--color">Dedicated Server</h4>
+            </div>
+            <p>We are using a dedicated server for the website which allows us exclusive use of the resources of the
+              entire server.</p>
+          </div><!-- choose-card end -->
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="about-us" class="about-us container">
+    <div>
+      <h1 class="hiddenblur">ABOUT <span> US</span></h1>
+      <p class="sub-text hiddenblur">NEO IS AN OPEN SOURCE, COMMUNITY DRIVEN PLATFORM.</p>
 
 
-    </section>
-
-    <section id="about-us" class="about-us container">
-      <div>
-        <h1 class="hiddenblur">ABOUT <span> US</span></h1>
-        <p class="sub-text hiddenblur">NEO IS AN OPEN SOURCE, COMMUNITY DRIVEN PLATFORM.</p>
-
-
-        <div class="content">
-          <div class="bull hiddenblur">
-            <img src="./assets/images/NEO COINN.png" alt="">
-            <!-- <video src="path_to_your_video.mp4" controls></video> -->
-          </div>
-          <div class="paragraphs">
-
-
-
-            <div id="all-tabs" class="hiddenblur">
-
-              <div id="tabs">
-                <p> <span>Neo</span> is a software network that seeks to serve as a platform on top of which anyone can
-                  transact and create decentralized products and services. Neo is sometimes referred to as the “Ethereum
-                  of China” due to it sharing many similar features with its more popular counterpart, such as the
-                  ability to write decentralized applications (dapps) for decentralized exchanges, prediction markets
-                  and social networks, among others.
-                </p>
-              </div>
-              <div id="tabs">
-                <p> Further, the Neo network also offers a host of other features to its users, including a
-                  decentralized file storage system, an identity system, and an oracle system for feeding external
-                  information to it.</p>
-              </div>
-            </div>
-            <a class="hiddenblur" href="./html/signup.html">REGISTER NOW</a>
-          </div>
+      <div class="content">
+        <div class="bull hiddenblur">
+          <img src="./assets/images/NEO COINN.png" alt="">
+          <!-- <video src="path_to_your_video.mp4" controls></video> -->
         </div>
-
-      </div>
-    </section>
-
-    <section class="numbers container">
-      <div class="number">
-        <div class="uk-first-column">
-          <h1 class="uk-heading-bullet" style="color: #fff">
-            $<span class="count" data-counter-end="127">200</span>K+
-          </h1>
-          <p style="color: #fff !important;" class="tup">Active Investments</p>
-        </div>
-        <div class="uk-first-column">
-          <h1 class="uk-heading-bullet" style="color: #fff">
-            <span class="count" data-counter-end="100">100</span>K+
-          </h1>
-          <p style="color: #fff !important;" class="tup">Active Accounts</p>
-        </div>
-        <div class="uk-first-column">
-          <h1 class="uk-heading-bullet" style="color: #fff">
-            $<span class="count" data-counter-end="38">38</span>K+
-          </h1>
-          <p style="color: #fff !important;" class="tup">Weekly Payouts</p>
-        </div>
-        <div class="uk-first-column">
-          <h1 class="uk-heading-bullet" style="color: #fff">
-            <span class="count" data-counter-end="2">2</span>+
-          </h1>
-          <p style="color: #fff !important;" class="tup">Years of Experience</p>
-        </div>
-      </div>
-    </section>
+        <div class="paragraphs">
 
 
-    <section id="faq" class="faqs">
-      <div class="container">
-        <h2 class="hiddenblur">Frequently Asked Questions</h2>
-        <div class="faqs__container">
 
-          <article class="faq hidden">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">What is cloud mining?</h4>
-              <p>Cloud mining is the process of using remote data centers to mine cryptocurrencies. Instead of
-                purchasing and maintaining your own mining hardware, you can rent computing power from a cloud mining
-                provider and receive a share of the rewards based on the amount of computing power you've contributed.
+          <div id="all-tabs" class="hiddenblur">
+
+            <div id="tabs">
+              <p> <span>Neo</span> is a software network that seeks to serve as a platform on top of which anyone can
+                transact and create decentralized products and services. Neo is sometimes referred to as the “Ethereum
+                of China” due to it sharing many similar features with its more popular counterpart, such as the
+                ability to write decentralized applications (dapps) for decentralized exchanges, prediction markets
+                and social networks, among others.
               </p>
             </div>
-          </article>
-
-          <article class="faq hiddenright">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">How does Neo Cloud Mining work?</h4>
-              <p>Neo Cloud Mining offers a user-friendly platform that allows you to purchase mining hashrates and start
-                earning rewards immediately. Our data centers are located in secure facilities with high-speed internet
-                connections, and we use the latest mining hardware and software to optimize your mining experience.</p>
+            <div id="tabs">
+              <p> Further, the Neo network also offers a host of other features to its users, including a
+                decentralized file storage system, an identity system, and an oracle system for feeding external
+                information to it.</p>
             </div>
-          </article>
-
-          <article class="faq hidden">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">What cryptocurrencies can I mine in Neo Mining ?</h4>
-              <p>We only offer hashrates for mining Neo Protocol. Our hashrates are designed to be flexible and
-                affordable, allowing you to choose the option that best suits your needs and budget. </p>
-            </div>
-          </article>
-
-          <article class="faq hiddenright">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">How much can I earn with Neo Cloud Mining?</h4>
-              <p>Your earnings will depend on a variety of factors, including the hashrate you're using for mining, the
-                amount of computing power you've contributed, and the current market conditions. We provide detailed
-                information about expected earnings for each of our mining plans, so you can make an informed decision.
-              </p>
-            </div>
-          </article>
-
-          <article class="faq hidden">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">How long does it take to receive my earnings?</h4>
-              <p>We pay out mining rewards on a daily basis, so you can expect to receive your earnings within 24 hours
-                of making a withdrawal request. Minimum withdrawal amount is $2, you can withdraw your funds at any
-                time. 5% tax charge applies to any withdrawal amount.</p>
-            </div>
-          </article>
-
-          <article class="faq hiddenright">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">Is cloud mining safe?</h4>
-              <p>Cloud mining can be a safe and secure way to mine cryptocurrencies, as long as you choose a reputable
-                provider with a track record of success. At Neo Cloud Mining, we prioritize the security and privacy of
-                our customers, and we use advanced security measures to protect your data and your assets.</p>
-            </div>
-          </article>
-
-          <article class="faq hidden">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">What's the minimum amount required to purchase hashrates?</h4>
-              <p>There isn't a set minimum expense; you can buy hashrates with any sum ranginng from one dollar upwards,
-                and the corresponding hash power will be delivered to your dashboard. Users also have the option to mine
-                for free, but their earnings are limited due to the absence of contributing hashrates that accelerate
-                the mining rate.</p>
-            </div>
-          </article>
-
-          <article class="faq hiddenright">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">How do i increase my mining rate ?</h4>
-              <p>You can increase your mining rate by buying more hashrates. The Increment happens authomatically, the
-                new hashrate will be added to the existing hash rates to increase yield balance when mining.</p>
-            </div>
-          </article>
-
-          <article class="faq hidden">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">How do I sign up for Neo Cloud Mining?</h4>
-              <p>Signing up is easy! Simply visit the login page, create an account (REGISTER), buy your preferred
-                hashrate. You can start mining and earning rewards immediately after registration. <span>NOTE:</span>
-                Users have to visit the website daily to activate the mining mechanism.</p>
-            </div>
-          </article>
-
-          <article class="faq hiddenright">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">Do I need any technical expertise to start Mining?</h4>
-              <p>No, our platform is designed to be user-friendly and accessible to everyone, regardless of technical
-                expertise. We provide detailed instructions and support to help you get started.</p>
-            </div>
-          </article>
-
-          <article class="faq hidden">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">Can I track my mining activity and earnings?</h4>
-              <p>Yes, we provide detailed statistics on your mining activity and earnings, so you can monitor your
-                progress and make informed decisions about your mining strategy.</p>
-            </div>
-          </article>
-
-          <article class="faq hiddenright">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">Are there any hidden fees or charges?</h4>
-              <p>Yes, only a 5% tax payment which is dynamic and can be adjusted at any time upon withdrawals, we are
-                transparent about our fees and charges, and we do not impose any hidden fees or charges there are no
-                additional costs or fees.</p>
-            </div>
-          </article>
-
-          <article class="faq hidden">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">What is the tax for ?</h4>
-              <p>It is a compulsory contribution to state revenue, levied by the government on our company for services
-                and transactions being carried out by the company. Income received from mining is taxed as ordinary
-                income based on the fair value of coins on the day they are received. You will pay income tax based on
-                the price of Neo in dollar terms on that date. </p>
-            </div>
-          </article>
-
-          <article class="faq hiddenright">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">What happens if the cryptocurrency market crashes?</h4>
-              <p>Like any investment, cryptocurrency mining involves risks, and the market can be volatile. However, we
-                strive to minimize risk by using advanced mining hardwares and softwares and by diversifying our mining
-                activities across multiple cryptocurrency exchanges.</p>
-            </div>
-          </article>
-
-          <article class="faq hidden">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline">Can I refer friends to Anchor Cloud Mining?</h4>
-              <p>Yes, we offer a generous referral program that rewards you for referring friends and family to our
-                platform. You can earn hashrates as commission from each referral and also from their downliners.</p>
-            </div>
-          </article>
-
-          <article class="faq hiddenright">
-            <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
-            <div class="question__answer">
-              <h4 id="underline"> I still have more questions to ask, who do i ask ?</h4>
-              <p>If you still have more questions to ask simply go to the contact page and send an email about your
-                questions or problems to our team and you will get a reply as soon as possible.</p>
-            </div>
-          </article>
-
+          </div>
+          <!-- <a class="hiddenblur" href="./html/signup.html">REGISTER NOW</a> -->
+          <a href="./html/signup.html"class="primary-button">
+            REGISTER NOW</i>
+          </a>
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section class="numbers container">
+    <div class="number">
+      <div class="uk-first-column">
+        <h1 class="uk-heading-bullet" style="color: #fff">
+          $<span class="count" data-counter-end="127">200</span>K+
+        </h1>
+        <p style="color: #fff !important;" class="tup">Active Investments</p>
+      </div>
+      <div class="uk-first-column">
+        <h1 class="uk-heading-bullet" style="color: #fff">
+          <span class="count" data-counter-end="100">100</span>K+
+        </h1>
+        <p style="color: #fff !important;" class="tup">Active Accounts</p>
+      </div>
+      <div class="uk-first-column">
+        <h1 class="uk-heading-bullet" style="color: #fff">
+          $<span class="count" data-counter-end="38">38</span>K+
+        </h1>
+        <p style="color: #fff !important;" class="tup">Weekly Payouts</p>
+      </div>
+      <div class="uk-first-column">
+        <h1 class="uk-heading-bullet" style="color: #fff">
+          <span class="count" data-counter-end="2">2</span>+
+        </h1>
+        <p style="color: #fff !important;" class="tup">Years of Experience</p>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="faq" class="faqs">
+    <div class="container">
+      <h2 class="hiddenblur">Frequently Asked Questions</h2>
+      <div class="faqs__container">
+
+        <article class="faq hiddens">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">What is cloud mining?</h4>
+            <p>Cloud mining is the process of using remote data centers to mine cryptocurrencies. Instead of
+              purchasing and maintaining your own mining hardware, you can rent computing power from a cloud mining
+              provider and receive a share of the rewards based on the amount of computing power you've contributed.
+            </p>
+          </div>
+        </article>
+
+        <article class="faq hiddenright">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">How does Neo Cloud Mining work?</h4>
+            <p>Neo Cloud Mining offers a user-friendly platform that allows you to purchase mining hashrates and start
+              earning rewards immediately. Our data centers are located in secure facilities with high-speed internet
+              connections, and we use the latest mining hardware and software to optimize your mining experience.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddens">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">What cryptocurrencies can I mine in Neo Mining ?</h4>
+            <p>We only offer hashrates for mining Neo Protocol. Our hashrates are designed to be flexible and
+              affordable, allowing you to choose the option that best suits your needs and budget. </p>
+          </div>
+        </article>
+
+        <article class="faq hiddenright">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">How much can I earn with Neo Cloud Mining?</h4>
+            <p>Your earnings will depend on a variety of factors, including the hashrate you're using for mining, the
+              amount of computing power you've contributed, and the current market conditions. We provide detailed
+              information about expected earnings for each of our mining plans, so you can make an informed decision.
+            </p>
+          </div>
+        </article>
+
+        <article class="faq hiddens">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">How long does it take to receive my earnings?</h4>
+            <p>We pay out mining rewards on a daily basis, so you can expect to receive your earnings within 24 hours
+              of making a withdrawal request. Minimum withdrawal amount is $2, you can withdraw your funds at any
+              time. 5% tax charge applies to any withdrawal amount.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddenright">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">Is cloud mining safe?</h4>
+            <p>Cloud mining can be a safe and secure way to mine cryptocurrencies, as long as you choose a reputable
+              provider with a track record of success. At Neo Cloud Mining, we prioritize the security and privacy of
+              our customers, and we use advanced security measures to protect your data and your assets.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddens">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">What's the minimum amount required to purchase hashrates?</h4>
+            <p>There isn't a set minimum expense; you can buy hashrates with any sum ranging from one dollar upwards,
+              and the corresponding hash power will be delivered to your dashboard. Users also have the option to mine
+              for free, but their earnings are limited due to the absence of contributing hashrates that accelerate
+              the mining rate.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddenright">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">How do i increase my mining rate ?</h4>
+            <p>You can increase your mining rate by buying more hashrates. The Increment happens authomatically, the
+              new hashrate will be added to the existing hash rates to increase yield balance when mining.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddens">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">How do I sign up for Neo Cloud Mining?</h4>
+            <p>Signing up is easy! Simply visit the login page, create an account (REGISTER), buy your preferred
+              hashrate. You can start mining and earning rewards immediately after registration. <span>NOTE:</span>
+              Users have to visit the website daily to activate the mining mechanism.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddenright">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">Do I need any technical expertise to start Mining?</h4>
+            <p>No, our platform is designed to be user-friendly and accessible to everyone, regardless of technical
+              expertise. We provide detailed instructions and support to help you get started.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddens">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">Can I track my mining activity and earnings?</h4>
+            <p>Yes, we provide detailed statistics on your mining activity and earnings, so you can monitor your
+              progress and make informed decisions about your mining strategy.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddenright">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">Are there any hidden fees or charges?</h4>
+            <p>Yes, only a 5% tax payment which is dynamic and can be adjusted at any time upon withdrawals, we are
+              transparent about our fees and charges, and we do not impose any hidden fees or charges there are no
+              additional costs or fees.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddens">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">What is the tax for ?</h4>
+            <p>It is a compulsory contribution to state revenue, levied by the government on our company for services
+              and transactions being carried out by the company. Income received from mining is taxed as ordinary
+              income based on the fair value of coins on the day they are received. You will pay income tax based on
+              the price of Neo in dollar terms on that date. </p>
+          </div>
+        </article>
+
+        <article class="faq hiddenright">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">What happens if the cryptocurrency market crashes?</h4>
+            <p>Like any investment, cryptocurrency mining involves risks, and the market can be volatile. However, we
+              strive to minimize risk by using advanced mining hardwares and softwares and by diversifying our mining
+              activities across multiple cryptocurrency exchanges.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddens">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline">Can I refer friends to Anchor Cloud Mining?</h4>
+            <p>Yes, we offer a generous referral program that rewards you for referring friends and family to our
+              platform. You can earn 10% of your referral's initial deposit.</p>
+          </div>
+        </article>
+
+        <article class="faq hiddenright">
+          <div class="faq__icon"><i class="fa-sharp fa-solid fa-plus"></i></div>
+          <div class="question__answer">
+            <h4 id="underline"> I still have more questions to ask, who do i ask ?</h4>
+            <p>If you still have more questions to ask simply go to the contact page and send an email about your
+              questions or problems to our team and you will get a reply as soon as possible.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+  </section>
+
+  <section class="testimonial-section">
+    <div class="testimonial container">
+      <div class="testimonial-title">
+        <h2>our testimonial</h2>
+        <p>what our clients say about us</p>
+      </div>
+      <div class="testimonial-contents owl-carousel">
+        <div class="single-testmonail">
+          <p>I have invested with this platform and gotten my money in my account. This is legit and safe. Great doing
+            business with them</p>
+          <div class="client-info">
+            <div class="client-pic">
+              <a href="#">
+                <img src="../assets/images/accountant.webp">
+              </a>
+            </div>
+            <div class="client-details">
+              <h6> Allison Claire</h6>
+              <span>Financial Analyst</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="single-testmonail">
+          <p>Legit....and legit. Although i think the payment was processed manually, but i have received my first
+            payment within a very short time. I think it's nice to invest in this site.</p>
+          <div class="client-info">
+            <div class="client-pic">
+              <a href="#">
+                <img src="../assets/images/Nigerian-Student.jpeg" alt="">
+              </a>
+            </div>
+            <div class="client-details">
+              <h6> Daniel Wyatt</h6>
+              <span>Entrepreneur</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="single-testmonail">
+          <p>Impressed by the promptness of my first payment. This platform is the real deal. I feel confident and
+            positive about my investment here</p>
+          <div class="client-info">
+            <div class="client-pic">
+              <a href="#">
+                <img src="./assets/images/consultant2.webp" alt="">
+              </a>
+            </div>
+            <div class="client-details">
+              <h6> Joy Davis </h6>
+              <span> Business Consultant</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="single-testmonail">
+          <p>The website is genuinely trustworthy and impressive. However, we eagerly await the release of the mobile
+            app, as it would enhance our overall experience and convenience.</p>
+          <div class="client-info">
+            <div class="client-pic">
+              <a href="#">
+                <img src="../assets/images/Crypto-Trader.jpg" alt="">
+              </a>
+            </div>
+            <div class="client-details">
+              <h6> Benjamin Reed</h6>
+              <span>Freelancer</span>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+<div class="sections">
+  <div class="container">
+    <section class="section__how">
+      <h2 class="section-title">
+        <span>how</span>&nbsp;we mine Neo coin
+      </h2>
+      <div class="steps">
+        <div class="steps-row">
+          <div class="steps-content">
+            <div class="">
+              <h3 class="">efficient mining operations</h3>
+              <p class="mb-4">Utilizing optimized algorithms for Neo coin mining</p>
+              <h3 class="">secure mining protocols</h3>
+              <span class="">Implementing advanced cryptographic techniques</span>
+            </div>
+          </div>
+          <div class="steps-marker"><div class="steps-marker__line"></div></div>
+          <div class="steps-grid">
+            <!-- <img class="steps-logo" src="./x/images/web3auth.svg" alt="web3auth"> -->
+          </div>
+        </div>
+        <div class="steps-row">
+          <div class="steps-grid">
+            <!-- <img class="steps-logo" src="./x/images/zerodev.svg" alt="zerodev"> -->
+          </div>
+          <div class="steps-marker"><div class="steps-marker__line"></div></div>
+          <div class="steps-content">
+            <div class="">
+              <h3 class="">smart mining strategies</h3>
+              <p class="">Leveraging advanced account management techniques</p>
+              <ul class="mb-0">
+                <li>
+                  <b>session keys</b>
+                  <small class="">Granular control and permissions for mining operations</small>
+                </li>
+                <li>
+                  <b>energy efficiency</b>
+                  <small class="">Reducing costs with energy-efficient mining equipment</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="steps-row">
+          <div class="steps-content">
+            <div class="">
+              <h3 class="">battle-tested mining engine</h3>
+              <span class="">Using the latest mining hardware <br> for optimal performance</span>
+            </div>
+          </div>
+          <div class="steps-marker"><div class="steps-marker__line"></div></div>
+          <div class="steps-grid">
+            <!-- <img class="steps-logo" src="./x/images/goodcrypto.svg" alt="goodcrypto"> -->
+          </div>
+
+        </div>
+      </div>
     </section>
-
-    <section class="testimonial-section">
-      <div class="testimonial container">
-        <div class="testimonial-title">
-          <h2>our testimonial</h2>
-          <p>what our clients say about us</p>
-        </div>
-        <div class="testimonial-contents owl-carousel">
-          <div class="single-testmonail">
-            <p>I have invested with this platform and gotten my money in my account. This is legit and safe. Great doing
-              business with them</p>
-            <div class="client-info">
-              <div class="client-pic">
-                <a href="#">
-                  <img src="../assets/images/accountant.webp" alt="">
-                </a>
-              </div>
-              <div class="client-details">
-                <h6> Allison Claire</h6>
-                <span>Financial Analyst</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="single-testmonail">
-            <p>Legit....and legit. Although i think the payment was processed manually, but i have received my first
-              payment within a very short time. I think it's nice to invest in this site.</p>
-            <div class="client-info">
-              <div class="client-pic">
-                <a href="#">
-                  <img src="../assets/images/Nigerian-Student.jpeg" alt="">
-                </a>
-              </div>
-              <div class="client-details">
-                <h6> Daniel Wyatt</h6>
-                <span>Entrepreneur</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="single-testmonail">
-            <p>Impressed by the promptness of my first payment. This platform is the real deal. I feel confident and
-              positive about my investment here</p>
-            <div class="client-info">
-              <div class="client-pic">
-                <a href="#">
-                  <img src="../assets/images/black-teacher.jpg" alt="">
-                </a>
-              </div>
-              <div class="client-details">
-                <h6> Joy Davis </h6>
-                <span> Business Consultant</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="single-testmonail">
-            <p>The website is genuinely trustworthy and impressive. However, we eagerly await the release of the mobile
-              app, as it would enhance our overall experience and convenience.</p>
-            <div class="client-info">
-              <div class="client-pic">
-                <a href="#">
-                  <img src="../assets/images/Crypto-Trader.jpg" alt="">
-                </a>
-              </div>
-              <div class="client-details">
-                <h6> Benjamin Reed</h6>
-                <span>Freelancer</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <section class="newsletter">
-      <div id="newsletter" class="container section-p1 section-m1 hidden container py-4">
-        <!-- Display error -->
-        <div id="errorMsg" class="error"></div>
-        <div id="successMsg" class="success"></div>
-
-        <div class="newstext">
-          <h4>Sign Up For Newsletters</h4>
-          <P>Get E-mail updates about our lastest updates and <span>special offers.</span></P>
-        </div>
-        <div class="form">
-          <input type="email" id="newLetterEmail" placeholder="Your Email Address">
-          <button class="normal" onclick="newLetter()">Submit</button>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="footer container py-4 px-4">
-        <div class="cols">
-          <h4>Contact</h4>
-          <p><span><strong><i class="uil uil-envelope"></i></strong> </span><a
-              href="mailto:Neoprotocol.help@gmail.com">Neo-protocol@mail.com</a></p>
-          <p> <span><strong><i class="uil uil-location-point"></i></strong></span> 562 Willingtom Road, Street 32, San
-            Francisco</p>
-          <p><span><strong><i class="uil uil-clock-nine"></i></strong> </span> 10:00 - 18:00, Mon - Sat</p>
-          <div class="follow">
-            <div class="icon">
-              <a href=" https://twitter.com/@Neo_Blockchain" target="_blank"><i class="uil uil-twitter-alt"></i></a>
-              <a href=" https://telegram.com" target="_blank"><i class="uil uil-telegram"></i></a>
-              <a href=" https://youtube.com" target="_blank"><i class="uil uil-youtube"></i></a>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="cols1">
-          <h4>About</h4>
-          <a href="#about-us">About Us</a>
-          <a href="contact.html">Contact Us</a>
-        </div>
-
-        <div class="cols1">
-          <h4>My Account</h4>
-          <a href="signin.html">Sign In</a>
-          <a href="contact.html">Help</a>
-        </div>
-        <div class="cols install">
-          <h4>Install App</h4>
-          <p></p>
-          <p>Coming Soon To App Store &amp Google Play!!</p>
-          <div class="row-flex">
-            <div><a href="#"> <img src="../assets/images/app_store.svg" alt=""></a></div>
-            <div><a href="#"><img src="../assets/images/google_play.svg" alt=""></a></div>
-          </div>
-          <!-- <p>Secured Payment Gateways</p>
-          <img src="pay.png" alt=""> -->
-        </div>
-
-
-        <div class="copyright">
-          <p> © <span id="currentYear"></span> Neo-Protocol, All Rights Resrerved.</p>
-        </div>
-      </div>
-    </footer>
 
   </div>
+</div>
 
-  <script src="./assets/js/index.page.js"></script>
-  <script defer src="./assets/js/click.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $('.testimonial-contents').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: true,
-        margin: 50,
-        autoplay: true,
-        autoplayTimeout: 4000,
-        smartSpeed: 800,
-        responsive: {
-          0: {
-            items: 1
-          },
-          600: {
-            items: !1
-          },
-          800: {
-            items: 2
-          },
-          1000: {
-            items: 2
-          }
-        }
-      })
+<div class="container">
+
+  <section class="section__token">
+    <h2 class="section-title">
+      <span>NEO</span>&nbsp;token
+    </h2>
+    <div class="phase">
+      <div class="phase-top" style="background: #01b44f;">Phase 1</div>
+      <div class="phase-content">
+        <div class="mb-5 d-flex flex-wrap gap-4">
+          <div class="">
+            <div class="phase-title">revenue share</div>
+            <p class="mb-2 phase-text">50% of NEO protocol revenue</p>
+            <p class="phase-text__small">% of all GAS fees and smart contract executions collected by NEO</p>
+
+            <p class="phase-title">token burn</p>
+            <p class="mb-0 phase-text">10% of NEO protocol and <a href="https://neo.org/">NEO</a> revenue</p>
+          </div>
+          <div class="">
+            <div class="phase-title">discounts</div>
+            <p class="phase-text mb-4">Up to 50% discount on GAS fees for NEO holders</p>
+            <div class="phase-title">governance</div>
+            <p class="mb-0 phase-text">Vote on new features, supported dApps, and network upgrades</p>
+          </div>
+        </div>
+        <a href="https://neo.org/" class="primary-button" id="x-join-waitlist" target="_blank">
+          Visit site
+          <i class="mask link"></i>
+        </a>
+      </div>
+      <img style="width: 350px;" src="./x/images/3d3-removebg-preview.png" alt="phase image" class="phase-image">
+    </div>
+    <div class="phase">
+      <div class="phase-top"   style="background: #01b44f;" >Phase 2</div>
+      <div class="phase-content">
+        <div class="">
+          <div class="phase-title">NEO protocol</div>
+          <p class="mb-4 phase-text">Same cutting-edge blockchain functionality.</p>
+          <ul class="">
+            <li>100% on-chain</li>
+            <li>Execution logic coded into smart contracts</li>
+            <li>Transactions validated via dBFT consensus</li>
+            <li>Fully decentralized governance</li>
+          </ul>
+        </div>
+      </div>
+      <img style="width: 350px;" src="./x/images/3d2-removebg-preview.png" alt="phase image" class="phase-image">
+    </div>
+  </section>
+
+  <section class="section__roadmap">
+    <h2 class="section-title">roadmap</h2>
+    <div class="roadmap-slider swiper-initialized swiper-horizontal swiper-backface-hidden">
+      <div class="swiper-wrapper" id="swiper-wrapper-7b449d64a28b2998" aria-live="polite" style="transition-duration: 0ms; transform: translate3d(-720px, 0px, 0px); transition-delay: 0ms;">
+        <div class="swiper-slide complited" role="group" aria-label="1 / 7">
+          <div class="roadmap-date">Sep’23</div>
+          <div class="roadmap-marker">
+            <div class="roadmap-marker__line"></div>
+          </div>
+          <div class="roadmap-text">Neo N3 MainNet Launch</div>
+        </div>
+        <div class="swiper-slide complited" role="group" aria-label="2 / 7">
+          <div class="roadmap-date">Oct’23</div>
+          <div class="roadmap-marker">
+            <div class="roadmap-marker__line"></div>
+          </div>
+          <div class="roadmap-text">NeoID Integration</div>
+        </div>
+        <div class="swiper-slide complited swiper-slide-prev" role="group" aria-label="3 / 7">
+          <div class="roadmap-date">Mar’24</div>
+          <div class="roadmap-marker">
+            <div class="roadmap-marker__line"></div>
+          </div>
+          <div class="roadmap-text">Oracles Implementation</div>
+        </div>
+        <div class="swiper-slide complited last-complited" role="group" aria-label="4 / 7">
+          <div class="roadmap-date">Apr’24</div>
+          <div class="roadmap-marker">
+            <div class="roadmap-marker__line"></div>
+          </div>
+          <div class="roadmap-text">Public Beta for NeoFS</div>
+        </div>
+        <div class="swiper-slide swiper-slide-active swiper-slide-next" role="group" aria-label="5 / 7">
+          <div class="roadmap-date">May’24</div>
+          <div class="roadmap-marker">
+            <div class="roadmap-marker__line"></div>
+          </div>
+          <div class="roadmap-text">NeoFS Public Launch</div>
+        </div>
+        <div class="swiper-slide" role="group" aria-label="6 / 7">
+          <div class="roadmap-date">Q3’24</div>
+          <div class="roadmap-marker">
+            <div class="roadmap-marker__line"></div>
+          </div>
+          <div class="roadmap-text">NEO 3.1 Upgrade</div>
+        </div>
+
+        <div class="swiper-slide" role="group" aria-label="7 / 7">
+          <div class="roadmap-date">2025</div>
+          <div class="roadmap-marker">
+            <div class="roadmap-marker__line"></div>
+          </div>
+          <div class="roadmap-text">Neo Ecosystem Expansion</div>
+        </div>
+      </div>
+      <div class="swiper-button-prev" id="x-roadmap" tabindex="0" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-7b449d64a28b2998" aria-disabled="false"></div>
+      <div class="swiper-button-next" id="x-roadmap" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-7b449d64a28b2998" aria-disabled="false"></div>
+      <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+    </div>
+  </section>
+
+</div>
+
+<section class="section__join">
+  <div class="container">
+    <div class="">
+      <h2 class="section-title">
+        public beta        <br>
+        <span>revolution</span>
+      </h2>
+      <div class="section__join--text">
+        <p>Join the future of decentralized applications by participating in the NEO protocol beta now! Get early access to our advanced blockchain tools, invite your friends, and earn rewards.</p>
+        <p>Boost your chances of getting whitelisted for our NEO token <a target="_blank" style="color:#01EF67;" href="https://neo.org/">betaFs</a> and get in prime position for our upcoming <a target="_blank" style="color:#01EF67;" href="https://neo.org/">update</a>. The more you engage, the higher your chances become.</p>
+        <p>Don't miss the opportunity to be at the forefront of blockchain innovation. Join the NEO protocol beta today, invite your network, and unlock exclusive benefits and rewards.</p>
+      </div>
+      <a href="./html/signup.html" class="primary-button" target="_blank">
+        JOIN NOW    <i class="mask link"></i>
+      </a>
+    </div>
+    <img src="./x/images/robo2-removebg-preview.png" alt="robot" class="join-robot">
+  </div>
+</section>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const menu = document.querySelector("#navbar");
+    const menuBtn = document.querySelector("#open-menu-btn");
+    const closeBtn = document.querySelector("#close-menu-btn");
+
+    menuBtn.addEventListener('click', () => {
+      menu.style.display = "flex"
+      closeBtn.style.display = "inline-block";
+      menuBtn.style.display = "none";
     });
-  </script>
-</body>
 
+    closeBtn.addEventListener('click', () => {
+      menu.style.display = "none";
+      closeBtn.style.display = "none";
+      menuBtn.style.display = "inline-block";
+    });
+
+    console.log("Contact script file linked successfully!");
+});
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const roadmapSlider = new Swiper ('.roadmap-slider', {
+      slidesPerView: 'auto',
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  });
+</script>
+
+
+<footer class="footer">
+  <div class="container footer-container">
+   <div class="logo">
+    <a href="/x/" class="">
+      <img src="./assets/images/neo-logo.png" alt="logo">
+    </a>
+   </div>
+    <div class="copyright">
+      <p> © <span id="currentYear"></span> Neo-Protocol, All Rights Resrerved.</p>
+    </div>
+    <div class="socials">
+      <a href=" https://twitter.com/@Neo_Blockchain" class="d-flex" id="x-twitter" target="_blank" rel="nofollow"><i class="mask x"></i></a>
+      <a href=" https://youtube.com" class="d-flex" id="x-youtube" target="_blank" rel="nofollow"><i class="mask youtube"></i></a>
+      <a href=" https://telegram.com" class="d-flex" id="x-telegram" target="_blank" rel="nofollow"><i class="mask telegram"></i></a>
+    </div>
+  </div>
+</footer>
+    </main>
+</div>
+<script defer src="./assets/js/click.js"></script>
+<!--   <script src="./assets/js/index.page.js"></script>
+  <script defer src="./assets/js/click.js"></script>
+ -->
+<script src="/x/assets/82019e32/swiper-bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.testimonial-contents').owlCarousel({
+      loop: true,
+      nav: false,
+      dots: true,
+      margin: 50,
+      autoplay: true,
+      autoplayTimeout: 4000,
+      smartSpeed: 800,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: !1
+        },
+        800: {
+          items: 2
+        },
+        1000: {
+          items: 2
+        }
+      }
+    })
+  });
+</script>
+</body>
 </html>

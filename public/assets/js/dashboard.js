@@ -226,7 +226,7 @@ const startMiningBtn = document.querySelector('#start-mining-btn');
 
 
 async function startMining(){
-// console.log(socket)
+
     let yield_balancep = document.querySelector("#yield_balance");
     let time = document.querySelector("#timer");
     let yield_percentagep = document.getElementById("percentage");
@@ -240,76 +240,76 @@ async function startMining(){
             const accessToken = getCookie("accessToken")
            
             const socket = io({
-                query: {accessToken}
+                query: {accessToken},
+                reconnection: true,            // Enable automatic reconnection
+                reconnectionAttempts: 5, // Infinite reconnection attempts
+                reconnectionDelay: 2000,        // 5 seconds delay between reconnection attempts
+                // reconnectionDelayMax: 10000,    // Max 10 seconds delay between reconnections
+                // timeout: 20000                 // Timeout for initial connection (20 seconds)
             });
 
-            // socket.on("message", (arg1,arg2,arg3,arg4) =>{
-            //     // console.log(arg1)
-            //     // console.log(arg2) //yield balance
-            //     // console.log(arg3) // percentage
-            //     // console.log(arg4) // time
+            
+            // Reconnection logic - request mining data upon reconnection
+            socket.on("reconnect", () => {
+                console.log("Reconnected! Requesting updated mining data...");
+                socket.emit("requestMiningData"); // Emit to request the latest data after reconnection
+            });
 
-            //     const parsedDate = moment(arg4);
-            //     const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
-            //     yield_balancep.textContent = arg2.toFixed(8),
-            //     yield_percentagep.textContent = arg3,
-            //     time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
+            // Handle reconnection attempts
+            socket.on("reconnect_attempt", () => {
+                console.log("Attempting to reconnect...");
+            });
+
+            // Start mining process
+            socket.emit("startMining");
+
+            // Change the button state to indicate mining has started
+            startMiningBtn.textContent = 'Currently Mining';
+            startMiningBtn.disabled = true;
+
+            // Progress bar animation
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.strokeDasharray = `${progress}, 100`;
+                if (progress >= 100) {
+                    progress = 0;
+                }
+            }, 10);
+
+            // Listen for mining updates from the server
+            socket.on('message', ({ mining_status, yield_balance, yield_percentage, yield_time }) => {
+                // console.log(mining_status);
+                // console.log(yield_balance);
+                // console.log(yield_percentage);
+                // console.log(yield_time);
+
+                const parsedDate = moment(yield_time);
+                const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss');
+
+                yield_balancep.textContent = yield_balance.toFixed(8);
+                yield_percentagep.textContent = yield_percentage;
+                time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime;
+            });
+
+            // // Reconnection logic - request mining data upon reconnection
+            // socket.on("reconnect", () => {
+            //     console.log("Reconnected! Requesting updated mining data...");
+            //     socket.emit("requestMiningData"); // Emit to request the latest data after reconnection
             // });
 
-            if(socket.emit('startMining')){
-                socket.emit("startMining")
-                startMiningBtn.textContent = 'Currently Mining';
-                startMiningBtn.disabled = true;
-                const interval = setInterval(() =>{
-                    progress += 5;
-                    progressBar.style.strokeDasharray = `${progress}, 100`;
-                    if(progress >= 100){
-                        progress = 0;
-                                    // clearInterval(interval)
-                    }
-                },10)
-            }else{
+            // // Handle reconnection attempts
+            // socket.on("reconnect_attempt", () => {
+            //     console.log("Attempting to reconnect...");
+            // });
+
+            // Handle reconnection failure
+            socket.on("reconnect_failed", () => {
+                console.log("Reconnection failed.");
+                clearInterval(interval);  // Stop the progress bar if reconnection fails
                 startMiningBtn.textContent = 'Start Mining';
                 startMiningBtn.disabled = false;
-                let interval = setInterval(() =>{
-                    progress += 5;
-                    progressBar.style.strokeDasharray = `${progress}, 100`;
-                    if(progress >= 100){
-                        progress = 0;
-                        clearInterval(interval)
-                    }
-                },10)
-            }
-
-
-            socket.on('message', ({mining_status,yield_balance,yield_percentage,yield_time,}) =>{
-              
-                // const {
-                //     yield_balance,
-                //     yield_percentage,
-                //     yield_time,
-                //     mining_status
-                // } = data;
-                console.log(mining_status)
-                console.log(yield_balance) // yieldB
-                console.log(yield_percentage) // perce
-                console.log(yield_time) // time
-  
-                const parsedDate = moment(yield_time);
-                const formattedTime = parsedDate == "invalid date" ? "00:00:00" : parsedDate.format('HH:mm:ss')
-                    
-                yield_balancep.textContent = yield_balance.toFixed(8), 
-                yield_percentagep.textContent = yield_percentage
-                time.textContent = formattedTime == "invalid date" ? "00:00:00" : formattedTime
-
             });
 
-            // socket.on("disconnect", (reason) =>{
-            //     console.log("Disconnected", reason)
-            //     setTimeout(() =>{
-            //         socket.connect();
-            //     },3500)
-            // });
              
         } catch (error) {
             console.log(error)

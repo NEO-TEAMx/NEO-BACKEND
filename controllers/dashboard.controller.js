@@ -128,7 +128,7 @@ const neoToUsdt = async(req,res) =>{
 const startMining = (io) =>{
     
     io.on("connection", async(socket) =>{
-        console.log("connection achieved!!")
+        console.log("connection achieved!!", socket.id)
         
         try {
             const user = await User.findById(socket.userId);
@@ -139,6 +139,13 @@ const startMining = (io) =>{
             }
             //prevent mining if already in progress
             if(user.mining_status){
+                 // Emit the current status to the client to ensure it's updated even if user reconnects
+                socket.emit("message", {
+                    mining_status: user.mining_status,
+                    yield_balance: user.yield_balance,
+                    yield_percentage: user.yield_percentage,
+                    yield_time: user.yield_time
+                });
                 return;
             }
             //initialize mining duration
@@ -166,7 +173,14 @@ const startMining = (io) =>{
                         user.yield_time = null;
                         user.mining_status = false;
                         await user.save();
-                        socket.emit("message", user.yield_balance);
+                        
+                        // socket.emit("message", {
+                        //     mining_status: user.mining_status,
+                        //     yield_balance: user.yield_balance,
+                        //     yield_percentage: user.yield_percentage,
+                        //     yield_time: user.yield_time
+                        // });
+                        
                     }else{
                         // mining in progress
                         let progress = 100 - (remainingTime / (user.mining_duration * 1000)) * 100;
@@ -183,11 +197,11 @@ const startMining = (io) =>{
                         user.mining_status = true;
                         await user.save();
 
-                        socket.emit("message", {
-                            yield_balance: user.yield_balance,
-                            yield_percentage: user.yield_percentage,
-                            remaining_time: user.yield_time
-                        });
+                        // socket.emit("message", {
+                        //     yield_balance: user.yield_balance,
+                        //     yield_percentage: user.yield_percentage,
+                        //     remaining_time: user.yield_time
+                        // });
                     }
 
                 }catch(e){
@@ -211,6 +225,17 @@ const startMining = (io) =>{
                 userCronJob.stop();
             }
 
+            // Handle the client requesting the current mining data on reconnection
+            socket.on("requestMiningData", async () => {
+                const updatedUser = await User.findById(socket.userId);
+                socket.emit("message", {
+                    mining_status: updatedUser.mining_status,
+                    yield_balance: updatedUser.yield_balance,
+                    yield_percentage: updatedUser.yield_percentage,
+                    yield_time: updatedUser.yield_time
+                });
+            });
+
             // Clean up on disconnection
             socket.on("disconnect", () => {
                 clearInterval(intervalId);
@@ -219,84 +244,6 @@ const startMining = (io) =>{
                 }
                 console.log("User disconnected:", socket.id);
             });    
-            //     if(currentTime >= endTime){
-            //         if(user.hash_rate > 0){
-            //             console.log("Hash mining started!!")
-            //             clearInterval(intervalId);
-
-            //             const finalYieldPercentage = 0;
-            //             const totalYieldBalance = (user.hash_rate * 24 * 60 *60)*0.118;
-            //             user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(10)));
-            //             user.yield_percentage = finalYieldPercentage;
-            //             user.yield_time = null;
-            //             user.mining_status = false;
-            //             await user.save();
-            //             return;
-                        
-            //         }else{
-            //             clearInterval(intervalId);
-            //             console.log("Mining no Hash!!")
-            //             const finalYieldPercentage = 0;
-            //             const totalYieldBalance = 0.00000003 * 24 * 60 * 60;
-            //             user.yield_balance += Number(parseFloat(totalYieldBalance.toFixed(8)));
-            //             user.yield_percentage = finalYieldPercentage;
-            //             user.yield_time = null;
-            //             user.mining_status = false;
-            //             await user.save();
-            //             return;
-
-            //         }
-            //     }else{
-            //         if(user.hash_rate > 0){
-            //             console.log("Hash mining started!!")
-            //             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
-            //             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-            //             let currentYeildBalance = (user.hash_rate * (24 * 60 * 60 - remainingMinutes))*0.0000013;
-            //             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
-            //             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
-            //             user.yield_time = remainingTime;
-            //             user.mining_status = true;
-
-            //             await user.save();
-            //             return;
-            //         }else{
-            //             console.log("Mining no Hash!!")
-            //             let progress = 100-(remainingTime / (user.mining_duration * 1000)) *100;
-            //             let remainingMinutes = remainingTime / (60 * 60 * 1000);
-            //             let currentYeildBalance = (0.00000021 * (24 * 60 * 60 - remainingMinutes))*0.000001;
-            //             user.yield_balance += Number(parseFloat(currentYeildBalance.toFixed(8)));
-            //             user.yield_percentage = progress >= 100 ? 100 : Math.ceil(progress)
-            //             user.yield_time = remainingTime;
-            //             user.mining_status = true;
-
-            //             await user.save();
-            //             return;
-            //         }
-            //     }
-                
-            // },5000)
-            // if(!user.mining_status || user.yield_percentage === 0){
-            //     startCronJob(socket.user)
-            // }
-            // if(user.yield_percentage === 100){
-            //     stopCronJob()
-            // }
-            // if(!user.mining_status || user.yield_percentage === 0){
-            //     if(!cronJob){
-            //         cronJob = cron.schedule("* * * * * * *", () =>{
-            //             // socket.emit("miningData", user.mining_status, user.yield_balance, user.yield_percentage, user.yield_time)
-                        
-            //             socket.emit("message", user.mining_status, user.yield_balance, user.yield_percentage,user.yield_time)
-            //         });
-            //     }
-            // }
-            // if(user.yield_percentage === 100){
-            //     if(cronJob){
-            //         cronJob.stop()
-            //     }
-            // }
-        // })
-
     } catch (error) {
         console.error(error.message)
     }

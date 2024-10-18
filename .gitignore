@@ -1,4 +1,5 @@
 new.js
+tail -f /usr/local/lsws/logs/error.log
 # Logs
 logs
 *.log

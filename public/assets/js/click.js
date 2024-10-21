@@ -88,20 +88,20 @@ countElements.forEach((element) => {
 });
 
 
-
-const customObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    } else {
-      entry.target.classList.remove('show');
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  const customObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      } else {
+        entry.target.classList.remove('show');
+      }
+    });
   });
+
+  const customHiddenElements = document.querySelectorAll('.hiddens');
+  customHiddenElements.forEach((el) => customObserver.observe(el));
 });
-
-const customHiddenElements = document.querySelectorAll('.hidden');
-customHiddenElements.forEach((el) => customObserver.observe(el));
-
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
